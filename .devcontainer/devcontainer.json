@@ -1,0 +1,15 @@
+{
+  "name": "Large Systems Collaboration Template (.NET 8)",
+  "image": "mcr.microsoft.com/devcontainers/dotnet:1-8.0",
+  "features": {},
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-dotnettools.csharp",
+        "streetsidesoftware.code-spell-checker"
+      ]
+    }
+  },
+  "forwardPorts": [5080],
+  "postCreateCommand": "dotnet --version && dotnet restore"
+}

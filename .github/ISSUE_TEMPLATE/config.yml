@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Repository documentation
+    url: https://github.com/VivekNagra/large-systems-collab-template
+    about: Check the README/CONTRIBUTING before opening an issue.

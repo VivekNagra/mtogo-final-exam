@@ -1,0 +1,12 @@
+# CODEOWNERS
+# Purpose: auto-request reviewers for changes.
+# Even as a solo project, this demonstrates review routing and can be used
+# with a second account to satisfy "approval required" branch protection.
+
+/docs/ @VivekNagra @Grumpz555
+/.devcontainer/ @VivekNagra @Grumpz555
+/src/ @VivekNagra @Grumpz555
+/tests/ @VivekNagra @Grumpz555
+
+
+* @VivekNagra @Grumpz555
