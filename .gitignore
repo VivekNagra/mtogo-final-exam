@@ -1,21 +1,27 @@
-## .NET
-bin/
-obj/
-*.user
-*.suo
-*.userosscache
-*.sln.docstates
+# .NET build output
+**/bin/
+**/obj/
+**/*.user
+**/*.suo
+**/*.userosscache
+**/*.sln.docstates
 
-## VS Code
+# VS Code
 .vscode/
 
-## OS
+# Rider / JetBrains
+.idea/
+
+# OS
 .DS_Store
 Thumbs.db
 
-## Test results
-TestResults/
+# Test results / coverage
+**/TestResults/
+**/*.trx
+**/*.coverage
+**/*.coveragexml
 
-## NuGet
+# NuGet
+**/packages/
 *.nupkg
-.nuget/
