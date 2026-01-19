@@ -1,63 +1,41 @@
-using System.Net;
-using System.Net.Http.Json;
+using Mtogo.Ordering.Api.Application;
+using Mtogo.Ordering.Api.Integration;
 
-var builder = WebApplication.CreateBuilder(args);
+namespace Mtogo.Ordering.Api;
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-builder.Services.AddHttpClient("LegacyMenu", client =>
+public sealed class Program
 {
-  var baseUrl = builder.Configuration["LegacyMenu:BaseUrl"] ?? "http://localhost:8081";
-  client.BaseAddress = new Uri(baseUrl);
-});
+  public static void Main(string[] args)
+  {
+    var builder = WebApplication.CreateBuilder(args);
 
-var app = builder.Build();
+    builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddSwaggerGen();
 
-app.UseSwagger();
-app.UseSwaggerUI();
+    builder.Services.AddHttpClient<LegacyMenuClient>(client =>
+    {
+      var baseUrl = builder.Configuration["LegacyMenu:BaseUrl"] ?? "http://localhost:8081";
+      client.BaseAddress = new Uri(baseUrl);
+    });
 
-app.MapGet("/health", () => Results.Ok(new { status = "ok", service = "ordering" }));
+    builder.Services.AddScoped<ILegacyMenuClient>(sp => sp.GetRequiredService<LegacyMenuClient>());
+    builder.Services.AddScoped<OrderService>();
 
-// TAINT SOURCE: user-controlled request body
-// TAINT RELEVANCE: restaurantId/items/quantities are untrusted input
-// TAINT SINKS (future): SQL persistence, logs, message publishing, downstream HTTP calls.
-// MITIGATIONS: validation, parameterized SQL, safe logging, and CodeQL (taint/dataflow) evidence in CI.
-app.MapPost("/api/orders", async (CreateOrderRequest req, IHttpClientFactory httpFactory, ILoggerFactory lf, CancellationToken ct) =>
-{
-  var log = lf.CreateLogger("Ordering");
+    var app = builder.Build();
 
-  if (req.RestaurantId == Guid.Empty)
-    return Results.BadRequest(new { message = "restaurantId required" });
+    app.UseSwagger();
+    app.UseSwaggerUI();
 
-  if (req.Items is null || req.Items.Count == 0)
-    return Results.BadRequest(new { message = "items required" });
+    app.MapGet("/health", () => Results.Ok(new { status = "ok", service = "ordering" }));
 
-  if (req.Items.Any(i => i.Quantity <= 0))
-    return Results.BadRequest(new { message = "quantity must be > 0" });
+    
+    app.MapPost("/api/orders", async (CreateOrderRequest req, OrderService svc, CancellationToken ct) =>
+    {
+      var (ok, status, body) = await svc.CreateOrderAsync(req, ct);
+      return Results.Json(body, statusCode: status);
+    })
+    .WithName("CreateOrder");
 
-  var client = httpFactory.CreateClient("LegacyMenu");
-
-  // validate restaurant exists in legacy system
-  var legacyResponse = await client.GetAsync($"/api/legacy/menu/{req.RestaurantId}", ct);
-
-  if (legacyResponse.StatusCode == HttpStatusCode.NotFound)
-    return Results.BadRequest(new { message = "Unknown restaurant (legacy menu)" });
-
-  if (!legacyResponse.IsSuccessStatusCode)
-    return Results.StatusCode(502);
-
-  var orderId = Guid.NewGuid();
-
-  // SAFE LOGGING: do not log full req body; avoid PII; keep minimal identifiers only.
-  log.LogInformation("Order created {OrderId} for Restaurant {RestaurantId}", orderId, req.RestaurantId);
-
-  return Results.Accepted($"/api/orders/{orderId}", new { orderId, status = "Created" });
-})
-.WithName("CreateOrder")
-.WithOpenApi();
-
-app.Run();
-
-public sealed record CreateOrderRequest(Guid RestaurantId, List<CreateOrderItem> Items);
-public sealed record CreateOrderItem(Guid MenuItemId, int Quantity);
+    app.Run();
+  }
+}
