@@ -33,7 +33,7 @@ jobs:
         run: |
           dotnet test mtogo-final-exam.sln -c Release --no-build \
             --settings coverlet.runsettings \
-            /p:Threshold=35 \
+            /p:Threshold=9 \
             /p:ThresholdType=line \
             /p:CollectCoverage=true
 

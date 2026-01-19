@@ -11,16 +11,18 @@
           <Include>[Mtogo.LegacyMenu.Api]*,[Mtogo.Ordering.Api]*</Include>
           <IncludeTestAssembly>false</IncludeTestAssembly>
 
-          <!-- Exclude bootstrapping + EF plumbing (noise early in the project) -->
-          <Exclude>
+            <!-- Exclude bootstrapping + EF plumbing (noise early in the project) -->
+            <Exclude>
             [*]Program,
             [*]*DbContext*,
-            [*]*Migrations*,
-            [*]*Controllers*,
-            [*]*Data*,
+            [*]*DbInitializer*,
             [*]*Seed*,
-            [*]*DbInitializer*
-          </Exclude>
+            [*]*Migration*,
+            [Mtogo.LegacyMenu.Api]Mtogo.LegacyMenu.Api.Controllers.*,
+            [Mtogo.LegacyMenu.Api]Mtogo.LegacyMenu.Api.Data.*,
+            [Mtogo.LegacyMenu.Api]Mtogo.LegacyMenu.Api.Models.*
+            </Exclude>
+
         </Configuration>
       </DataCollector>
     </DataCollectors>

@@ -79,7 +79,7 @@ public sealed class MenuServiceTests
         Assert.NotNull(item);
         Assert.Equal(SeedIds.BurgerId, item!.Id);
     }
-    
+
 
     [Fact]
     public async Task GetMenu_ReturnsEmpty_WhenNoItems()
