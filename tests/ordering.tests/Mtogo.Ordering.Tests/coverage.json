@@ -1,0 +1,2417 @@
+{
+  "Mtogo.Ordering.Api.dll": {
+    "/src/src/services/ordering/Mtogo.Ordering.Api/Program.cs": {
+      "Program": {
+        "System.Void Program::<Main>$(System.String[])": {
+          "Lines": {
+            "5": 1,
+            "7": 1,
+            "8": 1,
+            "10": 1,
+            "11": 1,
+            "12": 0,
+            "13": 0,
+            "14": 1,
+            "16": 1,
+            "17": 1,
+            "18": 1,
+            "19": 1,
+            "21": 1,
+            "23": 1,
+            "24": 1,
+            "26": 1,
+            "28": 1,
+            "29": 1,
+            "30": 1,
+            "31": 1,
+            "32": 1,
+            "33": 1,
+            "35": 1
+          },
+          "Branches": [
+            {
+              "Line": 12,
+              "Offset": 22,
+              "EndOffset": 24,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 12,
+              "Offset": 22,
+              "EndOffset": 30,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "/src/src/services/ordering/Mtogo.Ordering.Api/obj/Release/net10.0/Microsoft.AspNetCore.OpenApi.SourceGenerators/Microsoft.AspNetCore.OpenApi.SourceGenerators.XmlCommentGenerator/OpenApiXmlCommentSupport.generated.cs": {
+      "Microsoft.AspNetCore.OpenApi.Generated.<OpenApiXmlCommentSupport_generated>F798E8189BFB1DDCC4524A7B3A07F93FE0E5E53F78A5F94B1548D5F4530E15BC0__XmlComment": {
+        "System.String Microsoft.AspNetCore.OpenApi.Generated.<OpenApiXmlCommentSupport_generated>F798E8189BFB1DDCC4524A7B3A07F93FE0E5E53F78A5F94B1548D5F4530E15BC0__XmlComment::get_Summary()": {
+          "Lines": {
+            "47": 0
+          },
+          "Branches": []
+        },
+        "System.String Microsoft.AspNetCore.OpenApi.Generated.<OpenApiXmlCommentSupport_generated>F798E8189BFB1DDCC4524A7B3A07F93FE0E5E53F78A5F94B1548D5F4530E15BC0__XmlComment::get_Description()": {
+          "Lines": {
+            "48": 0
+          },
+          "Branches": []
+        },
+        "System.String Microsoft.AspNetCore.OpenApi.Generated.<OpenApiXmlCommentSupport_generated>F798E8189BFB1DDCC4524A7B3A07F93FE0E5E53F78A5F94B1548D5F4530E15BC0__XmlComment::get_Remarks()": {
+          "Lines": {
+            "49": 0
+          },
+          "Branches": []
+        },
+        "System.String Microsoft.AspNetCore.OpenApi.Generated.<OpenApiXmlCommentSupport_generated>F798E8189BFB1DDCC4524A7B3A07F93FE0E5E53F78A5F94B1548D5F4530E15BC0__XmlComment::get_Returns()": {
+          "Lines": {
+            "50": 0
+          },
+          "Branches": []
+        },
+        "System.String Microsoft.AspNetCore.OpenApi.Generated.<OpenApiXmlCommentSupport_generated>F798E8189BFB1DDCC4524A7B3A07F93FE0E5E53F78A5F94B1548D5F4530E15BC0__XmlComment::get_Value()": {
+          "Lines": {
+            "51": 0
+          },
+          "Branches": []
+        },
+        "System.Boolean Microsoft.AspNetCore.OpenApi.Generated.<OpenApiXmlCommentSupport_generated>F798E8189BFB1DDCC4524A7B3A07F93FE0E5E53F78A5F94B1548D5F4530E15BC0__XmlComment::get_Deprecated()": {
+          "Lines": {
+            "52": 0
+          },
+          "Branches": []
+        },
+        "System.Collections.Generic.List`1<System.String> Microsoft.AspNetCore.OpenApi.Generated.<OpenApiXmlCommentSupport_generated>F798E8189BFB1DDCC4524A7B3A07F93FE0E5E53F78A5F94B1548D5F4530E15BC0__XmlComment::get_Examples()": {
+          "Lines": {
+            "53": 0
+          },
+          "Branches": []
+        },
+        "System.Collections.Generic.List`1<Microsoft.AspNetCore.OpenApi.Generated.<OpenApiXmlCommentSupport_generated>F798E8189BFB1DDCC4524A7B3A07F93FE0E5E53F78A5F94B1548D5F4530E15BC0__XmlParameterComment> Microsoft.AspNetCore.OpenApi.Generated.<OpenApiXmlCommentSupport_generated>F798E8189BFB1DDCC4524A7B3A07F93FE0E5E53F78A5F94B1548D5F4530E15BC0__XmlComment::get_Parameters()": {
+          "Lines": {
+            "54": 0
+          },
+          "Branches": []
+        },
+        "System.Collections.Generic.List`1<Microsoft.AspNetCore.OpenApi.Generated.<OpenApiXmlCommentSupport_generated>F798E8189BFB1DDCC4524A7B3A07F93FE0E5E53F78A5F94B1548D5F4530E15BC0__XmlResponseComment> Microsoft.AspNetCore.OpenApi.Generated.<OpenApiXmlCommentSupport_generated>F798E8189BFB1DDCC4524A7B3A07F93FE0E5E53F78A5F94B1548D5F4530E15BC0__XmlComment::get_Responses()": {
+          "Lines": {
+            "55": 0
+          },
+          "Branches": []
+        },
+        "System.Void Microsoft.AspNetCore.OpenApi.Generated.<OpenApiXmlCommentSupport_generated>F798E8189BFB1DDCC4524A7B3A07F93FE0E5E53F78A5F94B1548D5F4530E15BC0__XmlComment::.ctor(System.String,System.String,System.String,System.String,System.String,System.Boolean,System.Collections.Generic.List`1<System.String>,System.Collections.Generic.List`1<Microsoft.AspNetCore.OpenApi.Generated.<OpenApiXmlCommentSupport_generated>F798E8189BFB1DDCC4524A7B3A07F93FE0E5E53F78A5F94B1548D5F4530E15BC0__XmlParameterComment>,System.Collections.Generic.List`1<Microsoft.AspNetCore.OpenApi.Generated.<OpenApiXmlCommentSupport_generated>F798E8189BFB1DDCC4524A7B3A07F93FE0E5E53F78A5F94B1548D5F4530E15BC0__XmlResponseComment>)": {
+          "Lines": {
+            "46": 0
+          },
+          "Branches": []
+        }
+      },
+      "Microsoft.AspNetCore.OpenApi.Generated.<OpenApiXmlCommentSupport_generated>F798E8189BFB1DDCC4524A7B3A07F93FE0E5E53F78A5F94B1548D5F4530E15BC0__XmlParameterComment": {
+        "System.String Microsoft.AspNetCore.OpenApi.Generated.<OpenApiXmlCommentSupport_generated>F798E8189BFB1DDCC4524A7B3A07F93FE0E5E53F78A5F94B1548D5F4530E15BC0__XmlParameterComment::get_Name()": {
+          "Lines": {
+            "58": 0
+          },
+          "Branches": []
+        }
+      },
+      "Microsoft.AspNetCore.OpenApi.Generated.<OpenApiXmlCommentSupport_generated>F798E8189BFB1DDCC4524A7B3A07F93FE0E5E53F78A5F94B1548D5F4530E15BC0__XmlResponseComment": {
+        "System.String Microsoft.AspNetCore.OpenApi.Generated.<OpenApiXmlCommentSupport_generated>F798E8189BFB1DDCC4524A7B3A07F93FE0E5E53F78A5F94B1548D5F4530E15BC0__XmlResponseComment::get_Code()": {
+          "Lines": {
+            "61": 0
+          },
+          "Branches": []
+        }
+      },
+      "Microsoft.AspNetCore.OpenApi.Generated.<OpenApiXmlCommentSupport_generated>F798E8189BFB1DDCC4524A7B3A07F93FE0E5E53F78A5F94B1548D5F4530E15BC0__XmlCommentCache": {
+        "System.Collections.Generic.Dictionary`2<System.String,Microsoft.AspNetCore.OpenApi.Generated.<OpenApiXmlCommentSupport_generated>F798E8189BFB1DDCC4524A7B3A07F93FE0E5E53F78A5F94B1548D5F4530E15BC0__XmlComment> Microsoft.AspNetCore.OpenApi.Generated.<OpenApiXmlCommentSupport_generated>F798E8189BFB1DDCC4524A7B3A07F93FE0E5E53F78A5F94B1548D5F4530E15BC0__XmlCommentCache::get_Cache()": {
+          "Lines": {
+            "67": 0
+          },
+          "Branches": [
+            {
+              "Line": 67,
+              "Offset": 6,
+              "EndOffset": 8,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 67,
+              "Offset": 6,
+              "EndOffset": 20,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Collections.Generic.Dictionary`2<System.String,Microsoft.AspNetCore.OpenApi.Generated.<OpenApiXmlCommentSupport_generated>F798E8189BFB1DDCC4524A7B3A07F93FE0E5E53F78A5F94B1548D5F4530E15BC0__XmlComment> Microsoft.AspNetCore.OpenApi.Generated.<OpenApiXmlCommentSupport_generated>F798E8189BFB1DDCC4524A7B3A07F93FE0E5E53F78A5F94B1548D5F4530E15BC0__XmlCommentCache::GenerateCacheEntries()": {
+          "Lines": {
+            "71": 0,
+            "74": 0
+          },
+          "Branches": []
+        }
+      },
+      "Microsoft.AspNetCore.OpenApi.Generated.<OpenApiXmlCommentSupport_generated>F798E8189BFB1DDCC4524A7B3A07F93FE0E5E53F78A5F94B1548D5F4530E15BC0__DocumentationCommentIdHelper": {
+        "System.String Microsoft.AspNetCore.OpenApi.Generated.<OpenApiXmlCommentSupport_generated>F798E8189BFB1DDCC4524A7B3A07F93FE0E5E53F78A5F94B1548D5F4530E15BC0__DocumentationCommentIdHelper::CreateDocumentationId(System.Type)": {
+          "Lines": {
+            "87": 0,
+            "89": 0,
+            "92": 0
+          },
+          "Branches": [
+            {
+              "Line": 87,
+              "Offset": 7,
+              "EndOffset": 9,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 87,
+              "Offset": 7,
+              "EndOffset": 20,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.String Microsoft.AspNetCore.OpenApi.Generated.<OpenApiXmlCommentSupport_generated>F798E8189BFB1DDCC4524A7B3A07F93FE0E5E53F78A5F94B1548D5F4530E15BC0__DocumentationCommentIdHelper::CreateDocumentationId(System.Reflection.PropertyInfo)": {
+          "Lines": {
+            "101": 0,
+            "103": 0,
+            "106": 0,
+            "107": 0,
+            "109": 0,
+            "111": 0,
+            "114": 0,
+            "115": 0,
+            "118": 0,
+            "119": 0,
+            "121": 0,
+            "122": 0,
+            "124": 0,
+            "126": 0,
+            "129": 0,
+            "131": 0,
+            "134": 0
+          },
+          "Branches": [
+            {
+              "Line": 101,
+              "Offset": 7,
+              "EndOffset": 9,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 101,
+              "Offset": 7,
+              "EndOffset": 20,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 109,
+              "Offset": 50,
+              "EndOffset": 52,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 109,
+              "Offset": 50,
+              "EndOffset": 72,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 119,
+              "Offset": 103,
+              "EndOffset": 105,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 122,
+              "Offset": 161,
+              "EndOffset": 118,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 0
+            },
+            {
+              "Line": 124,
+              "Offset": 120,
+              "EndOffset": 122,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 124,
+              "Offset": 120,
+              "EndOffset": 131,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            },
+            {
+              "Line": 122,
+              "Offset": 161,
+              "EndOffset": 163,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 0
+            },
+            {
+              "Line": 119,
+              "Offset": 103,
+              "EndOffset": 172,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.String Microsoft.AspNetCore.OpenApi.Generated.<OpenApiXmlCommentSupport_generated>F798E8189BFB1DDCC4524A7B3A07F93FE0E5E53F78A5F94B1548D5F4530E15BC0__DocumentationCommentIdHelper::CreateDocumentationId(System.Type,System.String)": {
+          "Lines": {
+            "143": 0,
+            "145": 0,
+            "147": 0,
+            "149": 0,
+            "152": 0,
+            "153": 0,
+            "154": 0,
+            "155": 0,
+            "156": 0,
+            "158": 0
+          },
+          "Branches": [
+            {
+              "Line": 143,
+              "Offset": 7,
+              "EndOffset": 9,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 143,
+              "Offset": 7,
+              "EndOffset": 20,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 147,
+              "Offset": 26,
+              "EndOffset": 28,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 147,
+              "Offset": 26,
+              "EndOffset": 44,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.String Microsoft.AspNetCore.OpenApi.Generated.<OpenApiXmlCommentSupport_generated>F798E8189BFB1DDCC4524A7B3A07F93FE0E5E53F78A5F94B1548D5F4530E15BC0__DocumentationCommentIdHelper::CreateDocumentationId(System.Reflection.MethodInfo)": {
+          "Lines": {
+            "169": 0,
+            "171": 0,
+            "174": 0,
+            "175": 0,
+            "178": 0,
+            "180": 0,
+            "183": 0,
+            "186": 0,
+            "188": 0,
+            "192": 0,
+            "193": 0,
+            "195": 0,
+            "196": 0,
+            "201": 0,
+            "202": 0,
+            "204": 0,
+            "205": 0,
+            "207": 0,
+            "209": 0,
+            "213": 0,
+            "215": 0,
+            "219": 0,
+            "221": 0,
+            "223": 0,
+            "226": 0
+          },
+          "Branches": [
+            {
+              "Line": 169,
+              "Offset": 7,
+              "EndOffset": 9,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 169,
+              "Offset": 7,
+              "EndOffset": 20,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 178,
+              "Offset": 50,
+              "EndOffset": 52,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 178,
+              "Offset": 50,
+              "EndOffset": 72,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 186,
+              "Offset": 87,
+              "EndOffset": 89,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 188,
+              "Offset": 96,
+              "EndOffset": 98,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 188,
+              "Offset": 96,
+              "EndOffset": 105,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            },
+            {
+              "Line": 186,
+              "Offset": 87,
+              "EndOffset": 118,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 193,
+              "Offset": 137,
+              "EndOffset": 139,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 0
+            },
+            {
+              "Line": 193,
+              "Offset": 137,
+              "EndOffset": 181,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 0
+            },
+            {
+              "Line": 202,
+              "Offset": 190,
+              "EndOffset": 192,
+              "Path": 0,
+              "Ordinal": 10,
+              "Hits": 0
+            },
+            {
+              "Line": 205,
+              "Offset": 248,
+              "EndOffset": 205,
+              "Path": 1,
+              "Ordinal": 15,
+              "Hits": 0
+            },
+            {
+              "Line": 207,
+              "Offset": 207,
+              "EndOffset": 209,
+              "Path": 0,
+              "Ordinal": 12,
+              "Hits": 0
+            },
+            {
+              "Line": 207,
+              "Offset": 207,
+              "EndOffset": 218,
+              "Path": 1,
+              "Ordinal": 13,
+              "Hits": 0
+            },
+            {
+              "Line": 205,
+              "Offset": 248,
+              "EndOffset": 250,
+              "Path": 0,
+              "Ordinal": 14,
+              "Hits": 0
+            },
+            {
+              "Line": 202,
+              "Offset": 190,
+              "EndOffset": 259,
+              "Path": 1,
+              "Ordinal": 11,
+              "Hits": 0
+            },
+            {
+              "Line": 219,
+              "Offset": 280,
+              "EndOffset": 282,
+              "Path": 0,
+              "Ordinal": 16,
+              "Hits": 0
+            },
+            {
+              "Line": 219,
+              "Offset": 280,
+              "EndOffset": 311,
+              "Path": 1,
+              "Ordinal": 17,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.String Microsoft.AspNetCore.OpenApi.Generated.<OpenApiXmlCommentSupport_generated>F798E8189BFB1DDCC4524A7B3A07F93FE0E5E53F78A5F94B1548D5F4530E15BC0__DocumentationCommentIdHelper::GetTypeDocId(System.Type,System.Boolean,System.Boolean)": {
+          "Lines": {
+            "239": 0,
+            "242": 0,
+            "244": 0,
+            "246": 0,
+            "248": 0,
+            "252": 0,
+            "256": 0,
+            "258": 0,
+            "259": 0,
+            "261": 0,
+            "264": 0,
+            "266": 0,
+            "267": 0,
+            "269": 0,
+            "271": 0,
+            "277": 0,
+            "281": 0,
+            "283": 0,
+            "284": 0,
+            "285": 0,
+            "288": 0,
+            "290": 0,
+            "291": 0,
+            "293": 0,
+            "295": 0,
+            "297": 0,
+            "300": 0,
+            "303": 0,
+            "306": 0,
+            "310": 0
+          },
+          "Branches": [
+            {
+              "Line": 239,
+              "Offset": 6,
+              "EndOffset": 8,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 242,
+              "Offset": 20,
+              "EndOffset": 22,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 242,
+              "Offset": 20,
+              "EndOffset": 47,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 246,
+              "Offset": 59,
+              "EndOffset": 61,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 246,
+              "Offset": 59,
+              "EndOffset": 86,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 239,
+              "Offset": 6,
+              "EndOffset": 93,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 256,
+              "Offset": 99,
+              "EndOffset": 104,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 259,
+              "Offset": 118,
+              "EndOffset": 120,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 0
+            },
+            {
+              "Line": 259,
+              "Offset": 118,
+              "EndOffset": 127,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 0
+            },
+            {
+              "Line": 264,
+              "Offset": 201,
+              "EndOffset": 145,
+              "Path": 1,
+              "Ordinal": 15,
+              "Hits": 0
+            },
+            {
+              "Line": 267,
+              "Offset": 159,
+              "EndOffset": 161,
+              "Path": 0,
+              "Ordinal": 10,
+              "Hits": 0
+            },
+            {
+              "Line": 267,
+              "Offset": 159,
+              "EndOffset": 172,
+              "Path": 1,
+              "Ordinal": 11,
+              "Hits": 0
+            },
+            {
+              "Line": 271,
+              "Offset": 176,
+              "EndOffset": 178,
+              "Path": 0,
+              "Ordinal": 12,
+              "Hits": 0
+            },
+            {
+              "Line": 271,
+              "Offset": 176,
+              "EndOffset": 203,
+              "Path": 1,
+              "Ordinal": 13,
+              "Hits": 0
+            },
+            {
+              "Line": 264,
+              "Offset": 201,
+              "EndOffset": 203,
+              "Path": 0,
+              "Ordinal": 14,
+              "Hits": 0
+            },
+            {
+              "Line": 281,
+              "Offset": 204,
+              "EndOffset": 206,
+              "Path": 0,
+              "Ordinal": 16,
+              "Hits": 0
+            },
+            {
+              "Line": 281,
+              "Offset": 204,
+              "EndOffset": 249,
+              "Path": 1,
+              "Ordinal": 17,
+              "Hits": 0
+            },
+            {
+              "Line": 288,
+              "Offset": 250,
+              "EndOffset": 252,
+              "Path": 0,
+              "Ordinal": 18,
+              "Hits": 0
+            },
+            {
+              "Line": 288,
+              "Offset": 258,
+              "EndOffset": 260,
+              "Path": 0,
+              "Ordinal": 20,
+              "Hits": 0
+            },
+            {
+              "Line": 293,
+              "Offset": 327,
+              "EndOffset": 282,
+              "Path": 1,
+              "Ordinal": 25,
+              "Hits": 0
+            },
+            {
+              "Line": 295,
+              "Offset": 285,
+              "EndOffset": 287,
+              "Path": 0,
+              "Ordinal": 22,
+              "Hits": 0
+            },
+            {
+              "Line": 295,
+              "Offset": 285,
+              "EndOffset": 296,
+              "Path": 1,
+              "Ordinal": 23,
+              "Hits": 0
+            },
+            {
+              "Line": 293,
+              "Offset": 327,
+              "EndOffset": 329,
+              "Path": 0,
+              "Ordinal": 24,
+              "Hits": 0
+            },
+            {
+              "Line": 288,
+              "Offset": 250,
+              "EndOffset": 338,
+              "Path": 1,
+              "Ordinal": 19,
+              "Hits": 0
+            },
+            {
+              "Line": 288,
+              "Offset": 258,
+              "EndOffset": 338,
+              "Path": 1,
+              "Ordinal": 21,
+              "Hits": 0
+            },
+            {
+              "Line": 256,
+              "Offset": 99,
+              "EndOffset": 345,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            },
+            {
+              "Line": 310,
+              "Offset": 352,
+              "EndOffset": 354,
+              "Path": 0,
+              "Ordinal": 26,
+              "Hits": 0
+            },
+            {
+              "Line": 310,
+              "Offset": 352,
+              "EndOffset": 361,
+              "Path": 1,
+              "Ordinal": 27,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.String Microsoft.AspNetCore.OpenApi.Generated.<OpenApiXmlCommentSupport_generated>F798E8189BFB1DDCC4524A7B3A07F93FE0E5E53F78A5F94B1548D5F4530E15BC0__DocumentationCommentIdHelper::NormalizeDocId(System.String)": {
+          "Lines": {
+            "322": 0,
+            "323": 0,
+            "326": 0,
+            "331": 0,
+            "333": 0,
+            "337": 0
+          },
+          "Branches": [
+            {
+              "Line": 323,
+              "Offset": 11,
+              "EndOffset": 13,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 323,
+              "Offset": 11,
+              "EndOffset": 15,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 331,
+              "Offset": 26,
+              "EndOffset": 28,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 331,
+              "Offset": 26,
+              "EndOffset": 41,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 331,
+              "Offset": 39,
+              "EndOffset": 41,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 331,
+              "Offset": 39,
+              "EndOffset": 43,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "Microsoft.AspNetCore.OpenApi.Generated.<OpenApiXmlCommentSupport_generated>F798E8189BFB1DDCC4524A7B3A07F93FE0E5E53F78A5F94B1548D5F4530E15BC0__XmlCommentOperationTransformer": {
+        "System.Threading.Tasks.Task Microsoft.AspNetCore.OpenApi.Generated.<OpenApiXmlCommentSupport_generated>F798E8189BFB1DDCC4524A7B3A07F93FE0E5E53F78A5F94B1548D5F4530E15BC0__XmlCommentOperationTransformer::TransformAsync(Microsoft.OpenApi.OpenApiOperation,Microsoft.AspNetCore.OpenApi.OpenApiOperationTransformerContext,System.Threading.CancellationToken)": {
+          "Lines": {
+            "346": 0,
+            "347": 0,
+            "348": 0,
+            "350": 0,
+            "352": 0,
+            "354": 0,
+            "356": 0,
+            "358": 0,
+            "360": 0,
+            "362": 0,
+            "364": 0,
+            "366": 0,
+            "368": 0,
+            "370": 0,
+            "372": 0,
+            "373": 0,
+            "374": 0,
+            "376": 0,
+            "377": 0,
+            "378": 0,
+            "380": 0,
+            "382": 0,
+            "386": 0,
+            "387": 0,
+            "389": 0,
+            "390": 0,
+            "392": 0,
+            "393": 0,
+            "397": 0,
+            "399": 0,
+            "407": 0,
+            "409": 0,
+            "410": 0,
+            "413": 0,
+            "415": 0,
+            "417": 0,
+            "418": 0,
+            "420": 0,
+            "425": 0,
+            "427": 0,
+            "428": 0,
+            "429": 0,
+            "430": 0,
+            "431": 0,
+            "433": 0,
+            "434": 0,
+            "436": 0,
+            "437": 0,
+            "438": 0,
+            "440": 0,
+            "442": 0,
+            "444": 0,
+            "446": 0,
+            "448": 0,
+            "450": 0,
+            "451": 0,
+            "453": 0,
+            "454": 0,
+            "458": 0,
+            "459": 0,
+            "461": 0,
+            "467": 0,
+            "468": 0,
+            "470": 0,
+            "471": 0,
+            "473": 0,
+            "480": 0
+          },
+          "Branches": [
+            {
+              "Line": 346,
+              "Offset": 18,
+              "EndOffset": 20,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 346,
+              "Offset": 18,
+              "EndOffset": 48,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 350,
+              "Offset": 56,
+              "EndOffset": 58,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 350,
+              "Offset": 56,
+              "EndOffset": 64,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 354,
+              "Offset": 87,
+              "EndOffset": 92,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 356,
+              "Offset": 100,
+              "EndOffset": 102,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 356,
+              "Offset": 100,
+              "EndOffset": 109,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            },
+            {
+              "Line": 360,
+              "Offset": 119,
+              "EndOffset": 121,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 0
+            },
+            {
+              "Line": 360,
+              "Offset": 119,
+              "EndOffset": 129,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 0
+            },
+            {
+              "Line": 364,
+              "Offset": 139,
+              "EndOffset": 141,
+              "Path": 0,
+              "Ordinal": 10,
+              "Hits": 0
+            },
+            {
+              "Line": 364,
+              "Offset": 139,
+              "EndOffset": 149,
+              "Path": 1,
+              "Ordinal": 11,
+              "Hits": 0
+            },
+            {
+              "Line": 368,
+              "Offset": 159,
+              "EndOffset": 164,
+              "Path": 0,
+              "Ordinal": 12,
+              "Hits": 0
+            },
+            {
+              "Line": 368,
+              "Offset": 172,
+              "EndOffset": 177,
+              "Path": 0,
+              "Ordinal": 14,
+              "Hits": 0
+            },
+            {
+              "Line": 370,
+              "Offset": 508,
+              "EndOffset": 195,
+              "Path": 1,
+              "Ordinal": 35,
+              "Hits": 0
+            },
+            {
+              "Line": 373,
+              "Offset": 249,
+              "EndOffset": 251,
+              "Path": 0,
+              "Ordinal": 16,
+              "Hits": 0
+            },
+            {
+              "Line": 373,
+              "Offset": 249,
+              "EndOffset": 255,
+              "Path": 1,
+              "Ordinal": 17,
+              "Hits": 0
+            },
+            {
+              "Line": 374,
+              "Offset": 277,
+              "EndOffset": 279,
+              "Path": 0,
+              "Ordinal": 18,
+              "Hits": 0
+            },
+            {
+              "Line": 378,
+              "Offset": 323,
+              "EndOffset": 325,
+              "Path": 0,
+              "Ordinal": 20,
+              "Hits": 0
+            },
+            {
+              "Line": 378,
+              "Offset": 323,
+              "EndOffset": 339,
+              "Path": 1,
+              "Ordinal": 21,
+              "Hits": 0
+            },
+            {
+              "Line": 374,
+              "Offset": 277,
+              "EndOffset": 363,
+              "Path": 1,
+              "Ordinal": 19,
+              "Hits": 0
+            },
+            {
+              "Line": 387,
+              "Offset": 373,
+              "EndOffset": 375,
+              "Path": 0,
+              "Ordinal": 22,
+              "Hits": 0
+            },
+            {
+              "Line": 390,
+              "Offset": 410,
+              "EndOffset": 412,
+              "Path": 0,
+              "Ordinal": 24,
+              "Hits": 0
+            },
+            {
+              "Line": 392,
+              "Offset": 414,
+              "EndOffset": 416,
+              "Path": 0,
+              "Ordinal": 26,
+              "Hits": 0
+            },
+            {
+              "Line": 392,
+              "Offset": 414,
+              "EndOffset": 419,
+              "Path": 1,
+              "Ordinal": 27,
+              "Hits": 0
+            },
+            {
+              "Line": 392,
+              "Offset": 427,
+              "EndOffset": 429,
+              "Path": 0,
+              "Ordinal": 28,
+              "Hits": 0
+            },
+            {
+              "Line": 392,
+              "Offset": 427,
+              "EndOffset": 433,
+              "Path": 1,
+              "Ordinal": 29,
+              "Hits": 0
+            },
+            {
+              "Line": 393,
+              "Offset": 442,
+              "EndOffset": 444,
+              "Path": 0,
+              "Ordinal": 30,
+              "Hits": 0
+            },
+            {
+              "Line": 397,
+              "Offset": 485,
+              "EndOffset": 455,
+              "Path": 1,
+              "Ordinal": 33,
+              "Hits": 0
+            },
+            {
+              "Line": 397,
+              "Offset": 485,
+              "EndOffset": 487,
+              "Path": 0,
+              "Ordinal": 32,
+              "Hits": 0
+            },
+            {
+              "Line": 387,
+              "Offset": 373,
+              "EndOffset": 501,
+              "Path": 1,
+              "Ordinal": 23,
+              "Hits": 0
+            },
+            {
+              "Line": 390,
+              "Offset": 410,
+              "EndOffset": 501,
+              "Path": 1,
+              "Ordinal": 25,
+              "Hits": 0
+            },
+            {
+              "Line": 393,
+              "Offset": 442,
+              "EndOffset": 501,
+              "Path": 1,
+              "Ordinal": 31,
+              "Hits": 0
+            },
+            {
+              "Line": 370,
+              "Offset": 508,
+              "EndOffset": 513,
+              "Path": 0,
+              "Ordinal": 34,
+              "Hits": 0
+            },
+            {
+              "Line": 368,
+              "Offset": 159,
+              "EndOffset": 529,
+              "Path": 1,
+              "Ordinal": 13,
+              "Hits": 0
+            },
+            {
+              "Line": 368,
+              "Offset": 172,
+              "EndOffset": 529,
+              "Path": 1,
+              "Ordinal": 15,
+              "Hits": 0
+            },
+            {
+              "Line": 407,
+              "Offset": 539,
+              "EndOffset": 541,
+              "Path": 0,
+              "Ordinal": 36,
+              "Hits": 0
+            },
+            {
+              "Line": 407,
+              "Offset": 551,
+              "EndOffset": 553,
+              "Path": 0,
+              "Ordinal": 38,
+              "Hits": 0
+            },
+            {
+              "Line": 407,
+              "Offset": 561,
+              "EndOffset": 563,
+              "Path": 0,
+              "Ordinal": 40,
+              "Hits": 0
+            },
+            {
+              "Line": 407,
+              "Offset": 539,
+              "EndOffset": 590,
+              "Path": 1,
+              "Ordinal": 37,
+              "Hits": 0
+            },
+            {
+              "Line": 407,
+              "Offset": 551,
+              "EndOffset": 590,
+              "Path": 1,
+              "Ordinal": 39,
+              "Hits": 0
+            },
+            {
+              "Line": 407,
+              "Offset": 561,
+              "EndOffset": 590,
+              "Path": 1,
+              "Ordinal": 41,
+              "Hits": 0
+            },
+            {
+              "Line": 413,
+              "Offset": 600,
+              "EndOffset": 605,
+              "Path": 0,
+              "Ordinal": 42,
+              "Hits": 0
+            },
+            {
+              "Line": 413,
+              "Offset": 613,
+              "EndOffset": 618,
+              "Path": 0,
+              "Ordinal": 44,
+              "Hits": 0
+            },
+            {
+              "Line": 413,
+              "Offset": 628,
+              "EndOffset": 630,
+              "Path": 0,
+              "Ordinal": 46,
+              "Hits": 0
+            },
+            {
+              "Line": 413,
+              "Offset": 638,
+              "EndOffset": 640,
+              "Path": 0,
+              "Ordinal": 48,
+              "Hits": 0
+            },
+            {
+              "Line": 415,
+              "Offset": 737,
+              "EndOffset": 655,
+              "Path": 1,
+              "Ordinal": 53,
+              "Hits": 0
+            },
+            {
+              "Line": 418,
+              "Offset": 704,
+              "EndOffset": 706,
+              "Path": 0,
+              "Ordinal": 50,
+              "Hits": 0
+            },
+            {
+              "Line": 418,
+              "Offset": 704,
+              "EndOffset": 730,
+              "Path": 1,
+              "Ordinal": 51,
+              "Hits": 0
+            },
+            {
+              "Line": 415,
+              "Offset": 737,
+              "EndOffset": 739,
+              "Path": 0,
+              "Ordinal": 52,
+              "Hits": 0
+            },
+            {
+              "Line": 354,
+              "Offset": 87,
+              "EndOffset": 755,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 413,
+              "Offset": 600,
+              "EndOffset": 755,
+              "Path": 1,
+              "Ordinal": 43,
+              "Hits": 0
+            },
+            {
+              "Line": 413,
+              "Offset": 613,
+              "EndOffset": 755,
+              "Path": 1,
+              "Ordinal": 45,
+              "Hits": 0
+            },
+            {
+              "Line": 413,
+              "Offset": 628,
+              "EndOffset": 755,
+              "Path": 1,
+              "Ordinal": 47,
+              "Hits": 0
+            },
+            {
+              "Line": 413,
+              "Offset": 638,
+              "EndOffset": 755,
+              "Path": 1,
+              "Ordinal": 49,
+              "Hits": 0
+            },
+            {
+              "Line": 425,
+              "Offset": 1238,
+              "EndOffset": 778,
+              "Path": 1,
+              "Ordinal": 93,
+              "Hits": 0
+            },
+            {
+              "Line": 428,
+              "Offset": 815,
+              "EndOffset": 820,
+              "Path": 0,
+              "Ordinal": 54,
+              "Hits": 0
+            },
+            {
+              "Line": 428,
+              "Offset": 833,
+              "EndOffset": 838,
+              "Path": 0,
+              "Ordinal": 56,
+              "Hits": 0
+            },
+            {
+              "Line": 428,
+              "Offset": 854,
+              "EndOffset": 859,
+              "Path": 0,
+              "Ordinal": 58,
+              "Hits": 0
+            },
+            {
+              "Line": 428,
+              "Offset": 875,
+              "EndOffset": 880,
+              "Path": 0,
+              "Ordinal": 60,
+              "Hits": 0
+            },
+            {
+              "Line": 434,
+              "Offset": 910,
+              "EndOffset": 915,
+              "Path": 0,
+              "Ordinal": 62,
+              "Hits": 0
+            },
+            {
+              "Line": 436,
+              "Offset": 922,
+              "EndOffset": 924,
+              "Path": 0,
+              "Ordinal": 64,
+              "Hits": 0
+            },
+            {
+              "Line": 436,
+              "Offset": 922,
+              "EndOffset": 928,
+              "Path": 1,
+              "Ordinal": 65,
+              "Hits": 0
+            },
+            {
+              "Line": 438,
+              "Offset": 964,
+              "EndOffset": 966,
+              "Path": 0,
+              "Ordinal": 66,
+              "Hits": 0
+            },
+            {
+              "Line": 438,
+              "Offset": 978,
+              "EndOffset": 980,
+              "Path": 0,
+              "Ordinal": 68,
+              "Hits": 0
+            },
+            {
+              "Line": 438,
+              "Offset": 964,
+              "EndOffset": 1003,
+              "Path": 1,
+              "Ordinal": 67,
+              "Hits": 0
+            },
+            {
+              "Line": 438,
+              "Offset": 978,
+              "EndOffset": 1003,
+              "Path": 1,
+              "Ordinal": 69,
+              "Hits": 0
+            },
+            {
+              "Line": 442,
+              "Offset": 1010,
+              "EndOffset": 1012,
+              "Path": 0,
+              "Ordinal": 70,
+              "Hits": 0
+            },
+            {
+              "Line": 442,
+              "Offset": 1010,
+              "EndOffset": 1021,
+              "Path": 1,
+              "Ordinal": 71,
+              "Hits": 0
+            },
+            {
+              "Line": 446,
+              "Offset": 1023,
+              "EndOffset": 1028,
+              "Path": 0,
+              "Ordinal": 72,
+              "Hits": 0
+            },
+            {
+              "Line": 448,
+              "Offset": 1034,
+              "EndOffset": 1039,
+              "Path": 0,
+              "Ordinal": 74,
+              "Hits": 0
+            },
+            {
+              "Line": 451,
+              "Offset": 1060,
+              "EndOffset": 1062,
+              "Path": 0,
+              "Ordinal": 76,
+              "Hits": 0
+            },
+            {
+              "Line": 451,
+              "Offset": 1060,
+              "EndOffset": 1066,
+              "Path": 1,
+              "Ordinal": 77,
+              "Hits": 0
+            },
+            {
+              "Line": 451,
+              "Offset": 1075,
+              "EndOffset": 1080,
+              "Path": 0,
+              "Ordinal": 78,
+              "Hits": 0
+            },
+            {
+              "Line": 453,
+              "Offset": 1092,
+              "EndOffset": 1094,
+              "Path": 0,
+              "Ordinal": 80,
+              "Hits": 0
+            },
+            {
+              "Line": 453,
+              "Offset": 1092,
+              "EndOffset": 1098,
+              "Path": 1,
+              "Ordinal": 81,
+              "Hits": 0
+            },
+            {
+              "Line": 454,
+              "Offset": 1107,
+              "EndOffset": 1109,
+              "Path": 0,
+              "Ordinal": 82,
+              "Hits": 0
+            },
+            {
+              "Line": 459,
+              "Offset": 1154,
+              "EndOffset": 1129,
+              "Path": 1,
+              "Ordinal": 85,
+              "Hits": 0
+            },
+            {
+              "Line": 459,
+              "Offset": 1154,
+              "EndOffset": 1156,
+              "Path": 0,
+              "Ordinal": 84,
+              "Hits": 0
+            },
+            {
+              "Line": 446,
+              "Offset": 1023,
+              "EndOffset": 1170,
+              "Path": 1,
+              "Ordinal": 73,
+              "Hits": 0
+            },
+            {
+              "Line": 468,
+              "Offset": 1181,
+              "EndOffset": 1183,
+              "Path": 0,
+              "Ordinal": 86,
+              "Hits": 0
+            },
+            {
+              "Line": 471,
+              "Offset": 1200,
+              "EndOffset": 1202,
+              "Path": 0,
+              "Ordinal": 88,
+              "Hits": 0
+            },
+            {
+              "Line": 471,
+              "Offset": 1200,
+              "EndOffset": 1206,
+              "Path": 1,
+              "Ordinal": 89,
+              "Hits": 0
+            },
+            {
+              "Line": 471,
+              "Offset": 1215,
+              "EndOffset": 1217,
+              "Path": 0,
+              "Ordinal": 90,
+              "Hits": 0
+            },
+            {
+              "Line": 428,
+              "Offset": 815,
+              "EndOffset": 1231,
+              "Path": 1,
+              "Ordinal": 55,
+              "Hits": 0
+            },
+            {
+              "Line": 428,
+              "Offset": 833,
+              "EndOffset": 1231,
+              "Path": 1,
+              "Ordinal": 57,
+              "Hits": 0
+            },
+            {
+              "Line": 428,
+              "Offset": 854,
+              "EndOffset": 1231,
+              "Path": 1,
+              "Ordinal": 59,
+              "Hits": 0
+            },
+            {
+              "Line": 428,
+              "Offset": 875,
+              "EndOffset": 1231,
+              "Path": 1,
+              "Ordinal": 61,
+              "Hits": 0
+            },
+            {
+              "Line": 434,
+              "Offset": 910,
+              "EndOffset": 1231,
+              "Path": 1,
+              "Ordinal": 63,
+              "Hits": 0
+            },
+            {
+              "Line": 448,
+              "Offset": 1034,
+              "EndOffset": 1231,
+              "Path": 1,
+              "Ordinal": 75,
+              "Hits": 0
+            },
+            {
+              "Line": 451,
+              "Offset": 1075,
+              "EndOffset": 1231,
+              "Path": 1,
+              "Ordinal": 79,
+              "Hits": 0
+            },
+            {
+              "Line": 454,
+              "Offset": 1107,
+              "EndOffset": 1231,
+              "Path": 1,
+              "Ordinal": 83,
+              "Hits": 0
+            },
+            {
+              "Line": 468,
+              "Offset": 1181,
+              "EndOffset": 1231,
+              "Path": 1,
+              "Ordinal": 87,
+              "Hits": 0
+            },
+            {
+              "Line": 471,
+              "Offset": 1215,
+              "EndOffset": 1231,
+              "Path": 1,
+              "Ordinal": 91,
+              "Hits": 0
+            },
+            {
+              "Line": 425,
+              "Offset": 1238,
+              "EndOffset": 1243,
+              "Path": 0,
+              "Ordinal": 92,
+              "Hits": 0
+            }
+          ]
+        },
+        "Microsoft.OpenApi.OpenApiParameter Microsoft.AspNetCore.OpenApi.Generated.<OpenApiXmlCommentSupport_generated>F798E8189BFB1DDCC4524A7B3A07F93FE0E5E53F78A5F94B1548D5F4530E15BC0__XmlCommentOperationTransformer::UnwrapOpenApiParameter(Microsoft.OpenApi.IOpenApiParameter)": {
+          "Lines": {
+            "485": 0,
+            "487": 0,
+            "489": 0,
+            "493": 0,
+            "496": 0,
+            "498": 0,
+            "502": 0
+          },
+          "Branches": [
+            {
+              "Line": 485,
+              "Offset": 8,
+              "EndOffset": 10,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 487,
+              "Offset": 23,
+              "EndOffset": 25,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 487,
+              "Offset": 23,
+              "EndOffset": 27,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 485,
+              "Offset": 8,
+              "EndOffset": 38,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 496,
+              "Offset": 46,
+              "EndOffset": 48,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 496,
+              "Offset": 46,
+              "EndOffset": 50,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "Microsoft.AspNetCore.OpenApi.Generated.<OpenApiXmlCommentSupport_generated>F798E8189BFB1DDCC4524A7B3A07F93FE0E5E53F78A5F94B1548D5F4530E15BC0__XmlCommentSchemaTransformer": {
+        "System.Threading.Tasks.Task Microsoft.AspNetCore.OpenApi.Generated.<OpenApiXmlCommentSupport_generated>F798E8189BFB1DDCC4524A7B3A07F93FE0E5E53F78A5F94B1548D5F4530E15BC0__XmlCommentSchemaTransformer::TransformAsync(Microsoft.OpenApi.OpenApiSchema,Microsoft.AspNetCore.OpenApi.OpenApiSchemaTransformerContext,System.Threading.CancellationToken)": {
+          "Lines": {
+            "513": 0,
+            "515": 0,
+            "516": 0,
+            "518": 0,
+            "522": 0,
+            "525": 0,
+            "527": 0,
+            "528": 0,
+            "530": 0,
+            "532": 0,
+            "534": 0,
+            "536": 0,
+            "537": 0,
+            "538": 0,
+            "541": 0,
+            "542": 0,
+            "544": 0,
+            "550": 0,
+            "552": 0,
+            "554": 0,
+            "556": 0,
+            "561": 0
+          },
+          "Branches": [
+            {
+              "Line": 513,
+              "Offset": 33,
+              "EndOffset": 35,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 516,
+              "Offset": 54,
+              "EndOffset": 56,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 516,
+              "Offset": 54,
+              "EndOffset": 60,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 516,
+              "Offset": 67,
+              "EndOffset": 69,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 513,
+              "Offset": 33,
+              "EndOffset": 81,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 516,
+              "Offset": 67,
+              "EndOffset": 81,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 522,
+              "Offset": 89,
+              "EndOffset": 94,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 522,
+              "Offset": 107,
+              "EndOffset": 112,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 0
+            },
+            {
+              "Line": 525,
+              "Offset": 135,
+              "EndOffset": 140,
+              "Path": 0,
+              "Ordinal": 10,
+              "Hits": 0
+            },
+            {
+              "Line": 528,
+              "Offset": 156,
+              "EndOffset": 158,
+              "Path": 0,
+              "Ordinal": 12,
+              "Hits": 0
+            },
+            {
+              "Line": 528,
+              "Offset": 170,
+              "EndOffset": 172,
+              "Path": 0,
+              "Ordinal": 14,
+              "Hits": 0
+            },
+            {
+              "Line": 528,
+              "Offset": 156,
+              "EndOffset": 195,
+              "Path": 1,
+              "Ordinal": 13,
+              "Hits": 0
+            },
+            {
+              "Line": 528,
+              "Offset": 170,
+              "EndOffset": 195,
+              "Path": 1,
+              "Ordinal": 15,
+              "Hits": 0
+            },
+            {
+              "Line": 532,
+              "Offset": 202,
+              "EndOffset": 204,
+              "Path": 0,
+              "Ordinal": 16,
+              "Hits": 0
+            },
+            {
+              "Line": 532,
+              "Offset": 202,
+              "EndOffset": 213,
+              "Path": 1,
+              "Ordinal": 17,
+              "Hits": 0
+            },
+            {
+              "Line": 536,
+              "Offset": 219,
+              "EndOffset": 221,
+              "Path": 0,
+              "Ordinal": 18,
+              "Hits": 0
+            },
+            {
+              "Line": 536,
+              "Offset": 239,
+              "EndOffset": 241,
+              "Path": 0,
+              "Ordinal": 20,
+              "Hits": 0
+            },
+            {
+              "Line": 536,
+              "Offset": 219,
+              "EndOffset": 255,
+              "Path": 1,
+              "Ordinal": 19,
+              "Hits": 0
+            },
+            {
+              "Line": 536,
+              "Offset": 239,
+              "EndOffset": 255,
+              "Path": 1,
+              "Ordinal": 21,
+              "Hits": 0
+            },
+            {
+              "Line": 536,
+              "Offset": 253,
+              "EndOffset": 255,
+              "Path": 0,
+              "Ordinal": 22,
+              "Hits": 0
+            },
+            {
+              "Line": 542,
+              "Offset": 271,
+              "EndOffset": 273,
+              "Path": 0,
+              "Ordinal": 24,
+              "Hits": 0
+            },
+            {
+              "Line": 542,
+              "Offset": 271,
+              "EndOffset": 277,
+              "Path": 1,
+              "Ordinal": 25,
+              "Hits": 0
+            },
+            {
+              "Line": 542,
+              "Offset": 286,
+              "EndOffset": 288,
+              "Path": 0,
+              "Ordinal": 26,
+              "Hits": 0
+            },
+            {
+              "Line": 536,
+              "Offset": 253,
+              "EndOffset": 303,
+              "Path": 1,
+              "Ordinal": 23,
+              "Hits": 0
+            },
+            {
+              "Line": 550,
+              "Offset": 310,
+              "EndOffset": 312,
+              "Path": 0,
+              "Ordinal": 28,
+              "Hits": 0
+            },
+            {
+              "Line": 550,
+              "Offset": 310,
+              "EndOffset": 330,
+              "Path": 1,
+              "Ordinal": 29,
+              "Hits": 0
+            },
+            {
+              "Line": 554,
+              "Offset": 338,
+              "EndOffset": 340,
+              "Path": 0,
+              "Ordinal": 30,
+              "Hits": 0
+            },
+            {
+              "Line": 554,
+              "Offset": 338,
+              "EndOffset": 344,
+              "Path": 1,
+              "Ordinal": 31,
+              "Hits": 0
+            },
+            {
+              "Line": 554,
+              "Offset": 353,
+              "EndOffset": 355,
+              "Path": 0,
+              "Ordinal": 32,
+              "Hits": 0
+            },
+            {
+              "Line": 522,
+              "Offset": 89,
+              "EndOffset": 378,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            },
+            {
+              "Line": 522,
+              "Offset": 107,
+              "EndOffset": 378,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 0
+            },
+            {
+              "Line": 525,
+              "Offset": 135,
+              "EndOffset": 378,
+              "Path": 1,
+              "Ordinal": 11,
+              "Hits": 0
+            },
+            {
+              "Line": 542,
+              "Offset": 286,
+              "EndOffset": 378,
+              "Path": 1,
+              "Ordinal": 27,
+              "Hits": 0
+            },
+            {
+              "Line": 554,
+              "Offset": 353,
+              "EndOffset": 378,
+              "Path": 1,
+              "Ordinal": 33,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "Microsoft.AspNetCore.OpenApi.Generated.<OpenApiXmlCommentSupport_generated>F798E8189BFB1DDCC4524A7B3A07F93FE0E5E53F78A5F94B1548D5F4530E15BC0__JsonNodeExtensions": {
+        "System.Text.Json.Nodes.JsonNode Microsoft.AspNetCore.OpenApi.Generated.<OpenApiXmlCommentSupport_generated>F798E8189BFB1DDCC4524A7B3A07F93FE0E5E53F78A5F94B1548D5F4530E15BC0__JsonNodeExtensions::Parse(System.String)": {
+          "Lines": {
+            "570": 0,
+            "572": 0,
+            "577": 0,
+            "579": 0,
+            "584": 0,
+            "586": 0,
+            "588": 0,
+            "591": 0
+          },
+          "Branches": [
+            {
+              "Line": 570,
+              "Offset": 1,
+              "EndOffset": 3,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 570,
+              "Offset": 1,
+              "EndOffset": 5,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "System.Runtime.CompilerServices.<OpenApiXmlCommentSupport_generated>F798E8189BFB1DDCC4524A7B3A07F93FE0E5E53F78A5F94B1548D5F4530E15BC0__InterceptsLocationAttribute": {
+        "System.Void System.Runtime.CompilerServices.<OpenApiXmlCommentSupport_generated>F798E8189BFB1DDCC4524A7B3A07F93FE0E5E53F78A5F94B1548D5F4530E15BC0__InterceptsLocationAttribute::.ctor(System.Int32,System.String)": {
+          "Lines": {
+            "20": 0,
+            "22": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/src/src/services/ordering/Mtogo.Ordering.Api/Integration/LegacyMenuClient.cs": {
+      "Mtogo.Ordering.Api.Integration.LegacyMenuClient": {
+        "System.Void Mtogo.Ordering.Api.Integration.LegacyMenuClient::.ctor(System.Net.Http.HttpClient)": {
+          "Lines": {
+            "9": 0
+          },
+          "Branches": []
+        }
+      },
+      "Mtogo.Ordering.Api.Integration.LegacyMenuClient/<RestaurantExistsAsync>d__2": {
+        "System.Void Mtogo.Ordering.Api.Integration.LegacyMenuClient/<RestaurantExistsAsync>d__2::MoveNext()": {
+          "Lines": {
+            "13": 0,
+            "15": 0,
+            "16": 0,
+            "18": 0,
+            "19": 0
+          },
+          "Branches": [
+            {
+              "Line": 15,
+              "Offset": 180,
+              "EndOffset": 182,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 15,
+              "Offset": 180,
+              "EndOffset": 186,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 16,
+              "Offset": 192,
+              "EndOffset": 194,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 16,
+              "Offset": 192,
+              "EndOffset": 217,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "/src/src/services/ordering/Mtogo.Ordering.Api/Domain/OrderPricingRules.cs": {
+      "Mtogo.Ordering.Api.Domain.OrderPricingRules": {
+        "Mtogo.Ordering.Api.Domain.OrderPricingResult Mtogo.Ordering.Api.Domain.OrderPricingRules::CalculateTotal(System.Collections.Generic.IEnumerable`1<Mtogo.Ordering.Api.Domain.PricedOrderItem>)": {
+          "Lines": {
+            "12": 8,
+            "14": 16,
+            "15": 16,
+            "17": 8,
+            "18": 8,
+            "19": 8,
+            "21": 8,
+            "22": 8,
+            "23": 8,
+            "24": 8,
+            "26": 8
+          },
+          "Branches": [
+            {
+              "Line": 12,
+              "Offset": 1,
+              "EndOffset": 3,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 12,
+              "Offset": 1,
+              "EndOffset": 14,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 8
+            },
+            {
+              "Line": 17,
+              "Offset": 110,
+              "EndOffset": 112,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 3
+            },
+            {
+              "Line": 17,
+              "Offset": 110,
+              "EndOffset": 124,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 5
+            },
+            {
+              "Line": 18,
+              "Offset": 141,
+              "EndOffset": 143,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 5
+            },
+            {
+              "Line": 18,
+              "Offset": 141,
+              "EndOffset": 155,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 3
+            }
+          ]
+        },
+        "System.Decimal Mtogo.Ordering.Api.Domain.OrderPricingRules::RoundMoney(System.Decimal)": {
+          "Lines": {
+            "30": 32
+          },
+          "Branches": []
+        }
+      },
+      "Mtogo.Ordering.Api.Domain.PricedOrderItem": {
+        "System.Guid Mtogo.Ordering.Api.Domain.PricedOrderItem::get_MenuItemId()": {
+          "Lines": {
+            "33": 55
+          },
+          "Branches": []
+        }
+      },
+      "Mtogo.Ordering.Api.Domain.OrderPricingResult": {
+        "System.Decimal Mtogo.Ordering.Api.Domain.OrderPricingResult::get_Subtotal()": {
+          "Lines": {
+            "35": 43
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/src/src/services/ordering/Mtogo.Ordering.Api/Application/InMemoryMenuItemPriceProvider.cs": {
+      "Mtogo.Ordering.Api.Application.InMemoryMenuItemPriceProvider": {
+        "System.Boolean Mtogo.Ordering.Api.Application.InMemoryMenuItemPriceProvider::TryGetPrice(System.Guid,System.Decimal&)": {
+          "Lines": {
+            "14": 0
+          },
+          "Branches": []
+        },
+        "System.Void Mtogo.Ordering.Api.Application.InMemoryMenuItemPriceProvider::.cctor()": {
+          "Lines": {
+            "6": 0,
+            "7": 0,
+            "8": 0,
+            "9": 0,
+            "10": 0,
+            "11": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/src/src/services/ordering/Mtogo.Ordering.Api/Application/OrderService.cs": {
+      "Mtogo.Ordering.Api.Application.OrderService": {
+        "System.Void Mtogo.Ordering.Api.Application.OrderService::.ctor(Mtogo.Ordering.Api.Integration.ILegacyMenuClient,Mtogo.Ordering.Api.Application.IMenuItemPriceProvider,Mtogo.Ordering.Api.Domain.IOrderPricingRules,Microsoft.Extensions.Logging.ILogger`1<Mtogo.Ordering.Api.Application.OrderService>)": {
+          "Lines": {
+            "13": 6,
+            "14": 6,
+            "15": 6,
+            "16": 6,
+            "17": 6,
+            "19": 6,
+            "20": 6,
+            "21": 6,
+            "22": 6,
+            "23": 6
+          },
+          "Branches": []
+        }
+      },
+      "Mtogo.Ordering.Api.Application.OrderService/<>c": {
+        "System.Boolean Mtogo.Ordering.Api.Application.OrderService/<>c::<CreateOrderAsync>b__5_0(Mtogo.Ordering.Api.Application.CreateOrderItem)": {
+          "Lines": {
+            "34": 8
+          },
+          "Branches": []
+        }
+      },
+      "Mtogo.Ordering.Api.Application.OrderService/<CreateOrderAsync>d__5": {
+        "System.Void Mtogo.Ordering.Api.Application.OrderService/<CreateOrderAsync>d__5::MoveNext()": {
+          "Lines": {
+            "28": 6,
+            "29": 1,
+            "31": 5,
+            "32": 1,
+            "35": 1,
+            "38": 3,
+            "39": 3,
+            "40": 1,
+            "42": 2,
+            "43": 8,
+            "45": 2,
+            "46": 0,
+            "48": 2,
+            "51": 2,
+            "52": 2,
+            "55": 2,
+            "57": 2,
+            "58": 6
+          },
+          "Branches": [
+            {
+              "Line": 28,
+              "Offset": 41,
+              "EndOffset": 43,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 28,
+              "Offset": 41,
+              "EndOffset": 70,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 5
+            },
+            {
+              "Line": 31,
+              "Offset": 81,
+              "EndOffset": 83,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 5
+            },
+            {
+              "Line": 31,
+              "Offset": 81,
+              "EndOffset": 101,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 1
+            },
+            {
+              "Line": 31,
+              "Offset": 99,
+              "EndOffset": 101,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 1
+            },
+            {
+              "Line": 31,
+              "Offset": 99,
+              "EndOffset": 128,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 4
+            },
+            {
+              "Line": 34,
+              "Offset": 175,
+              "EndOffset": 177,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 1
+            },
+            {
+              "Line": 34,
+              "Offset": 175,
+              "EndOffset": 204,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 3
+            },
+            {
+              "Line": 39,
+              "Offset": 326,
+              "EndOffset": 328,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 1
+            },
+            {
+              "Line": 39,
+              "Offset": 326,
+              "EndOffset": 355,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 2
+            },
+            {
+              "Line": 43,
+              "Offset": 529,
+              "EndOffset": 398,
+              "Path": 1,
+              "Ordinal": 13,
+              "Hits": 2
+            },
+            {
+              "Line": 45,
+              "Offset": 427,
+              "EndOffset": 429,
+              "Path": 0,
+              "Ordinal": 10,
+              "Hits": 0
+            },
+            {
+              "Line": 45,
+              "Offset": 427,
+              "EndOffset": 494,
+              "Path": 1,
+              "Ordinal": 11,
+              "Hits": 2
+            },
+            {
+              "Line": 43,
+              "Offset": 529,
+              "EndOffset": 534,
+              "Path": 0,
+              "Ordinal": 12,
+              "Hits": 2
+            }
+          ]
+        }
+      },
+      "Mtogo.Ordering.Api.Application.CreateOrderRequest": {
+        "System.Guid Mtogo.Ordering.Api.Application.CreateOrderRequest::get_RestaurantId()": {
+          "Lines": {
+            "62": 35
+          },
+          "Branches": []
+        }
+      },
+      "Mtogo.Ordering.Api.Application.CreateOrderItem": {
+        "System.Guid Mtogo.Ordering.Api.Application.CreateOrderItem::get_MenuItemId()": {
+          "Lines": {
+            "63": 15
+          },
+          "Branches": []
+        }
+      }
+    }
+  }
+}

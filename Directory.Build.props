@@ -4,5 +4,6 @@
     <CoverletExclude Include="[*]*DbContext*" />
     <CoverletExclude Include="[*]*DbInitializer*" />
     <CoverletExclude Include="[*]*SeedIds*" />
+    <CoverletExclude Include="[*]*Configuration*" />
   </ItemGroup>
 </Project>

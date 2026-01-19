@@ -32,9 +32,14 @@ jobs:
       - name: Test + Coverage Gate
         run: |
           dotnet test mtogo-final-exam.sln -c Release --no-build \
-            /p:CollectCoverage=true \
-            /p:CoverletOutputFormat=cobertura \
-            '/p:Include=[Mtogo.LegacyMenu.Api]*,[Mtogo.Ordering.Api]*' \
-            /p:IncludeTestAssembly=false \
+            --settings coverlet.runsettings \
             /p:Threshold=35 \
-            /p:ThresholdType=line 
+            /p:ThresholdType=line \
+            /p:CollectCoverage=true
+
+      - name: Upload coverage reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-cobertura
+          path: |
+            **/TestResults/**/coverage.cobertura.xml

@@ -33,6 +33,18 @@ public sealed class MenuServiceTests
     }
 
     [Fact]
+    public async Task RestaurantExists_ReturnsFalse_WhenRestaurantMissing()
+    {
+        await using var db = CreateDb();
+        var repo = new MenuRepository(db);
+        var svc = new MenuService(repo);
+
+        var exists = await svc.RestaurantExists(SeedIds.RestaurantId, CancellationToken.None);
+
+        Assert.False(exists);
+    }
+
+    [Fact]
     public async Task GetMenu_ReturnsItems_ForRestaurant()
     {
         await using var db = CreateDb();
@@ -50,4 +62,62 @@ public sealed class MenuServiceTests
 
         Assert.Equal(2, items.Count);
     }
+
+    [Fact]
+    public async Task GetMenuItem_ReturnsItem_WhenPresent()
+    {
+        await using var db = CreateDb();
+        db.Restaurants.Add(new Restaurant { Id = SeedIds.RestaurantId, Name = "Test" });
+        db.MenuItems.Add(new MenuItem { Id = SeedIds.BurgerId, RestaurantId = SeedIds.RestaurantId, Name = "Burger", Price = 10m });
+        await db.SaveChangesAsync();
+
+        var repo = new MenuRepository(db);
+        var svc = new MenuService(repo);
+
+        var item = await svc.GetMenuItem(SeedIds.BurgerId, CancellationToken.None);
+
+        Assert.NotNull(item);
+        Assert.Equal(SeedIds.BurgerId, item!.Id);
+    }
+    
+
+    [Fact]
+    public async Task GetMenu_ReturnsEmpty_WhenNoItems()
+    {
+        await using var db = CreateDb();
+        db.Restaurants.Add(new Restaurant { Id = SeedIds.RestaurantId, Name = "Test" });
+        await db.SaveChangesAsync();
+
+        var repo = new MenuRepository(db);
+        var svc = new MenuService(repo);
+
+        var items = await svc.GetMenu(SeedIds.RestaurantId, CancellationToken.None);
+
+        Assert.Empty(items);
+    }
+
+    [Fact]
+    public async Task GetMenuItem_ReturnsNull_WhenMissing()
+    {
+        await using var db = CreateDb();
+        var repo = new MenuRepository(db);
+        var svc = new MenuService(repo);
+
+        var item = await svc.GetMenuItem(SeedIds.BurgerId, CancellationToken.None);
+
+        Assert.Null(item);
+    }
+
+    [Fact]
+    public async Task GetMenu_ReturnsEmpty_WhenRestaurantMissing()
+    {
+        await using var db = CreateDb();
+        var repo = new MenuRepository(db);
+        var svc = new MenuService(repo);
+
+        var items = await svc.GetMenu(SeedIds.RestaurantId, CancellationToken.None);
+
+        Assert.Empty(items);
+    }
+
 }

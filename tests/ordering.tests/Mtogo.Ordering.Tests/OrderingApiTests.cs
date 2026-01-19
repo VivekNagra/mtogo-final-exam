@@ -2,23 +2,31 @@ using System.Net;
 using System.Net.Http.Json;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Logging;
+using Mtogo.Ordering.Api.Application;
+using Mtogo.Ordering.Api.Domain;
 using Mtogo.Ordering.Api.Integration;
 
 namespace Mtogo.Ordering.Tests;
 
-public sealed class OrderingApiTests : IClassFixture<WebApplicationFactory<Mtogo.Ordering.Api.Program>>
+public sealed class OrderingApiTests : IClassFixture<WebApplicationFactory<Program>>
 {
-    private readonly WebApplicationFactory<Mtogo.Ordering.Api.Program> _factory;
+    private readonly WebApplicationFactory<Program> _factory;
 
-    public OrderingApiTests(WebApplicationFactory<Mtogo.Ordering.Api.Program> factory)
+    public OrderingApiTests(WebApplicationFactory<Program> factory)
     {
         _factory = factory.WithWebHostBuilder(builder =>
         {
+            builder.ConfigureLogging(logging => logging.ClearProviders());
+
             builder.ConfigureServices(services =>
-        {
-            // Replace legacy client with deterministic fake for integration tests
-            services.AddSingleton<ILegacyMenuClient>(new FakeLegacyMenuClient(true));
-        });
+            {
+                // Replace legacy client with deterministic fake for integration tests
+                services.AddSingleton<ILegacyMenuClient>(new FakeLegacyMenuClient(true));
+                services.AddSingleton<IMenuItemPriceProvider>(new FakePriceProvider());
+                services.AddSingleton<IOrderPricingRules, OrderPricingRules>();
+            });
         });
     }
 
@@ -42,5 +50,14 @@ public sealed class OrderingApiTests : IClassFixture<WebApplicationFactory<Mtogo
         private readonly bool _exists;
         public FakeLegacyMenuClient(bool exists) => _exists = exists;
         public Task<bool> RestaurantExistsAsync(Guid restaurantId, CancellationToken ct) => Task.FromResult(_exists);
+    }
+
+    private sealed class FakePriceProvider : IMenuItemPriceProvider
+    {
+        public bool TryGetPrice(Guid menuItemId, out decimal price)
+        {
+            price = 10.00m;
+            return true;
+        }
     }
 }
