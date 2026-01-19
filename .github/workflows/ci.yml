@@ -21,19 +21,13 @@ jobs:
           dotnet-version: "10.0.x"
 
       - name: Restore
-        run: dotnet restore
+        run: dotnet restore mtogo-final-exam.sln
 
       - name: Build
-        run: dotnet build --no-restore -c Release
+        run: dotnet build mtogo-final-exam.sln --no-restore -c Release
 
-      - name: Install dotnet-format
-        run: |
-          dotnet tool update -g dotnet-format --version 8.* || dotnet tool install -g dotnet-format --version 8.*
-          
       - name: Verify formatting
         run: dotnet format mtogo-final-exam.sln --verify-no-changes
-      - name: Test
-        run: dotnet test --no-build -c Release
 
       - name: Test + Coverage Gate
         run: |
@@ -42,4 +36,3 @@ jobs:
             /p:CoverletOutputFormat=cobertura \
             /p:Threshold=60 \
             /p:ThresholdType=line
-  
