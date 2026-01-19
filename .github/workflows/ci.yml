@@ -34,7 +34,7 @@ jobs:
           dotnet test mtogo-final-exam.sln -c Release --no-build \
             /p:CollectCoverage=true \
             /p:CoverletOutputFormat=cobertura \
-            /p:Include="[Mtogo.LegacyMenu.Api]*,[Mtogo.Ordering.Api]*" \
+            '/p:Include=[Mtogo.LegacyMenu.Api]*,[Mtogo.Ordering.Api]*' \
             /p:IncludeTestAssembly=false \
             /p:Threshold=35 \
             /p:ThresholdType=line 
