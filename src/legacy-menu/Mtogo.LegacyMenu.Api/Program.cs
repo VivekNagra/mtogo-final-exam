@@ -22,8 +22,8 @@ app.MapControllers();
 
 using (var scope = app.Services.CreateScope())
 {
-  var init = scope.ServiceProvider.GetRequiredService<LegacyMenuDbInitializer>();
-  await init.InitializeAsync(CancellationToken.None);
+    var init = scope.ServiceProvider.GetRequiredService<LegacyMenuDbInitializer>();
+    await init.InitializeAsync(CancellationToken.None);
 }
 
 app.Run();
