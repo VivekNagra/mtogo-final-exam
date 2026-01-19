@@ -17,8 +17,8 @@ public sealed class OrderingApiTests : IClassFixture<WebApplicationFactory<Mtogo
             builder.ConfigureServices(services =>
         {
             // Replace legacy client with deterministic fake for integration tests
-              services.AddSingleton<ILegacyMenuClient>(new FakeLegacyMenuClient(true));
-          });
+            services.AddSingleton<ILegacyMenuClient>(new FakeLegacyMenuClient(true));
+        });
         });
     }
 
