@@ -64,4 +64,18 @@ public sealed class OrderServiceTests
         Assert.True(result.ok);
         Assert.Equal(202, result.statusCode);
     }
+
+    [Fact]
+    public async Task CreateOrder_Returns400_WhenQuantityNotPositive()
+    {
+        var legacy = new Mock<ILegacyMenuClient>();
+        var svc = new OrderService(legacy.Object, NullLogger<OrderService>.Instance);
+
+        var req = new CreateOrderRequest(Guid.NewGuid(), new List<CreateOrderItem> { new(Guid.NewGuid(), 0) });
+        var result = await svc.CreateOrderAsync(req, CancellationToken.None);
+
+        Assert.False(result.ok);
+        Assert.Equal(400, result.statusCode);
+    }
+
 }

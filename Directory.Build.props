@@ -1,0 +1,8 @@
+<Project>
+  <ItemGroup>
+    <CoverletExclude Include="[*]Program" />
+    <CoverletExclude Include="[*]*DbContext*" />
+    <CoverletExclude Include="[*]*DbInitializer*" />
+    <CoverletExclude Include="[*]*SeedIds*" />
+  </ItemGroup>
+</Project>
