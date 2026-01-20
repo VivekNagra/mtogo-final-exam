@@ -4,16 +4,17 @@ flowchart TB
   classDef system fill:#f7f7f7,stroke:#333,stroke-width:1px;
   classDef ext fill:#fff,stroke:#666,stroke-dasharray: 4 3;
 
-  C[Customer\n(Web/Mobile)]:::person
+  C[Customer\nWeb/Mobile]:::person
 
-  S[MTOGO Ordering Slice\n(System under development)]:::system
+  S[MTOGO Ordering Slice\nSystem under development]:::system
 
-  R[Restaurant\n(Owner of menu data)]:::ext
+  R[Restaurant\nOwner of menu data]:::ext
 
   %% Only show what exists in codebase as behavior:
   C -->|Place order / view health via Gateway| S
-  S -->|Reads menu data for validation\n(sync HTTP via LegacyMenu service)| R
+  S -->|Reads menu data for validation\nsync HTTP via LegacyMenu service| R
 
   %% Notes for future scope (not implemented) - keep it explicit:
-  N1["Future (not implemented):\n• Delivery agent app + bonus rules\n• Customer status updates (SMS/app)\n• Payment provider integration\n• Full customer accounts"]:::ext
+  N1["Future (not implemented):<br/>• Delivery agent app + bonus rules<br/>• Customer status updates (SMS/app)<br/>• Payment provider integration<br/>• Full customer accounts"]:::ext
+  
   S -.-> N1
