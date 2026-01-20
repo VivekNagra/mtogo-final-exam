@@ -9,6 +9,7 @@ sequenceDiagram
   GW->>ORD: Forward request (HTTP)
 
   ORD->>MENU: GET /menu or validate items (HTTP)
+  
   alt Menu validation OK
     MENU-->>ORD: Menu/items valid
     ORD-->>GW: 200 OK (order accepted)
@@ -18,6 +19,7 @@ sequenceDiagram
     ORD-->>GW: 400 Bad Request (validation error)
     GW-->>Client: 400 Bad Request
   else LegacyMenu unavailable / timeout
+    MENU--xORD: (Connection failed/Timeout)
     ORD-->>GW: 503 Service Unavailable (dependency failure)
     GW-->>Client: 503 Service Unavailable
   end

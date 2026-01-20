@@ -5,21 +5,25 @@ flowchart TB
   classDef ext fill:#fff,stroke:#666,stroke-dasharray: 4 3;
 
   subgraph OS["Ordering Service (Mtogo.Ordering.Api)"]
-    API[HTTP API Layer\n(Controllers/Endpoints)]:::comp
-    APP[Application Layer\n(Use-cases: Place Order)]:::comp
-    DOM[Domain Model\n(Order, OrderLine, validation rules)]:::comp
-    INT[Integration Client\n(LegacyMenu HTTP client)]:::comp
-    ERR[Error handling\n(Dependency failure -> controlled response)]:::comp
-    LOG[Logging\n(request + dependency outcome)]:::comp
+    direction TB
+    API["HTTP API Layer\n(Controllers/Endpoints)"]:::comp
+    APP["Application Layer\n(Use-cases: Place Order)"]:::comp
+    DOM["Domain Model\n(Order, OrderLine, validation rules)"]:::comp
+    INT["Integration Client\n(LegacyMenu HTTP client)"]:::comp
+    ERR["Error handling\n(Dependency failure -> controlled response)"]:::comp
+    LOG["Logging\n(request + dependency outcome)"]:::comp
   end
 
-  LEG[Legacy Menu Service\nHTTP API]:::ext
+  LEG["Legacy Menu Service\nHTTP API"]:::ext
 
   API --> APP
   APP --> DOM
   APP --> INT
+  
+  %% Optional: Connect Error/Log to specific flows or keep generic
   APP --> ERR
   API --> LOG
+  
   INT -->|HTTP| LEG
 
   %% Note: persistence intentionally not shown as a dedicated component
