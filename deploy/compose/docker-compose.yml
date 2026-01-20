@@ -6,7 +6,7 @@ services:
       POSTGRES_PASSWORD: mtogo
       POSTGRES_DB: mtogo
     ports:
-      - "5433:5432"
+      - "55433:5432"
 
   rabbitmq:
     image: rabbitmq:3-management
