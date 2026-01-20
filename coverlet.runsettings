@@ -1,30 +1,22 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <RunSettings>
   <DataCollectionRunSettings>
     <DataCollectors>
       <DataCollector friendlyName="XPlat Code Coverage">
         <Configuration>
-          <!-- Output -->
-          <Format>cobertura</Format>
-
-          <!-- Measure only production assemblies -->
-          <Include>[Mtogo.LegacyMenu.Api]*,[Mtogo.Ordering.Api]*</Include>
-          <IncludeTestAssembly>false</IncludeTestAssembly>
-
-            <!-- Exclude bootstrapping + EF plumbing (noise early in the project) -->
-            <Exclude>
-                [*]Program,
-                [*]*DbContext*,
-                [*]*Migrations*,
-                [*]*Controllers*, [*]*Data*,
-                [*]*Seed*,
-                [*]*DbInitializer*,
-  
-                [Microsoft.AspNetCore.OpenApi*]*,
-                [System.*]*,
-                [*]*Generated*
-            </Exclude>
-
+          <Format>cobertura,json</Format>
+          
+          <ExcludeByAttribute>Obsolete,GeneratedCodeAttribute,CompilerGeneratedAttribute</ExcludeByAttribute>
+          
+          <ExcludeByFile>**/Migrations/*.cs,**/Program.cs,**/OpenApi*.cs</ExcludeByFile>
+          
+          <Exclude>
+            [Microsoft.AspNetCore.OpenApi*]*,
+            [System.*]*,
+            [*]*Generated*, 
+            [*]*Migrations*,
+            [*]*Program*
+          </Exclude>
         </Configuration>
       </DataCollector>
     </DataCollectors>

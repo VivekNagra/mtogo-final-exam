@@ -27,6 +27,28 @@ public sealed class OrderServiceTests
     }
 
     [Fact]
+    public async Task CreateOrder_Returns503_WhenLegacyApiFails()
+    {
+        var legacy = new Mock<ILegacyMenuClient>();
+        legacy
+            .Setup(x => x.RestaurantExistsAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
+            .ThrowsAsync(new HttpRequestException("Simulated connection failure"));
+
+        var svc = CreateService(legacy, new FakePriceProvider());
+
+        var req = new CreateOrderRequest(
+            Guid.NewGuid(),
+            new List<CreateOrderItem> { new(Guid.NewGuid(), 1) }
+        );
+
+        var result = await svc.CreateOrderAsync(req, CancellationToken.None);
+
+        Assert.False(result.ok);
+        Assert.Equal(503, result.statusCode);
+    }
+
+
+    [Fact]
     public async Task CreateOrder_Returns400_WhenRestaurantIdMissing()
     {
         var legacy = new Mock<ILegacyMenuClient>();

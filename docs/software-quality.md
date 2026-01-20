@@ -9,9 +9,9 @@ This document summarizes how software quality is demonstrated in this repository
 The project applies a pragmatic quality strategy:
 
 - **Fast feedback in CI:** build, tests, formatting verification, and a coverage threshold gate.
-- **Layered tests:** unit tests for domain rules and service logic, plus a lightweight API integration test.
+- **Layered tests:** unit tests for domain rules and service logic, plus lightweight API integration tests.
 - **Static analysis:** CodeQL is enabled to detect common vulnerability patterns and insecure flows.
-- **Security mindset:** input validation + safe logging + explicit handling of downstream dependency failure.
+- **Security mindset:** input validation, safe logging, and explicit handling of downstream dependency failure.
 
 ---
 
@@ -21,8 +21,8 @@ The project applies a pragmatic quality strategy:
 Unit tests focus on deterministic logic and edge cases:
 
 - **Ordering domain pricing rules** (`OrderPricingRulesTests`)
-  - Delivery fee boundary around a subtotal threshold
-  - Bulk discount boundary around total quantity threshold
+  - Delivery fee boundary around the subtotal threshold
+  - Bulk discount boundary around the total quantity threshold
   - Rounding rules for money values
 
 - **Ordering service logic** (`OrderServiceTests`)
@@ -35,11 +35,16 @@ Unit tests focus on deterministic logic and edge cases:
   - Menu retrieval: items returned / empty menu
   - Menu item lookup: missing returns null
 
-### 2.2 Integration test (in-process API)
-The Ordering API includes a small integration test using `WebApplicationFactory` to validate the API surface without requiring Docker:
+### 2.2 Integration tests (in-process API)
+Both APIs include lightweight integration tests using `WebApplicationFactory` to validate the API surface without requiring external infrastructure:
 
-- `POST /api/orders` returns **202 Accepted** for a valid payload.
-- The legacy dependency is replaced with a deterministic fake (`ILegacyMenuClient`) for stable test execution.
+- **Ordering API** (`OrderingApiTests`)
+  - `POST /api/orders` returns **202 Accepted** for a valid payload
+  - The legacy dependency is replaced with a deterministic fake (`ILegacyMenuClient`) for stable test execution
+
+- **Legacy Menu API** (`LegacyMenuApiTests`)
+  - `GET /api/legacy/menu/{restaurantId}` returns **200 OK** and items when seeded data exists
+  - `GET /api/legacy/restaurants/{restaurantId}/exists` returns **200 OK** with `exists=true`
 
 This provides confidence that dependency injection, routing, and request/response shapes work as intended.
 
@@ -50,105 +55,150 @@ This provides confidence that dependency injection, routing, and request/respons
 The CI pipeline runs on every push to `main` and on pull requests:
 
 - **Restore + Build** (`Release`)
-- **Format verification**:
+- **Format verification**
   - `dotnet format mtogo-final-exam.sln --verify-no-changes`
-- **Test execution + coverage gate**:
-  - `dotnet test ... --settings coverlet.runsettings /p:CollectCoverage=true`
+- **Test execution + coverage gate**
+  - `dotnet test mtogo-final-exam.sln -c Release --settings coverlet.runsettings /p:CollectCoverage=true`
   - Coverage threshold is enforced (currently staged at a conservative baseline to prevent regression).
 
 Coverage reports (`coverage.cobertura.xml`) are uploaded as workflow artifacts so an examiner can inspect them from GitHub Actions.
 
 ---
 
-## 4. Static analysis (CodeQL)
+## 4. Coverage evidence (Docker-run, CI-equivalent)
+
+To ensure reproducibility (and to avoid Windows-specific execution policy issues), the repository can run tests and collect coverage using the official .NET SDK container. This matches what the CI environment would execute.
+
+**Command (PowerShell):**
+```powershell
+docker run --rm -v ${PWD}:/src -w /src mcr.microsoft.com/dotnet/sdk:10.0 `
+  dotnet test mtogo-final-exam.sln -c Release --settings coverlet.runsettings /p:CollectCoverage=true
+````
+
+**Evidence (latest run output):**
+
+```text
+Passed!  - Failed:     0, Passed:    18, Skipped:     0, Total:    18, Duration: 338 ms - Mtogo.Ordering.Tests.dll (net10.0)
+
++--------------------+--------+--------+--------+
+| Module             | Line   | Branch | Method |
++--------------------+--------+--------+--------+
+| Mtogo.Ordering.Api | 26.36% | 8.11%  | 25.64% |
++--------------------+--------+--------+--------+
+
+Passed!  - Failed:     0, Passed:    10, Skipped:     0, Total:    10, Duration: 526 ms - Mtogo.LegacyMenu.Tests.dll (net10.0)
+
++----------------------+--------+--------+--------+
+| Module               | Line   | Branch | Method |
++----------------------+--------+--------+--------+
+| Mtogo.LegacyMenu.Api | 15.46% | 1.85%  | 45.09% |
++----------------------+--------+--------+--------+
+```
+
+---
+
+## 5. Static analysis (CodeQL)
 
 CodeQL is enabled as a repository security scan. It provides static analysis to detect issues such as:
 
-- unsafe data flows
-- injection risks (where applicable)
-- insecure API patterns
-- other common vulnerability classes supported by the CodeQL ruleset
+* unsafe data flows
+* injection risks (where applicable)
+* insecure API patterns
+* other common vulnerability classes supported by the CodeQL ruleset
 
 The intent is to demonstrate professional secure development practices (SAST) alongside testing.
 
 ---
 
-## 5. Taint analysis demonstration (explicit)
+## 6. Taint analysis demonstration (explicit)
 
 The exam brief requires demonstrating taint analysis. In this project, the Ordering API provides a clear example of tainted data flow across a trust boundary.
 
-### 5.1 Taint sources (untrusted input)
+### 6.1 Taint sources (untrusted input)
+
 In `Mtogo.Ordering.Api`, the following fields originate from the external client (untrusted):
 
-- `CreateOrderRequest.RestaurantId`
-- `CreateOrderRequest.Items[].MenuItemId`
-- `CreateOrderRequest.Items[].Quantity`
+* `CreateOrderRequest.RestaurantId`
+* `CreateOrderRequest.Items[].MenuItemId`
+* `CreateOrderRequest.Items[].Quantity`
 
 These values enter the system via the HTTP endpoint:
 
-- `POST /api/orders`
+* `POST /api/orders`
 
-### 5.2 Taint sinks (sensitive operations)
+### 6.2 Taint sinks (sensitive operations)
+
 Untrusted values should not flow unchecked into sinks. The main sink in this system is the downstream HTTP call into a legacy dependency:
 
-- `ILegacyMenuClient.RestaurantExistsAsync(restaurantId, ct)`
-  - This is an outbound call and a trust boundary crossing.
-  - If not validated, malformed values could cause unexpected behavior or excessive traffic.
+* `ILegacyMenuClient.RestaurantExistsAsync(restaurantId, ct)`
+
+  * This is an outbound call and a trust boundary crossing.
 
 Secondary sinks include:
-- **logging** (risk: sensitive data leakage if full payloads are logged)
-- **database operations** (inside the legacy service boundary)
 
-### 5.3 Mitigations (validation + safe logging + failure handling)
+* **logging** (risk: sensitive data leakage if full payloads are logged)
+* **database operations** (inside the legacy service boundary)
+
+### 6.3 Mitigations (validation + safe logging + failure handling)
+
 The Ordering service applies the following mitigations before using tainted values:
 
-- **Input validation** in `OrderService.CreateOrderAsync`:
-  - `restaurantId` must not be empty
-  - `items` must not be empty
-  - `quantity` must be > 0
-  - menu item prices must be known (via `IMenuItemPriceProvider`)
+* **Input validation** in `OrderService.CreateOrderAsync`
 
-- **Safe logging**:
-  - Logs contain only identifiers (orderId, restaurantId), not full request bodies.
+  * `restaurantId` must not be empty
+  * `items` must not be empty
+  * `quantity` must be > 0
+  * menu item prices must be known (via `IMenuItemPriceProvider`)
 
-- **Dependency failure handling**:
-  - If the legacy menu service is unavailable (e.g., `HttpRequestException`, timeouts), Ordering maps this to a controlled response (**503 Service Unavailable**) instead of leaking internals or returning an unhandled 500.
+* **Safe logging**
 
-### 5.4 Test evidence for mitigations
+  * Logs contain only identifiers (orderId, restaurantId), not full request bodies.
+
+* **Dependency failure handling**
+
+  * If the legacy menu service is unavailable (e.g., `HttpRequestException`, timeouts), Ordering maps this to a controlled response (**503 Service Unavailable**) instead of leaking internals or returning an unhandled 500.
+
+### 6.4 Test evidence for mitigations
+
 The test suite contains explicit examples that correspond to the mitigations above:
 
-- Validation rejects tainted inputs:
-  - missing `restaurantId` → 400
-  - empty items → 400
-  - invalid quantity → 400
+* Validation rejects tainted inputs:
 
-- Dependency failure:
-  - legacy client throws → Ordering returns 503
+  * missing `restaurantId` → 400
+  * empty items → 400
+  * invalid quantity → 400
 
-This provides a concrete, test-backed demonstration of a taint boundary: *untrusted input is validated and controlled before reaching sensitive sinks*.
+* Dependency failure:
+
+  * legacy client throws → Ordering returns 503
+
+This provides a concrete, test-backed demonstration of a taint boundary: untrusted input is validated and controlled before reaching sensitive sinks.
 
 ---
 
-## 6. How to run quality checks locally
+## 7. How to run quality checks locally
 
-### 6.1 Run tests (local)
+### 7.1 Run tests (local)
+
 ```bash
 dotnet test mtogo-final-exam.sln
 ```
 
-### 6.2 Run coverage using the same SDK container as CI
+### 7.2 Run coverage using the same SDK container as CI
+
 ```powershell
 docker run --rm -v ${PWD}:/src -w /src mcr.microsoft.com/dotnet/sdk:10.0 `
   dotnet test mtogo-final-exam.sln -c Release --settings coverlet.runsettings /p:CollectCoverage=true
 ```
 
-### 6.3 Check formatting locally
+### 7.3 Check formatting locally
+
 ```bash
 dotnet format mtogo-final-exam.sln
 ```
+
 ---
 
-## 7. Notes on coverage scope
+## 8. Notes on coverage scope
 Coverage is intended to measure meaningful code paths (domain rules and service logic). Boilerplate, hosting setup, and infrastructure-heavy code may be excluded from coverage calculations to reduce noise and keep the metric aligned with the learning objective: verifying business logic and integration seams.
 
----

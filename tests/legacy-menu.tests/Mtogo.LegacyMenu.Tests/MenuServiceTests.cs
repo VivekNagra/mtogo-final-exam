@@ -8,7 +8,7 @@ namespace Mtogo.LegacyMenu.Tests;
 
 public sealed class MenuServiceTests
 {
-    private static LegacyMenuDbContext CreateDb()
+    public static LegacyMenuDbContext CreateDb()
     {
         var opts = new DbContextOptionsBuilder<LegacyMenuDbContext>()
           .UseInMemoryDatabase(Guid.NewGuid().ToString())

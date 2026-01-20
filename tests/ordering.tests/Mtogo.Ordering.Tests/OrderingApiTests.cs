@@ -60,4 +60,31 @@ public sealed class OrderingApiTests : IClassFixture<WebApplicationFactory<Progr
             return true;
         }
     }
+
+    [Fact]
+    public async Task POST_orders_Returns400_WhenItemsMissing()
+    {
+        var client = _factory.CreateClient();
+
+        var req = new { restaurantId = Guid.NewGuid() }; // no items
+        var resp = await client.PostAsJsonAsync("/api/orders", req);
+
+        Assert.Equal(HttpStatusCode.BadRequest, resp.StatusCode);
+    }
+
+    [Fact]
+    public async Task POST_orders_Returns400_WhenQuantityInvalid()
+    {
+        var client = _factory.CreateClient();
+
+        var req = new
+        {
+            restaurantId = Guid.NewGuid(),
+            items = new[] { new { menuItemId = Guid.NewGuid(), quantity = 0 } }
+        };
+
+        var resp = await client.PostAsJsonAsync("/api/orders", req);
+        Assert.Equal(HttpStatusCode.BadRequest, resp.StatusCode);
+    }
+
 }

@@ -4,29 +4,29 @@
       "Program": {
         "System.Void Program::<Main>$(System.String[])": {
           "Lines": {
-            "5": 1,
-            "7": 1,
-            "8": 1,
-            "10": 1,
-            "11": 1,
+            "5": 3,
+            "7": 3,
+            "8": 3,
+            "10": 3,
+            "11": 3,
             "12": 0,
             "13": 0,
-            "14": 1,
-            "16": 1,
-            "17": 1,
-            "18": 1,
-            "19": 1,
-            "21": 1,
-            "23": 1,
-            "24": 1,
-            "26": 1,
-            "28": 1,
-            "29": 1,
-            "30": 1,
-            "31": 1,
-            "32": 1,
-            "33": 1,
-            "35": 1
+            "14": 3,
+            "16": 3,
+            "17": 3,
+            "18": 3,
+            "19": 3,
+            "21": 3,
+            "23": 3,
+            "24": 3,
+            "26": 3,
+            "28": 3,
+            "29": 3,
+            "30": 3,
+            "31": 3,
+            "32": 3,
+            "33": 3,
+            "35": 3
           },
           "Branches": [
             {
@@ -2205,7 +2205,7 @@
       "Mtogo.Ordering.Api.Domain.OrderPricingResult": {
         "System.Decimal Mtogo.Ordering.Api.Domain.OrderPricingResult::get_Subtotal()": {
           "Lines": {
-            "35": 45
+            "35": 46
           },
           "Branches": []
         }
@@ -2236,16 +2236,16 @@
       "Mtogo.Ordering.Api.Application.OrderService": {
         "System.Void Mtogo.Ordering.Api.Application.OrderService::.ctor(Mtogo.Ordering.Api.Integration.ILegacyMenuClient,Mtogo.Ordering.Api.Application.IMenuItemPriceProvider,Mtogo.Ordering.Api.Domain.IOrderPricingRules,Microsoft.Extensions.Logging.ILogger`1<Mtogo.Ordering.Api.Application.OrderService>)": {
           "Lines": {
-            "13": 8,
-            "14": 8,
-            "15": 8,
-            "16": 8,
-            "17": 8,
-            "19": 8,
-            "20": 8,
-            "21": 8,
-            "22": 8,
-            "23": 8
+            "13": 11,
+            "14": 11,
+            "15": 11,
+            "16": 11,
+            "17": 11,
+            "19": 11,
+            "20": 11,
+            "21": 11,
+            "22": 11,
+            "23": 11
           },
           "Branches": []
         }
@@ -2253,7 +2253,7 @@
       "Mtogo.Ordering.Api.Application.OrderService/<>c": {
         "System.Boolean Mtogo.Ordering.Api.Application.OrderService/<>c::<CreateOrderAsync>b__5_0(Mtogo.Ordering.Api.Application.CreateOrderItem)": {
           "Lines": {
-            "34": 12
+            "38": 16
           },
           "Branches": []
         }
@@ -2261,143 +2261,170 @@
       "Mtogo.Ordering.Api.Application.OrderService/<CreateOrderAsync>d__5": {
         "System.Void Mtogo.Ordering.Api.Application.OrderService/<CreateOrderAsync>d__5::MoveNext()": {
           "Lines": {
-            "28": 8,
-            "29": 1,
-            "31": 7,
-            "32": 1,
-            "35": 1,
-            "41": 5,
-            "42": 3,
-            "43": 1,
-            "46": 1,
-            "47": 1,
-            "49": 1,
-            "52": 1,
-            "53": 1,
-            "56": 3,
+            "28": 11,
+            "29": 0,
+            "32": 11,
+            "33": 1,
+            "35": 10,
+            "36": 2,
+            "39": 2,
+            "46": 6,
+            "47": 3,
+            "48": 2,
+            "50": 2,
+            "51": 2,
+            "52": 2,
+            "53": 2,
+            "55": 2,
             "57": 1,
-            "59": 2,
-            "60": 8,
-            "62": 2,
-            "63": 0,
-            "65": 2,
-            "68": 2,
-            "69": 2,
-            "72": 2,
-            "74": 2,
-            "75": 8
+            "59": 1,
+            "60": 1,
+            "61": 1,
+            "62": 1,
+            "64": 1,
+            "67": 3,
+            "68": 1,
+            "70": 2,
+            "71": 8,
+            "73": 2,
+            "74": 0,
+            "76": 2,
+            "79": 2,
+            "80": 2,
+            "83": 2,
+            "84": 2,
+            "85": 2,
+            "86": 2,
+            "88": 2,
+            "89": 11
           },
           "Branches": [
             {
               "Line": 28,
-              "Offset": 41,
-              "EndOffset": 43,
+              "Offset": 26,
+              "EndOffset": 28,
               "Path": 0,
               "Ordinal": 0,
-              "Hits": 1
-            },
-            {
-              "Line": 28,
-              "Offset": 41,
-              "EndOffset": 70,
-              "Path": 1,
-              "Ordinal": 1,
-              "Hits": 7
-            },
-            {
-              "Line": 31,
-              "Offset": 81,
-              "EndOffset": 83,
-              "Path": 0,
-              "Ordinal": 2,
-              "Hits": 7
-            },
-            {
-              "Line": 31,
-              "Offset": 81,
-              "EndOffset": 101,
-              "Path": 1,
-              "Ordinal": 3,
-              "Hits": 1
-            },
-            {
-              "Line": 31,
-              "Offset": 99,
-              "EndOffset": 101,
-              "Path": 0,
-              "Ordinal": 4,
-              "Hits": 1
-            },
-            {
-              "Line": 31,
-              "Offset": 99,
-              "EndOffset": 128,
-              "Path": 1,
-              "Ordinal": 5,
-              "Hits": 6
-            },
-            {
-              "Line": 34,
-              "Offset": 175,
-              "EndOffset": 177,
-              "Path": 0,
-              "Ordinal": 6,
-              "Hits": 1
-            },
-            {
-              "Line": 34,
-              "Offset": 175,
-              "EndOffset": 204,
-              "Path": 1,
-              "Ordinal": 7,
-              "Hits": 5
-            },
-            {
-              "Line": 56,
-              "Offset": 479,
-              "EndOffset": 481,
-              "Path": 0,
-              "Ordinal": 8,
-              "Hits": 1
-            },
-            {
-              "Line": 56,
-              "Offset": 479,
-              "EndOffset": 508,
-              "Path": 1,
-              "Ordinal": 9,
-              "Hits": 2
-            },
-            {
-              "Line": 60,
-              "Offset": 682,
-              "EndOffset": 551,
-              "Path": 1,
-              "Ordinal": 13,
-              "Hits": 2
-            },
-            {
-              "Line": 62,
-              "Offset": 580,
-              "EndOffset": 582,
-              "Path": 0,
-              "Ordinal": 10,
               "Hits": 0
             },
             {
-              "Line": 62,
-              "Offset": 580,
-              "EndOffset": 647,
+              "Line": 28,
+              "Offset": 26,
+              "EndOffset": 55,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 11
+            },
+            {
+              "Line": 32,
+              "Offset": 76,
+              "EndOffset": 78,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 1
+            },
+            {
+              "Line": 32,
+              "Offset": 76,
+              "EndOffset": 105,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 10
+            },
+            {
+              "Line": 35,
+              "Offset": 116,
+              "EndOffset": 118,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 9
+            },
+            {
+              "Line": 35,
+              "Offset": 116,
+              "EndOffset": 136,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 2
+            },
+            {
+              "Line": 35,
+              "Offset": 134,
+              "EndOffset": 136,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 2
+            },
+            {
+              "Line": 35,
+              "Offset": 134,
+              "EndOffset": 163,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 8
+            },
+            {
+              "Line": 38,
+              "Offset": 210,
+              "EndOffset": 212,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 2
+            },
+            {
+              "Line": 38,
+              "Offset": 210,
+              "EndOffset": 239,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 6
+            },
+            {
+              "Line": 67,
+              "Offset": 514,
+              "EndOffset": 516,
+              "Path": 0,
+              "Ordinal": 10,
+              "Hits": 1
+            },
+            {
+              "Line": 67,
+              "Offset": 514,
+              "EndOffset": 543,
               "Path": 1,
               "Ordinal": 11,
               "Hits": 2
             },
             {
-              "Line": 60,
-              "Offset": 682,
-              "EndOffset": 687,
+              "Line": 71,
+              "Offset": 717,
+              "EndOffset": 586,
+              "Path": 1,
+              "Ordinal": 15,
+              "Hits": 2
+            },
+            {
+              "Line": 73,
+              "Offset": 615,
+              "EndOffset": 617,
               "Path": 0,
               "Ordinal": 12,
+              "Hits": 0
+            },
+            {
+              "Line": 73,
+              "Offset": 615,
+              "EndOffset": 682,
+              "Path": 1,
+              "Ordinal": 13,
+              "Hits": 2
+            },
+            {
+              "Line": 71,
+              "Offset": 717,
+              "EndOffset": 722,
+              "Path": 0,
+              "Ordinal": 14,
               "Hits": 2
             }
           ]
@@ -2406,7 +2433,7 @@
       "Mtogo.Ordering.Api.Application.CreateOrderRequest": {
         "System.Guid Mtogo.Ordering.Api.Application.CreateOrderRequest::get_RestaurantId()": {
           "Lines": {
-            "79": 49
+            "92": 64
           },
           "Branches": []
         }
@@ -2414,7 +2441,7 @@
       "Mtogo.Ordering.Api.Application.CreateOrderItem": {
         "System.Guid Mtogo.Ordering.Api.Application.CreateOrderItem::get_MenuItemId()": {
           "Lines": {
-            "80": 19
+            "93": 23
           },
           "Branches": []
         }

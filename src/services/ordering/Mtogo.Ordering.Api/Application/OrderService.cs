@@ -24,7 +24,11 @@ public sealed class OrderService
 
     public async Task<(bool ok, int statusCode, object body)> CreateOrderAsync(CreateOrderRequest req, CancellationToken ct)
     {
-        // Validation (also used for SQ security test cases / taint mitigation)
+        // Defensive guard (helps tests and prevents null reference if binding fails)
+        if (req is null)
+            return (false, 400, new { message = "request body required" });
+
+        // Validation (also used for SQ test cases / taint mitigation)
         if (req.RestaurantId == Guid.Empty)
             return (false, 400, new { message = "restaurantId required" });
 
@@ -34,7 +38,8 @@ public sealed class OrderService
         if (req.Items.Any(i => i.Quantity <= 0))
             return (false, 400, new { message = "quantity must be > 0" });
 
-        // Integration boundary: untrusted input flows into downstream HTTP call (taint sink boundary)
+        // Integration boundary: untrusted input flows into downstream HTTP call.
+        // If legacy is unavailable/timeout -> map to 503 to avoid leaking infrastructure exceptions to clients.
         bool exists;
         try
         {
@@ -42,15 +47,21 @@ public sealed class OrderService
         }
         catch (HttpRequestException ex)
         {
-            // Do not log request body; log stable identifiers only
-            _log.LogWarning(ex, "Legacy menu unavailable when validating RestaurantId {RestaurantId}", req.RestaurantId);
+            _log.LogWarning(
+                ex,
+                "Legacy menu unavailable when validating RestaurantId {RestaurantId}",
+                req.RestaurantId);
+
             return (false, 503, new { message = "Legacy menu unavailable" });
         }
         catch (TaskCanceledException ex)
         {
-            // Covers timeouts (HttpClient timeouts commonly manifest as TaskCanceledException)
-            _log.LogWarning(ex, "Legacy menu timeout when validating RestaurantId {RestaurantId}", req.RestaurantId);
-            return (false, 503, new { message = "Legacy menu unavailable" });
+            _log.LogWarning(
+                ex,
+                "Legacy menu timeout when validating RestaurantId {RestaurantId}",
+                req.RestaurantId);
+
+            return (false, 503, new { message = "Legacy menu timeout" });
         }
 
         if (!exists)
@@ -68,13 +79,15 @@ public sealed class OrderService
         var pricing = _pricing.CalculateTotal(pricedItems);
         var orderId = Guid.NewGuid();
 
-        // Safe logging (no full request body)
-        _log.LogInformation("Order created {OrderId} for Restaurant {RestaurantId}", orderId, req.RestaurantId);
+        // Safe logging (no full request body / no PII)
+        _log.LogInformation(
+            "Order created {OrderId} for Restaurant {RestaurantId}",
+            orderId,
+            req.RestaurantId);
 
         return (true, 202, new { orderId, status = "Created", totalPrice = pricing.Total });
     }
 }
 
-// Keep DTOs here for now (or move to Contracts later)
 public sealed record CreateOrderRequest(Guid RestaurantId, List<CreateOrderItem> Items);
 public sealed record CreateOrderItem(Guid MenuItemId, int Quantity);

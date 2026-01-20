@@ -1,50 +1,59 @@
 # MTOGO Final Exam Project (2nd Semester) — Software Development Top-Up
 
-This repository contains my **final exam project** for the **2nd semester (of 3)** in the **Software Development Top-Up** program.
+This repo contains my final exam project for the Software Development Top-Up (2nd semester).
 
-The solution demonstrates outcomes across three course areas:
-- **Software Quality** (testing, quality gates, static analysis, coverage)
-- **System Integration** (integration between a legacy component and a modern service)
-- **Udvikling af Store Systemer** (collaboration setup, CI, automation, lightweight metrics)
+The project covers three course areas:
+- **Software Quality** (tests, CI checks, formatting, coverage, CodeQL)
+- **System Integration** (a modern service calling a legacy service)
+- **Udvikling af Store Systemer** (repo structure, CI, collaboration setup)
 
-The core story is intentionally simple and exam-friendly:
+The idea is simple on purpose: a legacy menu system already exists, and I add a small ordering service on top.
 
-- **Legacy component:** `Mtogo.LegacyMenu.Api` (legacy menu + restaurant data; “legacy boundary”)
-- **Modern service:** `Mtogo.Ordering.Api` (new order creation logic with pricing rules)
-- **Gateway:** `Mtogo.Gateway.Yarp` (single entry-point routing to services)
+## What is in the solution
 
-> I worked alone. Collaboration mechanics (PR discipline, CODEOWNERS review, etc.) are still demonstrated through GitHub workflows and rules.
+- **Legacy service:** `Mtogo.LegacyMenu.Api`  
+  Stores restaurants + menu items (legacy boundary)
+
+- **Ordering service:** `Mtogo.Ordering.Api`  
+  Creates orders and applies pricing rules
+
+- **Gateway:** `Mtogo.Gateway.Yarp`  
+  One entry point that routes requests to the services
+
+I worked alone, but I still keep the repo structured like a normal team repo (CI, PR flow, docs, etc.).
 
 ---
 
-````md
----
+## Examiner Quick Start
 
-## Examiner Quick Start (verify the system)
+### 1) Run the system (Docker Compose)
 
-### A) Run with Docker Compose
 From repo root:
 
 ```bash
 docker compose -f ./deploy/compose/docker-compose.yml up --build
 ````
 
-### B) Verify services via the gateway (health)
+### 2) Check that services are up (through the gateway)
 
 ```powershell
 Invoke-RestMethod http://localhost:8080/legacy-menu/health
 Invoke-RestMethod http://localhost:8080/ordering/health
 ```
 
-Expected: both return `{ status: "ok", service: "..." }`.
+Expected: both return something like:
 
-### C) Demo: Legacy menu endpoint (via gateway)
+```json
+{ "status": "ok", "service": "..." }
+```
+
+### 3) Call the legacy menu endpoint (through the gateway)
 
 ```powershell
 Invoke-RestMethod http://localhost:8080/legacy-menu/api/legacy/menu/11111111-1111-1111-1111-111111111111
 ```
 
-### D) Demo: Create an order (via gateway)
+### 4) Create an order (through the gateway)
 
 ```powershell
 $body = @{
@@ -58,37 +67,59 @@ $body = @{
 Invoke-RestMethod -Method Post -Uri "http://localhost:8080/ordering/api/orders" -ContentType "application/json" -Body $body
 ```
 
-Expected: `202 Accepted` and a JSON response containing `orderId` and `totalPrice`.
+Expected:
 
-### E) Run tests (local)
+* HTTP **202 Accepted**
+* Response includes `orderId` and `totalPrice`
+
+---
+
+## Software Quality (how to verify)
+
+### Run tests locally
 
 ```bash
 dotnet test mtogo-final-exam.sln
 ```
 
-For Software Quality evidence details, see: `docs/software-quality.md`.
+### Run Release tests + coverage in the same SDK container (evidence command)
+
+```powershell
+docker run --rm -v ${PWD}:/src -w /src mcr.microsoft.com/dotnet/sdk:10.0 `
+  dotnet test mtogo-final-exam.sln -c Release --settings coverlet.runsettings /p:CollectCoverage=true
+```
+
+### CI checks
+
+CI runs on pushes to `main` and on pull requests:
+
+* restore + build (Release)
+* formatting check (`dotnet format --verify-no-changes`)
+* tests + coverage gate (current threshold is **15**)
+* CodeQL scan
+
+Workflow file: `.github/workflows/ci.yml`
+
+More details: `docs/software-quality.md`
 
 ---
 
-## Architecture Overview
+## System Integration (what I show)
 
-### Runtime services
-- **Gateway** routes external traffic to internal services:
-  - `GET /legacy-menu/...` → `Mtogo.LegacyMenu.Api`
-  - `GET /ordering/...` → `Mtogo.Ordering.Api`
-- **Ordering → Legacy integration:**
-  - Ordering validates restaurant existence via `ILegacyMenuClient` calling LegacyMenu HTTP endpoints.
-  - Dependency failures are handled explicitly (503 mapping).
+The Ordering service depends on the LegacyMenu service:
 
-### High-level diagram (mental model)
-Client → **Gateway (YARP)** → **Ordering API** → (HTTP) → **Legacy Menu API**
+* Ordering calls the legacy service through `ILegacyMenuClient`
+* It checks if the restaurant exists before accepting an order
+* If the legacy service is down or times out, Ordering returns **503** instead of crashing with a raw 500
+
+Docs: `docs/system-integration.md`
 
 ---
 
-## Repository Structure
+## Repo structure
 
 ```text
-docs/  # Course evidence docs (short, focused)
+docs/
   software-quality.md
   system-integration.md
   udvikling-af-store-systemer.md
@@ -114,139 +145,13 @@ deploy/
   workflows/
     ci.yml
     codeql.yml
-    ...
 coverlet.runsettings
 Directory.Build.props
-
----
-
-## Run the system (Docker Compose)
-
-From repo root:
-
-```bash
-docker compose -f ./deploy/compose/docker-compose.yml up --build
 ```
 
-### Health checks (via gateway)
-
-```powershell
-Invoke-RestMethod http://localhost:8080/legacy-menu/health
-Invoke-RestMethod http://localhost:8080/ordering/health
-```
-
-Expected:
-
-* legacy-menu: `{ status: "ok", service: "legacy-menu" }`
-* ordering: `{ status: "ok", service: "ordering" }`
-
 ---
 
-## Demo endpoints (via gateway)
+## Notes
 
-### 1) Legacy Menu: list menu items for a restaurant
-
-```powershell
-Invoke-RestMethod http://localhost:8080/legacy-menu/api/legacy/menu/11111111-1111-1111-1111-111111111111
-```
-
-### 2) Ordering: create an order (valid request)
-
-```powershell
-$body = @{
-  restaurantId = "11111111-1111-1111-1111-111111111111"
-  items = @(
-    @{ menuItemId = "22222222-2222-2222-2222-222222222222"; quantity = 1 },
-    @{ menuItemId = "33333333-3333-3333-3333-333333333333"; quantity = 1 }
-  )
-} | ConvertTo-Json -Depth 10
-
-Invoke-RestMethod -Method Post -Uri "http://localhost:8080/ordering/api/orders" -ContentType "application/json" -Body $body
-```
-
-Expected:
-
-* Status 202
-* response contains `orderId` and `totalPrice`
-
-### 3) Ordering validation examples (bad input → 400)
-
-* Missing restaurantId
-* Empty items
-* Quantity <= 0
-
----
-
-## Software Quality (how to verify)
-
-### Run tests locally
-
-```bash
-dotnet test mtogo-final-exam.sln
-```
-
-### Run Release tests + coverage using the same SDK container as CI
-
-```powershell
-docker run --rm -v ${PWD}:/src -w /src mcr.microsoft.com/dotnet/sdk:10.0 `
-  dotnet test mtogo-final-exam.sln -c Release --settings coverlet.runsettings /p:CollectCoverage=true
-```
-
-### Quality gates in CI
-
-* Build + test
-* Formatting verification (`dotnet format` in verify mode)
-* Coverage threshold gate (staged; current threshold is conservative to prevent regression)
-* CodeQL scanning (static analysis)
-
-Evidence writeup:
-
-* `docs/software-quality.md`
-
----
-
-## System Integration (how it is demonstrated)
-
-Integration scenario:
-
-* Ordering service must validate the restaurant by calling the legacy menu service.
-* The integration boundary is explicit (`ILegacyMenuClient`).
-* Dependency failure handling is implemented:
-
-  * If the legacy service is down or times out, Ordering returns **503 Service Unavailable** (not a raw 500).
-
-This creates a clear exam narrative:
-
-* “We are integrating a modern ordering capability into an existing legacy menu system.”
-
-(Integration writeup can be added later under `docs/system-integration.md`.)
-
----
-
-## Udvikling af Store Systemer (collaboration setup)
-
-This repo reuses patterns from my earlier collaboration template:
-
-* Issue templates + PR templates
-* Labels + label automation
-* CI workflow
-* Code scanning
-* Branch protection/ruleset (where applicable)
-* Optional lightweight metrics (if kept)
-
-The intention is to demonstrate professional collaboration and delivery practices even in a solo exam project.
-
----
-
-## Documentation index (exam evidence)
-
-* `docs/software-quality.md` — testing strategy, gates, static analysis, and execution commands
-* `docs/system-integration.md`
-* `docs/udvikling-af-store-systemer.md`
-
----
-
-## License
-
-MIT (see `LICENSE`).
+License: MIT (see `LICENSE`).
 

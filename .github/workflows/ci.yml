@@ -23,7 +23,7 @@ jobs:
       - name: Restore
         run: dotnet restore mtogo-final-exam.sln
 
-      - name: Build
+      - name: Build (Release)
         run: dotnet build mtogo-final-exam.sln --no-restore -c Release
 
       - name: Verify formatting
@@ -31,11 +31,11 @@ jobs:
 
       - name: Test + Coverage Gate
         run: |
-          dotnet test mtogo-final-exam.sln -c Release --no-build \
+          dotnet test mtogo-final-exam.sln -c Release \
             --settings coverlet.runsettings \
-            /p:Threshold=9 \
-            /p:ThresholdType=line \
-            /p:CollectCoverage=true
+            /p:CollectCoverage=true \
+            /p:Threshold=15 \
+            /p:ThresholdType=line
 
       - name: Upload coverage reports
         uses: actions/upload-artifact@v4
