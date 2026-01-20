@@ -35,8 +35,8 @@ jobs:
             /p:CollectCoverage=true \
             /p:CoverletOutput=./TestResults/ordering- \
             /p:CoverletOutputFormat=cobertura \
-            /p:ExcludeByAttribute=Obsolete,GeneratedCodeAttribute,CompilerGeneratedAttribute \
-            /p:ExcludeByFile=**/Migrations/*.cs,**/Program.cs,**/OpenApi*.cs,**/obj/**,**/*.g.cs,**/*.g.i.cs,**/*AssemblyInfo*.cs \
+            '/p:ExcludeByAttribute=Obsolete,GeneratedCodeAttribute,CompilerGeneratedAttribute' \
+            '/p:ExcludeByFile=**/Migrations/*.cs,**/Program.cs,**/OpenApi*.cs,**/obj/**,**/*.g.cs,**/*.g.i.cs,**/*AssemblyInfo*.cs' \
             /p:Threshold=30 \
             /p:ThresholdType=line
 
@@ -46,10 +46,11 @@ jobs:
             /p:CollectCoverage=true \
             /p:CoverletOutput=./TestResults/legacy- \
             /p:CoverletOutputFormat=cobertura \
-            /p:ExcludeByAttribute=Obsolete,GeneratedCodeAttribute,CompilerGeneratedAttribute \
-            /p:ExcludeByFile=**/Migrations/*.cs,**/Program.cs,**/OpenApi*.cs,**/obj/**,**/*.g.cs,**/*.g.i.cs,**/*AssemblyInfo*.cs \
+            '/p:ExcludeByAttribute=Obsolete,GeneratedCodeAttribute,CompilerGeneratedAttribute' \
+            '/p:ExcludeByFile=**/Migrations/*.cs,**/Program.cs,**/OpenApi*.cs,**/obj/**,**/*.g.cs,**/*.g.i.cs,**/*AssemblyInfo*.cs' \
             /p:Threshold=25 \
             /p:ThresholdType=line
+
 
 
       - name: Upload coverage reports
