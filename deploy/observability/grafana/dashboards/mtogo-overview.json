@@ -14,7 +14,7 @@
         "label": "Service",
         "hide": 0,
         "query": "gateway,ordering,legacy-menu",
-        "current": { "text": "ordering", "value": "ordering" }
+        "current": { "text": "gateway", "value": "gateway" }
       }
     ]
   },
@@ -54,7 +54,7 @@
     },
     {
       "type": "timeseries",
-      "title": "Ordering: 503 dependency failures/sec",
+      "title": "Ordering: 503 responses/sec",
       "gridPos": { "x": 0, "y": 16, "w": 24, "h": 8 },
       "targets": [
         {
