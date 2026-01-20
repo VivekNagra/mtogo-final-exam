@@ -13,7 +13,7 @@ Compose is used for local orchestration:
 - predictable demo
 - good enough for a small slice
 
-See: `deploy/compose/docker-compose.yml`
+See: `docker-compose.exam.yml`
 
 ## Docker Swarm (code evidence)
 

@@ -31,13 +31,7 @@ I worked alone, but I still keep the repo structured like a normal team repo (CI
 From repo root:
 
 ```bash
-docker compose -f ./deploy/compose/docker-compose.yml up --build
-```
-
-Optional: also start the observability stack (Prometheus + Grafana):
-
-```bash
-docker compose -f ./deploy/compose/docker-compose.yml -f ./deploy/observability/docker-compose.observability.yml up --build
+docker compose -f docker-compose.exam.yml up --build
 ```
 
 ### 2) Check that services are up (through the gateway)

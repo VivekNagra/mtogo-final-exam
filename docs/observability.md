@@ -18,13 +18,10 @@ The goal is not a full production monitoring platform. It is an exam-friendly se
 
 ## How to run
 
-Start the system with both compose files:
+Start the system:
 
 ```bash
-docker compose \
-  -f deploy/compose/docker-compose.yml \
-  -f deploy/observability/docker-compose.observability.yml \
-  up --build
+docker compose -f docker-compose.exam.yml up --build
 ```
 ### Open:
 - Prometheus: http://localhost:9090

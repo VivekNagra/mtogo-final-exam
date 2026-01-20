@@ -76,7 +76,7 @@ In general, the repo is designed so you can:
 
 See:
 - `README.md`
-- `deploy/compose/docker-compose.yml`
+- `docker-compose.exam.yml`
 
 ## CI/CD (implemented)
 
@@ -116,7 +116,7 @@ If you want to check the repo evidence quickly, these are the main entry points:
 - System overview + run steps: `README.md`
 - DLS diagrams: `docs/diagrams/README.md`
 - Service boundaries: `src/gateway/`, `src/services/ordering/`, `src/legacy-menu/`
-- Local orchestration: `deploy/compose/docker-compose.yml`
+- Local orchestration: `docker-compose.exam.yml`
 - CI/CD: `.github/workflows/ci.yml`, `.github/workflows/codeql.yml`
 - Integration notes: `docs/system-integration.md`
 - Quality notes: `docs/software-quality.md`
