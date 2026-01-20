@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ordering
+  namespace: mtogo
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ordering
+  template:
+    metadata:
+      labels:
+        app: ordering
+    spec:
+      containers:
+        - name: ordering
+          image: mtogo/ordering:local
+          env:
+            - name: ASPNETCORE_URLS
+              value: "http://0.0.0.0:8080"
+            - name: LegacyMenu__BaseUrl
+              value: "http://legacy-menu:8080"
+            - name: RabbitMq__Host
+              value: "rabbitmq"
+          ports:
+            - containerPort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ordering
+  namespace: mtogo
+spec:
+  selector:
+    app: ordering
+  ports:
+    - port: 8080
+      targetPort: 8080

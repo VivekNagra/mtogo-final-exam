@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: legacy-menu
+  namespace: mtogo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: legacy-menu
+  template:
+    metadata:
+      labels:
+        app: legacy-menu
+    spec:
+      containers:
+        - name: legacy-menu
+          image: mtogo/legacy-menu:local
+          env:
+            - name: ASPNETCORE_URLS
+              value: "http://0.0.0.0:8080"
+            - name: ConnectionStrings__Db
+              value: "Host=postgres;Port=5432;Database=mtogo;Username=mtogo;Password=mtogo"
+          ports:
+            - containerPort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: legacy-menu
+  namespace: mtogo
+spec:
+  selector:
+    app: legacy-menu
+  ports:
+    - port: 8080
+      targetPort: 8080
