@@ -1,122 +1,171 @@
 # Udvikling af Store Systemer (DLS) — Repo Documentation
 
-This document is the **repository-side documentation** for the DLS part of my final exam project (MTOGO).  
-The **Word report** is the main deliverable for DLS. This file exists to keep the repo evidence tidy: links, diagrams, and where the “proof” lives.
+This file is the **repo-side documentation** for the DLS part of my final exam project (MTOGO).  
+The **main DLS deliverable is a separate Word report (max 10 pages)**. This document exists so the repository has clear, concrete evidence: where things live, what is implemented, and what is design-only.
 
-## Scope (what this repo actually contains)
+---
 
-This repository is an **exam-friendly slice** of the bigger MTOGO scenario:
+## Scope and honesty rule
 
-- **API Gateway (YARP)** as a single entry point
-- **Legacy Menu service** (legacy boundary)
-- **Ordering service** (modern service)
-- **Sync HTTP integration**: Ordering → LegacyMenu (validation)
-- **Docker Compose** run setup
-- **CI pipeline** + tests (quality gate)
+This repo contains an **exam-friendly slice** of a larger “national provider” scenario. I kept the solution small on purpose so it is easy to run, inspect, and explain.
 
-Anything outside this slice is either **out of scope** or explicitly marked as **Design (not implemented)**.
+Implemented in this repo:
 
-## Collaboration foundation (template-based)
+- API Gateway (YARP) as a single entry point
+- Legacy Menu service (legacy boundary)
+- Ordering service (modern service)
+- Synchronous HTTP integration: Ordering → LegacyMenu
+- Local orchestration with Docker Compose
+- CI pipeline with quality gates
+- Observability baseline: Prometheus + Grafana (metrics + dashboard provisioning)
 
-Even though I worked alone, the repository is set up like a team repo. I started from my earlier **large-systems collaboration template** to get a realistic baseline: structure, automation, and repo conventions.
+Anything outside this slice is marked clearly as **Design (not implemented)**.
 
-You can see this in the `.github/` setup and supporting files (workflows, templates, and contribution guidance).
+---
+
+## Collaboration setup (template-based foundation)
+
+Even though I worked alone, I wanted the repo to feel like a real team repository. I started from my earlier **large-systems collaboration template** so I did not “hand-wave” collaboration practices.
+
+This shows up as:
+
+- standard repo structure (`docs/`, `src/`, `tests/`, `deploy/`)
+- PR flow conventions and templates
+- CI workflows and automated checks
+
+Evidence lives primarily under `.github/`.
+
+---
+
+## Architecture overview (implemented)
+
+The system is split into three main runtime parts:
+
+- **Gateway**: routes incoming requests to the right service.
+- **Ordering service**: owns the “place order” flow and validates against legacy menu data.
+- **LegacyMenu service**: owns restaurant/menu data and represents a legacy boundary.
+
+The important integration in this slice is a synchronous HTTP call from Ordering to LegacyMenu. The goal is to show a realistic dependency where a modern service must call a legacy service and handle failure in a controlled way.
+
+---
+
+## Core flow: Place order (implemented)
+
+The main scenario I demonstrate is placing an order through the gateway:
+
+1. Client calls the gateway endpoint for orders
+2. Gateway forwards the request to Ordering
+3. Ordering calls LegacyMenu to validate restaurant + menu items
+4. Ordering returns either:
+   - success (accepted order)
+   - validation error
+   - dependency failure (503) if legacy is unavailable
+
+The detailed sequence is documented with Mermaid:
+
+- `docs/diagrams/sequence-order-flow.mmd`
+
+---
+
+## Error handling (implemented baseline)
+
+In distributed systems, dependency failures are normal. In this slice, the most important failure mode is the legacy service being unavailable or slow when Ordering needs to validate an order.
+
+The implemented goal is to return a clear, controlled response (503) instead of crashing with a random 500. This keeps the failure obvious and makes it easier to operate the system even when one dependency is unstable.
+
+---
+
+## Observability baseline (implemented)
+
+I added a minimal but realistic observability setup:
+
+- Each service exposes Prometheus-compatible metrics at `/metrics`
+- Prometheus scrapes the services using Docker Compose service names (container network)
+- Grafana provisions:
+  - a Prometheus datasource
+  - an overview dashboard (JSON in repo)
+- Evidence screenshots are stored in `docs/evidence/observability/`
+
+This is intentionally “small but real”: enough to show request rate, latency, and error responses (including 503 when legacy is down).
+
+---
+
+## How to run (local)
+
+I keep the single source of truth for run steps in the root `README.md`.
+
+Main entry points:
+
+- `README.md`
+- `docker-compose.exam.yml`
+
+---
+
+## CI/CD (implemented)
+
+This repository includes CI that runs on pushes and pull requests. The goal is to keep changes honest: if CI fails, the change is not “done”.
+
+Evidence:
+
+- `.github/workflows/ci.yml`
+- `.github/workflows/codeql.yml`
+
+More detailed notes (SQ part):
+
+- `docs/software-quality.md`
+
+---
+
+## Scalability and deployment (Design — not implemented)
+
+This exam scenario describes a national provider, so scalability and deployment concerns matter. My implemented baseline is Docker Compose for local demo. For production-style deployment, the next step would be Kubernetes (and possibly infrastructure-as-code), but that is **not implemented here unless `deploy/k8s/` exists and is runnable**.
+
+Planned repo locations (only relevant if added later):
+
+- `deploy/k8s/` (Kubernetes manifests)
+- `deploy/swarm/` (Docker Swarm stack file)
+- `docs/scalability.md` (short explanation + how to run)
+
+If these folders/files are not present, they should be treated as **Design (not implemented)** in the Word report.
+
+---
 
 ## Diagrams (Mermaid)
 
 All architecture diagrams are stored under `docs/diagrams/` and rendered in GitHub.
 
-- `docs/diagrams/README.md` (recommended entry point)
+Recommended entry point:
+
+- `docs/diagrams/README.md`
+
+Key diagram files:
+
 - `docs/diagrams/c4-context.mmd`
 - `docs/diagrams/c4-container.mmd`
 - `docs/diagrams/component-ordering.mmd`
 - `docs/diagrams/sequence-order-flow.mmd`
 
-## Architecture summary (implemented)
+---
 
-At a high level, the system is split into clear subsystems:
+## Evidence map (quick pointers)
 
-- **Gateway**: one entry point for clients, routes requests to services
-- **Ordering service**: owns the “place order” use case and business validation logic
-- **LegacyMenu service**: owns menu data (legacy boundary)
-
-The key integration is **synchronous HTTP** from Ordering to LegacyMenu, used to validate restaurant/menu item references during ordering.
-
-This is intentionally simple so it is easy to run and demonstrate, and it still reflects a realistic “legacy + modern” setup often seen in large systems.
-
-## Core flow: Place order (implemented)
-
-The main documented flow is placing an order through the gateway:
-
-1. Client calls the gateway endpoint for orders
-2. Gateway forwards to Ordering
-3. Ordering calls LegacyMenu to validate menu references
-4. Ordering returns either a success response, a validation error, or a controlled dependency failure response
-
-The detailed sequence is documented as a Mermaid diagram:
-
-- `docs/diagrams/sequence-order-flow.mmd`
-
-## Error handling (implemented baseline)
-
-Because services are distributed, dependency failures are expected.  
-The most important failure mode in this slice is **LegacyMenu being unavailable or slow** while Ordering is trying to validate an order.
-
-The project is documented to handle this with a controlled response (instead of “random 500 errors”), so it is clear for the client when the issue is a temporary dependency problem.
-
-## How to run (local)
-
-For the actual run commands, I keep the single source of truth in the root `README.md`.
-
-In general, the repo is designed so you can:
-
-- start the system with Docker Compose
-- call endpoints through the gateway
-- use health endpoints to verify services are running
-
-See:
-- `README.md`
-- `docker-compose.exam.yml`
-
-## CI/CD (implemented)
-
-This repo includes a CI pipeline that runs on pushes and pull requests. The goal is to keep development honest: if CI fails, the change is not “done”.
-
-See:
-- `.github/workflows/ci.yml`
-- `.github/workflows/codeql.yml`
-- `docs/software-quality.md` (notes about tests/quality gates)
-
-## Scalability & infrastructure (DLS Req 5)
-
-**Design (not implemented yet):** Terraform / Kubernetes / Docker Swarm
-
-The DLS brief expects scalability discussion (Terraform) and code evidence using tools such as Kubernetes and Docker Swarm.  
-My implemented baseline is Docker Compose, which is enough for local demo, but not “national scale”.
-
-Planned repo locations (to be added if missing):
-- `deploy/k8s/` (Kubernetes manifests)
-- `deploy/swarm/stack.yml` (Docker Swarm stack file)
-- `docs/scalability.md` (short explanation + how to run)
-
-## Observability (DLS Req 7)
-
-**Design (not implemented yet):** Prometheus / Grafana
-
-The DLS brief expects error handling and logging, and it mentions demonstrating with tools such as Prometheus and Grafana. The intention is to make failures visible (latency/errors/dependency problems), not to build a full monitoring platform.
-
-Planned repo locations (to be added if missing):
-- `deploy/observability/` (Prometheus + Grafana compose + configs)
-- `docs/observability.md` (how to run + what to show at the exam)
-
-## Evidence pointers (quick map)
-
-If you want to check the repo evidence quickly, these are the main entry points:
+If you want to verify the repo evidence quickly, these are the main entry points:
 
 - System overview + run steps: `README.md`
+- DLS repo doc (this file): `docs/udvikling-af-store-systemer.md`
 - DLS diagrams: `docs/diagrams/README.md`
-- Service boundaries: `src/gateway/`, `src/services/ordering/`, `src/legacy-menu/`
+- Service boundaries:
+  - `src/gateway/Mtogo.Gateway.Yarp/`
+  - `src/services/ordering/Mtogo.Ordering.Api/`
+  - `src/legacy-menu/Mtogo.LegacyMenu.Api/`
 - Local orchestration: `docker-compose.exam.yml`
+- Observability setup:
+  - `deploy/observability/prometheus/prometheus.yml`
+  - `deploy/observability/grafana/`
+  - `docs/evidence/observability/`
 - CI/CD: `.github/workflows/ci.yml`, `.github/workflows/codeql.yml`
 - Integration notes: `docs/system-integration.md`
 - Quality notes: `docs/software-quality.md`
+
+
+
