@@ -1,0 +1,31 @@
+flowchart LR
+  %% C4-style Container diagram (implementation-focused)
+
+  classDef container fill:#f7f7f7,stroke:#333,stroke-width:1px;
+  classDef boundary fill:#fff,stroke:#666,stroke-dasharray: 4 3;
+  classDef client fill:#fff,stroke:#333,stroke-width:1px;
+
+  U[Client\nWeb/Mobile/Postman]:::client
+
+  subgraph MTOGO["MTOGO (implemented slice)"]
+    direction LR
+    G[API Gateway YARP\nSingle entry point]:::container
+    O[Ordering Service\nModern service]:::container
+    L[Legacy Menu Service\nLegacy boundary]:::container
+  end
+
+  U -->|HTTP| G
+  G -->|HTTP| O
+  G -->|HTTP| L
+
+  %% Key integration (explicit in repo story)
+  O -->|Sync HTTP| L
+
+  %% Local runtime
+  D[Docker Compose\nlocal orchestration]:::boundary
+  D -.-> G
+  D -.-> O
+  D -.-> L
+
+  %% Future containers (not implemented)
+  F["Future (not implemented):\nNotifications, Delivery, Payments,\nshared data stores, messaging"]:::boundary

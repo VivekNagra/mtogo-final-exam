@@ -1,0 +1,26 @@
+flowchart TB
+  %% Component view inside Ordering Service (conceptual mapping)
+
+  classDef comp fill:#f7f7f7,stroke:#333,stroke-width:1px;
+  classDef ext fill:#fff,stroke:#666,stroke-dasharray: 4 3;
+
+  subgraph OS["Ordering Service (Mtogo.Ordering.Api)"]
+    API[HTTP API Layer\n(Controllers/Endpoints)]:::comp
+    APP[Application Layer\n(Use-cases: Place Order)]:::comp
+    DOM[Domain Model\n(Order, OrderLine, validation rules)]:::comp
+    INT[Integration Client\n(LegacyMenu HTTP client)]:::comp
+    ERR[Error handling\n(Dependency failure -> controlled response)]:::comp
+    LOG[Logging\n(request + dependency outcome)]:::comp
+  end
+
+  LEG[Legacy Menu Service\nHTTP API]:::ext
+
+  API --> APP
+  APP --> DOM
+  APP --> INT
+  APP --> ERR
+  API --> LOG
+  INT -->|HTTP| LEG
+
+  %% Note: persistence intentionally not shown as a dedicated component
+  %% unless you actually have a DB/repository abstraction in repo.

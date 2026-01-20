@@ -1,0 +1,23 @@
+sequenceDiagram
+  autonumber
+  actor Client as Client (Web/Mobile/Postman)
+  participant GW as API Gateway (YARP)
+  participant ORD as Ordering Service
+  participant MENU as Legacy Menu Service
+
+  Client->>GW: POST /orders (order request)
+  GW->>ORD: Forward request (HTTP)
+
+  ORD->>MENU: GET /menu or validate items (HTTP)
+  alt Menu validation OK
+    MENU-->>ORD: Menu/items valid
+    ORD-->>GW: 200 OK (order accepted)
+    GW-->>Client: 200 OK
+  else Validation fails (invalid restaurant/item)
+    MENU-->>ORD: Not found / invalid item
+    ORD-->>GW: 400 Bad Request (validation error)
+    GW-->>Client: 400 Bad Request
+  else LegacyMenu unavailable / timeout
+    ORD-->>GW: 503 Service Unavailable (dependency failure)
+    GW-->>Client: 503 Service Unavailable
+  end
