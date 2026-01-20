@@ -1,11 +1,13 @@
 using System.Net;
 using System.Net.Http.Json;
+using System.Linq;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Hosting;
 using Mtogo.LegacyMenu.Api.Data;
 using Mtogo.LegacyMenu.Api.Models;
+using Xunit;
 
 namespace Mtogo.LegacyMenu.Tests;
 
@@ -78,5 +80,29 @@ public sealed class LegacyMenuApiTests : IClassFixture<WebApplicationFactory<Pro
         Assert.Equal(HttpStatusCode.NotFound, resp.StatusCode);
     }
 
+    [Fact]
+    public async Task GET_menuItem_ReturnsItem_WhenPresent()
+    {
+        var client = _factory.CreateClient();
+
+        var resp = await client.GetAsync($"/api/legacy/menu/item/{SeedIds.BurgerId}");
+        Assert.Equal(HttpStatusCode.OK, resp.StatusCode);
+
+        var item = await resp.Content.ReadFromJsonAsync<MenuItemDetailsDto>();
+        Assert.NotNull(item);
+        Assert.Equal(SeedIds.BurgerId, item.Id);
+        Assert.Equal(SeedIds.RestaurantId, item.RestaurantId);
+    }
+
+    [Fact]
+    public async Task GET_menuItem_Returns404_WhenMissing()
+    {
+        var client = _factory.CreateClient();
+
+        var resp = await client.GetAsync($"/api/legacy/menu/item/{Guid.NewGuid()}");
+        Assert.Equal(HttpStatusCode.NotFound, resp.StatusCode);
+    }
+
     private sealed record MenuItemDto(Guid Id, string Name, decimal Price);
+    private sealed record MenuItemDetailsDto(Guid Id, Guid RestaurantId, string Name, decimal Price);
 }

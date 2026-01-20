@@ -8,7 +8,7 @@
           
           <ExcludeByAttribute>Obsolete,GeneratedCodeAttribute,CompilerGeneratedAttribute</ExcludeByAttribute>
           
-          <ExcludeByFile>**/Migrations/*.cs,**/Program.cs,**/OpenApi*.cs</ExcludeByFile>
+          <ExcludeByFile>**/Migrations/*.cs,**/Program.cs,**/OpenApi*.cs,**/obj/**,**/*.g.cs,**/*.g.i.cs,**/*AssemblyInfo*.cs</ExcludeByFile>
           
           <Exclude>
             [Microsoft.AspNetCore.OpenApi*]*,

@@ -67,4 +67,49 @@ public sealed class OrderPricingRulesTests
         Assert.Equal(expectedDiscount, result.Discount);
         Assert.Equal(expectedTotal, result.Total);
     }
+
+    [Fact]
+    public void CalculateTotal_RoundsMoneyAwayFromZero()
+    {
+        var items = new[] { new PricedOrderItem(Guid.NewGuid(), 5, 0.01m) };
+
+        var result = _rules.CalculateTotal(items);
+
+        Assert.Equal(0.05m, result.Subtotal);
+        Assert.Equal(29.00m, result.DeliveryFee);
+        Assert.Equal(0.01m, result.Discount);
+        Assert.Equal(29.05m, result.Total);
+    }
+
+    [Fact]
+    public void CalculateTotal_Throws_WhenItemsNull()
+    {
+        Assert.Throws<ArgumentNullException>(() => _rules.CalculateTotal(null!));
+    }
+
+    [Fact]
+    public void CalculateTotal_NoDiscount_NoDeliveryFee_WhenSubtotalAboveThreshold()
+    {
+        var items = new[] { new PricedOrderItem(Guid.NewGuid(), 4, 60.00m) };
+
+        var result = _rules.CalculateTotal(items);
+
+        Assert.Equal(240.00m, result.Subtotal);
+        Assert.Equal(0.00m, result.DeliveryFee);
+        Assert.Equal(0.00m, result.Discount);
+        Assert.Equal(240.00m, result.Total);
+    }
+
+    [Fact]
+    public void CalculateTotal_AppliesDiscountWithoutDeliveryFee_WhenBulkAndOverThreshold()
+    {
+        var items = new[] { new PricedOrderItem(Guid.NewGuid(), 5, 50.00m) }; // subtotal 250
+
+        var result = _rules.CalculateTotal(items);
+
+        Assert.Equal(250.00m, result.Subtotal);
+        Assert.Equal(0.00m, result.DeliveryFee);
+        Assert.Equal(25.00m, result.Discount);
+        Assert.Equal(225.00m, result.Total);
+    }
 }

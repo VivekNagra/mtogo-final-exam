@@ -34,7 +34,7 @@ jobs:
           dotnet test tests/ordering.tests/Mtogo.Ordering.Tests/Mtogo.Ordering.Tests.csproj -c Release \
             --settings coverlet.runsettings \
             /p:CollectCoverage=true \
-            /p:Threshold=25 \
+            /p:Threshold=30 \
             /p:ThresholdType=line
 
       - name: Test + Coverage Gate (LegacyMenu)
@@ -42,7 +42,7 @@ jobs:
           dotnet test tests/legacy-menu.tests/Mtogo.LegacyMenu.Tests/Mtogo.LegacyMenu.Tests.csproj -c Release \
             --settings coverlet.runsettings \
             /p:CollectCoverage=true \
-            /p:Threshold=15 \
+            /p:Threshold=25 \
             /p:ThresholdType=line
 
 

@@ -8,6 +8,9 @@ namespace Mtogo.Ordering.Tests;
 
 public sealed class OrderServiceTests
 {
+    private static string GetMessage(object body) =>
+        (string)body.GetType().GetProperty("message")!.GetValue(body)!;
+
     private static OrderService CreateService(Mock<ILegacyMenuClient> legacy, IMenuItemPriceProvider prices)
     {
         var pricing = new Mock<IOrderPricingRules>();
@@ -23,6 +26,15 @@ public sealed class OrderServiceTests
         {
             price = 10.00m;
             return true;
+        }
+    }
+
+    private sealed class MissingPriceProvider : IMenuItemPriceProvider
+    {
+        public bool TryGetPrice(Guid menuItemId, out decimal price)
+        {
+            price = 0.00m;
+            return false;
         }
     }
 
@@ -47,6 +59,17 @@ public sealed class OrderServiceTests
         Assert.Equal(503, result.statusCode);
     }
 
+    [Fact]
+    public async Task CreateOrder_Returns400_WhenRequestNull()
+    {
+        var legacy = new Mock<ILegacyMenuClient>();
+        var svc = CreateService(legacy, new FakePriceProvider());
+
+        var result = await svc.CreateOrderAsync(null!, CancellationToken.None);
+
+        Assert.False(result.ok);
+        Assert.Equal(400, result.statusCode);
+    }
 
     [Fact]
     public async Task CreateOrder_Returns400_WhenRestaurantIdMissing()
@@ -75,12 +98,38 @@ public sealed class OrderServiceTests
     }
 
     [Fact]
+    public async Task CreateOrder_Returns400_WhenItemsNull()
+    {
+        var legacy = new Mock<ILegacyMenuClient>();
+        var svc = CreateService(legacy, new FakePriceProvider());
+
+        var req = new CreateOrderRequest(Guid.NewGuid(), null!);
+        var result = await svc.CreateOrderAsync(req, CancellationToken.None);
+
+        Assert.False(result.ok);
+        Assert.Equal(400, result.statusCode);
+    }
+
+    [Fact]
     public async Task CreateOrder_Returns400_WhenQuantityNotPositive()
     {
         var legacy = new Mock<ILegacyMenuClient>();
         var svc = CreateService(legacy, new FakePriceProvider());
 
         var req = new CreateOrderRequest(Guid.NewGuid(), new List<CreateOrderItem> { new(Guid.NewGuid(), 0) });
+        var result = await svc.CreateOrderAsync(req, CancellationToken.None);
+
+        Assert.False(result.ok);
+        Assert.Equal(400, result.statusCode);
+    }
+
+    [Fact]
+    public async Task CreateOrder_Returns400_WhenQuantityNegative()
+    {
+        var legacy = new Mock<ILegacyMenuClient>();
+        var svc = CreateService(legacy, new FakePriceProvider());
+
+        var req = new CreateOrderRequest(Guid.NewGuid(), new List<CreateOrderItem> { new(Guid.NewGuid(), -1) });
         var result = await svc.CreateOrderAsync(req, CancellationToken.None);
 
         Assert.False(result.ok);
@@ -104,6 +153,45 @@ public sealed class OrderServiceTests
     }
 
     [Fact]
+    public async Task CreateOrder_Returns400_WhenMenuItemPriceMissing()
+    {
+        var legacy = new Mock<ILegacyMenuClient>();
+        legacy.Setup(x => x.RestaurantExistsAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(true);
+
+        var svc = CreateService(legacy, new MissingPriceProvider());
+        var menuItemId = Guid.NewGuid();
+
+        var req = new CreateOrderRequest(Guid.NewGuid(), new List<CreateOrderItem> { new(menuItemId, 1) });
+        var result = await svc.CreateOrderAsync(req, CancellationToken.None);
+
+        Assert.False(result.ok);
+        Assert.Equal(400, result.statusCode);
+        Assert.Contains(menuItemId.ToString(), GetMessage(result.body));
+    }
+
+    [Fact]
+    public async Task CreateOrder_Returns400_WhenPriceProviderThrows()
+    {
+        var legacy = new Mock<ILegacyMenuClient>();
+        legacy.Setup(x => x.RestaurantExistsAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(true);
+
+        var prices = new Mock<IMenuItemPriceProvider>();
+        prices.Setup(x => x.TryGetPrice(It.IsAny<Guid>(), out It.Ref<decimal>.IsAny))
+            .Throws(new InvalidOperationException("price lookup failed"));
+
+        var pricing = new Mock<IOrderPricingRules>();
+        pricing.Setup(x => x.CalculateTotal(It.IsAny<IEnumerable<PricedOrderItem>>()))
+            .Returns(new OrderPricingResult(0m, 0m, 0m, 0m));
+
+        var svc = new OrderService(legacy.Object, prices.Object, pricing.Object, NullLogger<OrderService>.Instance);
+
+        var req = new CreateOrderRequest(Guid.NewGuid(), new List<CreateOrderItem> { new(Guid.NewGuid(), 1) });
+        await Assert.ThrowsAsync<InvalidOperationException>(() => svc.CreateOrderAsync(req, CancellationToken.None));
+    }
+
+    [Fact]
     public async Task CreateOrder_Returns503_WhenLegacyThrowsHttpRequestException()
     {
         var legacy = new Mock<ILegacyMenuClient>();
@@ -120,6 +208,23 @@ public sealed class OrderServiceTests
     }
 
     [Fact]
+    public async Task CreateOrder_Returns503_WithUnavailableMessage_WhenLegacyThrowsHttpRequestException()
+    {
+        var legacy = new Mock<ILegacyMenuClient>();
+        legacy.Setup(x => x.RestaurantExistsAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
+            .ThrowsAsync(new HttpRequestException("legacy down"));
+
+        var svc = CreateService(legacy, new FakePriceProvider());
+
+        var req = new CreateOrderRequest(Guid.NewGuid(), new List<CreateOrderItem> { new(Guid.NewGuid(), 1) });
+        var result = await svc.CreateOrderAsync(req, CancellationToken.None);
+
+        Assert.False(result.ok);
+        Assert.Equal(503, result.statusCode);
+        Assert.Equal("Legacy menu unavailable", GetMessage(result.body));
+    }
+
+    [Fact]
     public async Task CreateOrder_Returns503_WhenLegacyTimesOut()
     {
         var legacy = new Mock<ILegacyMenuClient>();
@@ -133,6 +238,23 @@ public sealed class OrderServiceTests
 
         Assert.False(result.ok);
         Assert.Equal(503, result.statusCode);
+    }
+
+    [Fact]
+    public async Task CreateOrder_Returns503_WithTimeoutMessage_WhenLegacyTimesOut()
+    {
+        var legacy = new Mock<ILegacyMenuClient>();
+        legacy.Setup(x => x.RestaurantExistsAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
+            .ThrowsAsync(new TaskCanceledException("timeout"));
+
+        var svc = CreateService(legacy, new FakePriceProvider());
+
+        var req = new CreateOrderRequest(Guid.NewGuid(), new List<CreateOrderItem> { new(Guid.NewGuid(), 1) });
+        var result = await svc.CreateOrderAsync(req, CancellationToken.None);
+
+        Assert.False(result.ok);
+        Assert.Equal(503, result.statusCode);
+        Assert.Equal("Legacy menu timeout", GetMessage(result.body));
     }
 
     [Fact]
