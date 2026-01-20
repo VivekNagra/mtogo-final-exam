@@ -32,7 +32,7 @@ From repo root:
 
 ```bash
 docker compose -f ./deploy/compose/docker-compose.yml up --build
-````
+```
 
 ### 2) Check that services are up (through the gateway)
 
