@@ -1,0 +1,49 @@
+Summary
+  Generated on: 20/01/2026 - 05.45.39
+  Coverage date: 19/01/2026 - 23.38.43 - 20/01/2026 - 05.40.46
+  Parser: MultiReport (75x Cobertura)
+  Assemblies: 2
+  Classes: 25
+  Files: 17
+  Line coverage: 13%
+  Covered lines: 132
+  Uncovered lines: 882
+  Coverable lines: 1014
+  Total lines: 2730
+  Branch coverage: 3.5% (31 of 868)
+  Covered branches: 31
+  Total branches: 868
+  Method coverage: 28.7% (40 of 139)
+  Full method coverage: 26.6% (37 of 139)
+  Covered methods: 40
+  Fully covered methods: 37
+  Total methods: 139
+
+Mtogo.LegacyMenu.Api                                                7%
+  Microsoft.AspNetCore.OpenApi.Generated                            0%
+  Microsoft.AspNetCore.OpenApi.Generated                            0%
+  Mtogo.LegacyMenu.Api.Controllers.MenuController                  40%
+  Mtogo.LegacyMenu.Api.Data.LegacyMenuDbContext                   100%
+  Mtogo.LegacyMenu.Api.Data.LegacyMenuDbInitializer              16.6%
+  Mtogo.LegacyMenu.Api.Data.SeedIds                               100%
+  Mtogo.LegacyMenu.Api.Models.MenuItem                            100%
+  Mtogo.LegacyMenu.Api.Models.Restaurant                          100%
+  Mtogo.LegacyMenu.Api.Repositories.MenuRepository                100%
+  Mtogo.LegacyMenu.Api.Services.MenuService                       100%
+  System.Runtime.CompilerServices                                   0%
+  System.Runtime.CompilerServices                                   0%
+
+Mtogo.Ordering.Api                                               18.4%
+  Microsoft.AspNetCore.OpenApi.Generated                            0%
+  Microsoft.AspNetCore.OpenApi.Generated                            0%
+  Mtogo.Ordering.Api.Application.CreateOrderItem                  100%
+  Mtogo.Ordering.Api.Application.CreateOrderRequest               100%
+  Mtogo.Ordering.Api.Application.InMemoryMenuItemPriceProvider    100%
+  Mtogo.Ordering.Api.Application.OrderService                      98%
+  Mtogo.Ordering.Api.Domain.OrderPricingResult                    100%
+  Mtogo.Ordering.Api.Domain.OrderPricingRules                     100%
+  Mtogo.Ordering.Api.Domain.PricedOrderItem                       100%
+  Mtogo.Ordering.Api.Integration.LegacyMenuClient                16.6%
+  Mtogo.Ordering.Api.Program                                     90.9%
+  System.Runtime.CompilerServices                                   0%
+  System.Runtime.CompilerServices                                   0%

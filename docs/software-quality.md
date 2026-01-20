@@ -58,8 +58,8 @@ The CI pipeline runs on every push to `main` and on pull requests:
 - **Format verification**
   - `dotnet format mtogo-final-exam.sln --verify-no-changes`
 - **Test execution + coverage gate**
-  - `dotnet test mtogo-final-exam.sln -c Release --settings coverlet.runsettings /p:CollectCoverage=true`
-  - Coverage threshold is enforced (currently staged at a conservative baseline to prevent regression).
+  - `dotnet test mtogo-final-exam.sln -c Release /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat="cobertura,json" /p:ExcludeByAttribute="Obsolete,GeneratedCodeAttribute,CompilerGeneratedAttribute" /p:ExcludeByFile="**/Migrations/*.cs,**/Program.cs,**/OpenApi*.cs,**/obj/**,**/*.g.cs,**/*.g.i.cs,**/*AssemblyInfo*.cs"`
+  - Coverage threshold is enforced (Ordering **30% line**, LegacyMenu **25% line**).
 
 Coverage reports (`coverage.cobertura.xml`) are uploaded as workflow artifacts so an examiner can inspect them from GitHub Actions.
 
@@ -72,7 +72,12 @@ To ensure reproducibility (and to avoid Windows-specific execution policy issues
 **Command (PowerShell):**
 ```powershell
 docker run --rm -v ${PWD}:/src -w /src mcr.microsoft.com/dotnet/sdk:10.0 `
-  dotnet test mtogo-final-exam.sln -c Release --settings coverlet.runsettings /p:CollectCoverage=true
+  dotnet test mtogo-final-exam.sln -c Release `
+    /p:CollectCoverage=true `
+    /p:CoverletOutput=TestResults/ `
+    /p:CoverletOutputFormat="cobertura,json" `
+    /p:ExcludeByAttribute="Obsolete,GeneratedCodeAttribute,CompilerGeneratedAttribute" `
+    /p:ExcludeByFile="**/Migrations/*.cs,**/Program.cs,**/OpenApi*.cs,**/obj/**,**/*.g.cs,**/*.g.i.cs,**/*AssemblyInfo*.cs"
 ````
 
 **Evidence (latest run output):**
@@ -188,7 +193,12 @@ dotnet test mtogo-final-exam.sln
 
 ```powershell
 docker run --rm -v ${PWD}:/src -w /src mcr.microsoft.com/dotnet/sdk:10.0 `
-  dotnet test mtogo-final-exam.sln -c Release --settings coverlet.runsettings /p:CollectCoverage=true
+  dotnet test mtogo-final-exam.sln -c Release `
+    /p:CollectCoverage=true `
+    /p:CoverletOutput=TestResults/ `
+    /p:CoverletOutputFormat="cobertura,json" `
+    /p:ExcludeByAttribute="Obsolete,GeneratedCodeAttribute,CompilerGeneratedAttribute" `
+    /p:ExcludeByFile="**/Migrations/*.cs,**/Program.cs,**/OpenApi*.cs,**/obj/**,**/*.g.cs,**/*.g.i.cs,**/*AssemblyInfo*.cs"
 ```
 
 ### 7.3 Check formatting locally

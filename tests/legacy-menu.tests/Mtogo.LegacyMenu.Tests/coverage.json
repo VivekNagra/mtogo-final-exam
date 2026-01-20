@@ -2081,7 +2081,7 @@
       "Mtogo.LegacyMenu.Api.Services.MenuService": {
         "System.Threading.Tasks.Task`1<System.Boolean> Mtogo.LegacyMenu.Api.Services.MenuService::RestaurantExists(System.Guid,System.Threading.CancellationToken)": {
           "Lines": {
-            "13": 5
+            "13": 4
           },
           "Branches": []
         },
@@ -2099,7 +2099,7 @@
         },
         "System.Void Mtogo.LegacyMenu.Api.Services.MenuService::.ctor(Mtogo.LegacyMenu.Api.Repositories.MenuRepository)": {
           "Lines": {
-            "10": 24
+            "10": 22
           },
           "Branches": []
         }
@@ -2109,7 +2109,7 @@
       "Mtogo.LegacyMenu.Api.Repositories.MenuRepository": {
         "System.Threading.Tasks.Task`1<System.Boolean> Mtogo.LegacyMenu.Api.Repositories.MenuRepository::RestaurantExists(System.Guid,System.Threading.CancellationToken)": {
           "Lines": {
-            "14": 5
+            "14": 4
           },
           "Branches": []
         },
@@ -2127,7 +2127,7 @@
         },
         "System.Void Mtogo.LegacyMenu.Api.Repositories.MenuRepository::.ctor(Mtogo.LegacyMenu.Api.Data.LegacyMenuDbContext)": {
           "Lines": {
-            "11": 24
+            "11": 22
           },
           "Branches": []
         }
@@ -2181,7 +2181,7 @@
       "Mtogo.LegacyMenu.Api.Data.LegacyMenuDbContext": {
         "Microsoft.EntityFrameworkCore.DbSet`1<Mtogo.LegacyMenu.Api.Models.Restaurant> Mtogo.LegacyMenu.Api.Data.LegacyMenuDbContext::get_Restaurants()": {
           "Lines": {
-            "10": 19
+            "10": 18
           },
           "Branches": []
         },
@@ -2203,7 +2203,7 @@
         },
         "System.Void Mtogo.LegacyMenu.Api.Data.LegacyMenuDbContext::.ctor(Microsoft.EntityFrameworkCore.DbContextOptions`1<Mtogo.LegacyMenu.Api.Data.LegacyMenuDbContext>)": {
           "Lines": {
-            "8": 36
+            "8": 34
           },
           "Branches": []
         }
@@ -2283,7 +2283,7 @@
       "Mtogo.LegacyMenu.Api.Controllers.MenuController": {
         "System.Void Mtogo.LegacyMenu.Api.Controllers.MenuController::.ctor(Mtogo.LegacyMenu.Api.Services.MenuService)": {
           "Lines": {
-            "12": 10
+            "12": 8
           },
           "Branches": []
         }
@@ -2299,10 +2299,10 @@
       "Mtogo.LegacyMenu.Api.Controllers.MenuController/<GetMenu>d__2": {
         "System.Void Mtogo.LegacyMenu.Api.Controllers.MenuController/<GetMenu>d__2::MoveNext()": {
           "Lines": {
-            "17": 3,
-            "18": 2,
+            "17": 2,
+            "18": 1,
             "20": 1,
-            "22": 3
+            "22": 2
           },
           "Branches": [
             {
@@ -2311,7 +2311,7 @@
               "EndOffset": 141,
               "Path": 0,
               "Ordinal": 0,
-              "Hits": 2
+              "Hits": 1
             },
             {
               "Line": 17,

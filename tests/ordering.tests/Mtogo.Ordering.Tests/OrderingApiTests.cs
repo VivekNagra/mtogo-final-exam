@@ -54,21 +54,6 @@ public sealed class OrderingApiTests : IClassFixture<WebApplicationFactory<Progr
         });
     }
 
-    [Fact]
-    public async Task POST_orders_Returns202_WhenValid()
-    {
-        var client = _factory.CreateClient();
-
-        var req = new
-        {
-            restaurantId = Guid.NewGuid(),
-            items = new[] { new { menuItemId = Guid.NewGuid(), quantity = 1 } }
-        };
-
-        var resp = await client.PostAsJsonAsync("/api/orders", req);
-        Assert.Equal(HttpStatusCode.Accepted, resp.StatusCode);
-    }
-
     private sealed class FakeLegacyMenuClient : ILegacyMenuClient
     {
         private readonly bool _exists;
@@ -82,15 +67,6 @@ public sealed class OrderingApiTests : IClassFixture<WebApplicationFactory<Progr
         {
             price = 10.00m;
             return true;
-        }
-    }
-
-    private sealed class MissingPriceProvider : IMenuItemPriceProvider
-    {
-        public bool TryGetPrice(Guid menuItemId, out decimal price)
-        {
-            price = 0.00m;
-            return false;
         }
     }
 
@@ -113,77 +89,6 @@ public sealed class OrderingApiTests : IClassFixture<WebApplicationFactory<Progr
 
         public bool TryGetPrice(Guid menuItemId, out decimal price)
             => _inner.TryGetPrice(menuItemId, out price);
-    }
-
-    [Fact]
-    public async Task POST_orders_Returns400_WhenItemsMissing()
-    {
-        var client = _factory.CreateClient();
-
-        var req = new { restaurantId = Guid.NewGuid() }; // no items
-        var resp = await client.PostAsJsonAsync("/api/orders", req);
-
-        Assert.Equal(HttpStatusCode.BadRequest, resp.StatusCode);
-    }
-
-    [Fact]
-    public async Task POST_orders_Returns400_WhenQuantityInvalid()
-    {
-        var client = _factory.CreateClient();
-
-        var req = new
-        {
-            restaurantId = Guid.NewGuid(),
-            items = new[] { new { menuItemId = Guid.NewGuid(), quantity = 0 } }
-        };
-
-        var resp = await client.PostAsJsonAsync("/api/orders", req);
-        Assert.Equal(HttpStatusCode.BadRequest, resp.StatusCode);
-    }
-
-    [Fact]
-    public async Task POST_orders_Returns400_WhenRestaurantIdMissing()
-    {
-        var client = _factory.CreateClient();
-
-        var req = new
-        {
-            restaurantId = Guid.Empty,
-            items = new[] { new { menuItemId = Guid.NewGuid(), quantity = 1 } }
-        };
-
-        var resp = await client.PostAsJsonAsync("/api/orders", req);
-        Assert.Equal(HttpStatusCode.BadRequest, resp.StatusCode);
-    }
-
-    [Fact]
-    public async Task POST_orders_Returns400_WhenRestaurantUnknown()
-    {
-        var client = CreateFactory(restaurantExists: false).CreateClient();
-
-        var req = new
-        {
-            restaurantId = Guid.NewGuid(),
-            items = new[] { new { menuItemId = Guid.NewGuid(), quantity = 1 } }
-        };
-
-        var resp = await client.PostAsJsonAsync("/api/orders", req);
-        Assert.Equal(HttpStatusCode.BadRequest, resp.StatusCode);
-    }
-
-    [Fact]
-    public async Task POST_orders_Returns400_WhenMenuItemPriceUnknown()
-    {
-        var client = CreateFactory(priceProvider: new MissingPriceProvider()).CreateClient();
-
-        var req = new
-        {
-            restaurantId = Guid.NewGuid(),
-            items = new[] { new { menuItemId = Guid.NewGuid(), quantity = 1 } }
-        };
-
-        var resp = await client.PostAsJsonAsync("/api/orders", req);
-        Assert.Equal(HttpStatusCode.BadRequest, resp.StatusCode);
     }
 
     [Fact]

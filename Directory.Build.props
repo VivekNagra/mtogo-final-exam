@@ -1,0 +1,10 @@
+<Project>
+  <PropertyGroup>
+    <!-- Static analysis / "FxCop" equivalent in modern .NET -->
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisLevel>latest</AnalysisLevel>
+
+    <!-- Keep warnings visible, but do not fail the build right now -->
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+</Project>

@@ -1,24 +1,4 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <RunSettings>
-  <DataCollectionRunSettings>
-    <DataCollectors>
-      <DataCollector friendlyName="XPlat Code Coverage">
-        <Configuration>
-          <Format>cobertura,json</Format>
-          
-          <ExcludeByAttribute>Obsolete,GeneratedCodeAttribute,CompilerGeneratedAttribute</ExcludeByAttribute>
-          
-          <ExcludeByFile>**/Migrations/*.cs,**/Program.cs,**/OpenApi*.cs,**/obj/**,**/*.g.cs,**/*.g.i.cs,**/*AssemblyInfo*.cs</ExcludeByFile>
-          
-          <Exclude>
-            [Microsoft.AspNetCore.OpenApi*]*,
-            [System.*]*,
-            [*]*Generated*, 
-            [*]*Migrations*,
-            [*]*Program*
-          </Exclude>
-        </Configuration>
-      </DataCollector>
-    </DataCollectors>
-  </DataCollectionRunSettings>
+  <!-- Intentionally empty: coverage is collected via coverlet.msbuild -->
 </RunSettings>

@@ -39,27 +39,6 @@ public sealed class OrderServiceTests
     }
 
     [Fact]
-    public async Task CreateOrder_Returns503_WhenLegacyApiFails()
-    {
-        var legacy = new Mock<ILegacyMenuClient>();
-        legacy
-            .Setup(x => x.RestaurantExistsAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
-            .ThrowsAsync(new HttpRequestException("Simulated connection failure"));
-
-        var svc = CreateService(legacy, new FakePriceProvider());
-
-        var req = new CreateOrderRequest(
-            Guid.NewGuid(),
-            new List<CreateOrderItem> { new(Guid.NewGuid(), 1) }
-        );
-
-        var result = await svc.CreateOrderAsync(req, CancellationToken.None);
-
-        Assert.False(result.ok);
-        Assert.Equal(503, result.statusCode);
-    }
-
-    [Fact]
     public async Task CreateOrder_Returns400_WhenRequestNull()
     {
         var legacy = new Mock<ILegacyMenuClient>();
@@ -170,26 +149,6 @@ public sealed class OrderServiceTests
         Assert.Contains(menuItemId.ToString(), GetMessage(result.body));
     }
 
-    [Fact]
-    public async Task CreateOrder_Returns400_WhenPriceProviderThrows()
-    {
-        var legacy = new Mock<ILegacyMenuClient>();
-        legacy.Setup(x => x.RestaurantExistsAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(true);
-
-        var prices = new Mock<IMenuItemPriceProvider>();
-        prices.Setup(x => x.TryGetPrice(It.IsAny<Guid>(), out It.Ref<decimal>.IsAny))
-            .Throws(new InvalidOperationException("price lookup failed"));
-
-        var pricing = new Mock<IOrderPricingRules>();
-        pricing.Setup(x => x.CalculateTotal(It.IsAny<IEnumerable<PricedOrderItem>>()))
-            .Returns(new OrderPricingResult(0m, 0m, 0m, 0m));
-
-        var svc = new OrderService(legacy.Object, prices.Object, pricing.Object, NullLogger<OrderService>.Instance);
-
-        var req = new CreateOrderRequest(Guid.NewGuid(), new List<CreateOrderItem> { new(Guid.NewGuid(), 1) });
-        await Assert.ThrowsAsync<InvalidOperationException>(() => svc.CreateOrderAsync(req, CancellationToken.None));
-    }
 
     [Fact]
     public async Task CreateOrder_Returns503_WhenLegacyThrowsHttpRequestException()

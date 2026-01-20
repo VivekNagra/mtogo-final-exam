@@ -23,32 +23,37 @@ jobs:
       - name: Restore
         run: dotnet restore mtogo-final-exam.sln
 
-      - name: Build (Release)
-        run: dotnet build mtogo-final-exam.sln --no-restore -c Release
+      - name: Static analysis (analyzers)
+        run: dotnet build mtogo-final-exam.sln --no-restore -c Release -warnaserror:false
 
       - name: Verify formatting
         run: dotnet format mtogo-final-exam.sln --verify-no-changes
 
       - name: Test + Coverage Gate (Ordering)
         run: |
-          dotnet test tests/ordering.tests/Mtogo.Ordering.Tests/Mtogo.Ordering.Tests.csproj -c Release \
-            --settings coverlet.runsettings \
+          dotnet test tests/ordering.tests/Mtogo.Ordering.Tests/Mtogo.Ordering.Tests.csproj -c Release --no-build \
             /p:CollectCoverage=true \
+            /p:CoverletOutput=TestResults/ \
+            /p:CoverletOutputFormat="cobertura,json" \
+            /p:ExcludeByAttribute="Obsolete,GeneratedCodeAttribute,CompilerGeneratedAttribute" \
+            /p:ExcludeByFile="**/Migrations/*.cs,**/Program.cs,**/OpenApi*.cs,**/obj/**,**/*.g.cs,**/*.g.i.cs,**/*AssemblyInfo*.cs" \
             /p:Threshold=30 \
             /p:ThresholdType=line
 
       - name: Test + Coverage Gate (LegacyMenu)
         run: |
-          dotnet test tests/legacy-menu.tests/Mtogo.LegacyMenu.Tests/Mtogo.LegacyMenu.Tests.csproj -c Release \
-            --settings coverlet.runsettings \
+          dotnet test tests/legacy-menu.tests/Mtogo.LegacyMenu.Tests/Mtogo.LegacyMenu.Tests.csproj -c Release --no-build \
             /p:CollectCoverage=true \
+            /p:CoverletOutput=TestResults/ \
+            /p:CoverletOutputFormat="cobertura,json" \
+            /p:ExcludeByAttribute="Obsolete,GeneratedCodeAttribute,CompilerGeneratedAttribute" \
+            /p:ExcludeByFile="**/Migrations/*.cs,**/Program.cs,**/OpenApi*.cs,**/obj/**,**/*.g.cs,**/*.g.i.cs,**/*AssemblyInfo*.cs" \
             /p:Threshold=25 \
             /p:ThresholdType=line
-
 
       - name: Upload coverage reports
         uses: actions/upload-artifact@v4
         with:
           name: coverage-cobertura
           path: |
-            **/TestResults/**/coverage.cobertura.xml
+            **/TestResults/coverage.cobertura.xml

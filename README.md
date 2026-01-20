@@ -86,7 +86,12 @@ dotnet test mtogo-final-exam.sln
 
 ```powershell
 docker run --rm -v ${PWD}:/src -w /src mcr.microsoft.com/dotnet/sdk:10.0 `
-  dotnet test mtogo-final-exam.sln -c Release --settings coverlet.runsettings /p:CollectCoverage=true
+  dotnet test mtogo-final-exam.sln -c Release `
+    /p:CollectCoverage=true `
+    /p:CoverletOutput=TestResults/ `
+    /p:CoverletOutputFormat="cobertura,json" `
+    /p:ExcludeByAttribute="Obsolete,GeneratedCodeAttribute,CompilerGeneratedAttribute" `
+    /p:ExcludeByFile="**/Migrations/*.cs,**/Program.cs,**/OpenApi*.cs,**/obj/**,**/*.g.cs,**/*.g.i.cs,**/*AssemblyInfo*.cs"
 ```
 
 ### CI checks
@@ -95,7 +100,7 @@ CI runs on pushes to `main` and on pull requests:
 
 * restore + build (Release)
 * formatting check (`dotnet format --verify-no-changes`)
-* tests + coverage gate (current threshold is **15**)
+* tests + coverage gate (**Ordering 30% line**, **LegacyMenu 25% line**)
 * CodeQL scan
 
 Workflow file: `.github/workflows/ci.yml`
