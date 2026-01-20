@@ -13,14 +13,16 @@
 
             <!-- Exclude bootstrapping + EF plumbing (noise early in the project) -->
             <Exclude>
-            [*]Program,
-            [*]*DbContext*,
-            [*]*DbInitializer*,
-            [*]*Seed*,
-            [*]*Migration*,
-            [Mtogo.LegacyMenu.Api]Mtogo.LegacyMenu.Api.Controllers.*,
-            [Mtogo.LegacyMenu.Api]Mtogo.LegacyMenu.Api.Data.*,
-            [Mtogo.LegacyMenu.Api]Mtogo.LegacyMenu.Api.Models.*
+                [*]Program,
+                [*]*DbContext*,
+                [*]*Migrations*,
+                [*]*Controllers*, [*]*Data*,
+                [*]*Seed*,
+                [*]*DbInitializer*,
+  
+                [Microsoft.AspNetCore.OpenApi*]*,
+                [System.*]*,
+                [*]*Generated*
             </Exclude>
 
         </Configuration>

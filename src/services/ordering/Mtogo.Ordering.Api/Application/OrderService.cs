@@ -34,8 +34,25 @@ public sealed class OrderService
         if (req.Items.Any(i => i.Quantity <= 0))
             return (false, 400, new { message = "quantity must be > 0" });
 
-        // Integration with legacy (this is also a taint sink boundary: untrusted input flows into downstream HTTP call)
-        var exists = await _legacy.RestaurantExistsAsync(req.RestaurantId, ct);
+        // Integration boundary: untrusted input flows into downstream HTTP call (taint sink boundary)
+        bool exists;
+        try
+        {
+            exists = await _legacy.RestaurantExistsAsync(req.RestaurantId, ct);
+        }
+        catch (HttpRequestException ex)
+        {
+            // Do not log request body; log stable identifiers only
+            _log.LogWarning(ex, "Legacy menu unavailable when validating RestaurantId {RestaurantId}", req.RestaurantId);
+            return (false, 503, new { message = "Legacy menu unavailable" });
+        }
+        catch (TaskCanceledException ex)
+        {
+            // Covers timeouts (HttpClient timeouts commonly manifest as TaskCanceledException)
+            _log.LogWarning(ex, "Legacy menu timeout when validating RestaurantId {RestaurantId}", req.RestaurantId);
+            return (false, 503, new { message = "Legacy menu unavailable" });
+        }
+
         if (!exists)
             return (false, 400, new { message = "Unknown restaurant (legacy menu)" });
 
