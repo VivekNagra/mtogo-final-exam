@@ -7,7 +7,11 @@ services:
       POSTGRES_DB: mtogo
     ports:
       - "55433:5432"
-
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mtogo -d mtogo -h localhost"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
   rabbitmq:
     image: rabbitmq:3-management
     ports:
@@ -22,7 +26,8 @@ services:
       ASPNETCORE_URLS: http://0.0.0.0:8080
       ConnectionStrings__Db: Host=postgres;Port=5432;Database=mtogo;Username=mtogo;Password=mtogo
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
     ports:
       - "8081:8080"
 

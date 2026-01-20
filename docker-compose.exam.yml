@@ -1,0 +1,5 @@
+name: mtogo-exam
+
+include:
+  - deploy/compose/docker-compose.yml
+  - deploy/observability/docker-compose.observability.yml

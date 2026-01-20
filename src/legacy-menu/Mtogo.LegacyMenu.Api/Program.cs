@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Mtogo.LegacyMenu.Api.Data;
 using Mtogo.LegacyMenu.Api.Repositories;
 using Mtogo.LegacyMenu.Api.Services;
+using Prometheus;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +26,9 @@ builder.Services.AddScoped<LegacyMenuDbInitializer>();
 
 var app = builder.Build();
 
+app.UseHttpMetrics();
+
+app.MapMetrics("/metrics");
 app.MapGet("/health", () => Results.Ok(new { status = "ok", service = "legacy-menu" }));
 app.MapControllers();
 

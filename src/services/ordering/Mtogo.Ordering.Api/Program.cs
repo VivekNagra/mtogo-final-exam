@@ -1,6 +1,7 @@
 using Mtogo.Ordering.Api.Application;
 using Mtogo.Ordering.Api.Domain;
 using Mtogo.Ordering.Api.Integration;
+using Prometheus;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +21,9 @@ builder.Services.AddScoped<OrderService>();
 
 var app = builder.Build();
 
+app.UseHttpMetrics();
+
+app.MapMetrics("/metrics");
 app.UseSwagger();
 app.UseSwaggerUI();
 

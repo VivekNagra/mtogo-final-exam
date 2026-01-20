@@ -34,6 +34,12 @@ From repo root:
 docker compose -f ./deploy/compose/docker-compose.yml up --build
 ```
 
+Optional: also start the observability stack (Prometheus + Grafana):
+
+```bash
+docker compose -f ./deploy/compose/docker-compose.yml -f ./deploy/observability/docker-compose.observability.yml up --build
+```
+
 ### 2) Check that services are up (through the gateway)
 
 ```powershell
@@ -47,13 +53,21 @@ Expected: both return something like:
 { "status": "ok", "service": "..." }
 ```
 
-### 3) Call the legacy menu endpoint (through the gateway)
+### 3) Verify Prometheus metrics
+
+```powershell
+Invoke-RestMethod http://localhost:8080/metrics
+```
+
+Expected: Prometheus text output (e.g., `http_requests_received_total`).
+
+### 4) Call the legacy menu endpoint (through the gateway)
 
 ```powershell
 Invoke-RestMethod http://localhost:8080/legacy-menu/api/legacy/menu/11111111-1111-1111-1111-111111111111
 ```
 
-### 4) Create an order (through the gateway)
+### 5) Create an order (through the gateway)
 
 ```powershell
 $body = @{
