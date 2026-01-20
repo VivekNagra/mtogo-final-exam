@@ -29,13 +29,22 @@ jobs:
       - name: Verify formatting
         run: dotnet format mtogo-final-exam.sln --verify-no-changes
 
-      - name: Test + Coverage Gate
+      - name: Test + Coverage Gate (Ordering)
         run: |
-          dotnet test mtogo-final-exam.sln -c Release \
+          dotnet test tests/ordering.tests/Mtogo.Ordering.Tests/Mtogo.Ordering.Tests.csproj -c Release \
+            --settings coverlet.runsettings \
+            /p:CollectCoverage=true \
+            /p:Threshold=25 \
+            /p:ThresholdType=line
+
+      - name: Test + Coverage Gate (LegacyMenu)
+        run: |
+          dotnet test tests/legacy-menu.tests/Mtogo.LegacyMenu.Tests/Mtogo.LegacyMenu.Tests.csproj -c Release \
             --settings coverlet.runsettings \
             /p:CollectCoverage=true \
             /p:Threshold=15 \
             /p:ThresholdType=line
+
 
       - name: Upload coverage reports
         uses: actions/upload-artifact@v4
