@@ -1,6 +1,6 @@
 {
-  "name": "Large Systems Collaboration Template (.NET 8)",
-  "image": "mcr.microsoft.com/devcontainers/dotnet:1-8.0",
+  "name": "Large Systems Collaboration Template (.NET 10)",
+  "image": "mcr.microsoft.com/devcontainers/dotnet:1-10.0",
   "features": {},
   "customizations": {
     "vscode": {
