@@ -150,6 +150,44 @@ Docs: `docs/software-quality.md`
 
 ---
 
+## Kubernetes (minimal evidence)
+
+Where it is:
+- Manifests: `deploy/k8s/`
+
+How I applied it (in this repo):
+- I added a minimal set of manifests that mirrors the Docker Compose setup: namespace + infrastructure (Postgres, RabbitMQ) + the three services (legacy-menu, ordering, gateway).
+- The goal is evidence of deployability and separation, not a full production cluster setup.
+
+Optional run (local cluster):
+```bash
+kubectl apply -f deploy/k8s/namespace.yml
+kubectl apply -f deploy/k8s/postgres.yml
+kubectl apply -f deploy/k8s/rabbitmq.yml
+kubectl apply -f deploy/k8s/legacy-menu.yml
+kubectl apply -f deploy/k8s/ordering.yml
+kubectl apply -f deploy/k8s/gateway.yml
+```
+
+---
+
+## Docker Swarm (minimal evidence)
+
+Where it is:
+- Stack file: `deploy/swarm/stack.yml`
+
+How I applied it (in this repo):
+- I added a minimal Swarm stack file that describes the same services as Compose, to show how the slice could be deployed with Swarm concepts (stack deploy, scaling/rolling updates if needed).
+- This is kept optional for the exam demo.
+
+Optional run (local):
+```bash
+docker swarm init
+docker stack deploy -c deploy/swarm/stack.yml mtogo
+```
+
+---
+
 ## Repo structure (overview)
 
 ```text

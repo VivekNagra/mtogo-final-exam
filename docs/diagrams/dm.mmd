@@ -1,0 +1,49 @@
+classDiagram
+    direction LR
+
+    namespace LegacyMenu_Context {
+        class Restaurant {
+            +Guid Id
+            +string Name
+        }
+
+        class MenuItem {
+            +Guid Id
+            +Guid RestaurantId
+            +string Name
+            +decimal Price
+        }
+    }
+
+    namespace Ordering_Context {
+        class Order {
+            +Guid Id
+            +Guid RestaurantId
+            +List~OrderItem~ Items
+            +Money Subtotal
+            +Money DeliveryFee
+            +Money Discount
+            +Money Total
+            +string Status
+            +CalculateTotal()
+        }
+
+        class OrderItem {
+            +Guid MenuItemId
+            +int Quantity
+            +decimal UnitPrice
+        }
+        
+        class PricingService {
+            <<Domain Service>>
+            +CalculateTotal(items)
+        }
+    }
+
+    %% Relationships
+    Restaurant "1" -- "*" MenuItem : Owns
+    Order "1" *-- "*" OrderItem : Contains
+    
+    %% Cross-Context References (by ID only)
+    Order ..> Restaurant : References (Id)
+    OrderItem ..> MenuItem : References (Id)
