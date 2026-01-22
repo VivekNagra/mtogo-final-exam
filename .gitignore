@@ -25,3 +25,5 @@ Thumbs.db
 # NuGet
 **/packages/
 *.nupkg
+
+.fake
