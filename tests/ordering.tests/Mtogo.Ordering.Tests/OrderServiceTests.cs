@@ -33,12 +33,12 @@ public class OrderServiceTests
 
         _legacyMock.Setup(x => x.RestaurantExistsAsync(restaurantId, It.IsAny<CancellationToken>()))
             .ReturnsAsync(true);
-        
+
         _priceMock.Setup(x => x.TryGetPrice(itemId, out It.Ref<decimal>.IsAny))
             .Callback(new TryGetPriceCallback((Guid id, out decimal p) => p = 10m))
             .Returns(true);
 
-        
+
         _pricingMock.Setup(x => x.CalculateTotal(It.IsAny<IEnumerable<PricedOrderItem>>()))
             .Returns(new OrderPricingResult(10m, 0m, 0m, 10m));
 
@@ -50,10 +50,10 @@ public class OrderServiceTests
         // Assert
         Assert.True(ok);
         Assert.Equal(202, status);
-        
+
         _publishMock.Verify(x => x.Publish(
-            It.Is<OrderPlacedEvent>(e => e.RestaurantId == restaurantId), 
-            It.IsAny<CancellationToken>()), 
+            It.Is<OrderPlacedEvent>(e => e.RestaurantId == restaurantId),
+            It.IsAny<CancellationToken>()),
             Times.Once);
     }
 

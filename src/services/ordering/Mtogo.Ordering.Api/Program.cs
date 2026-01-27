@@ -15,7 +15,7 @@ builder.Services.AddMassTransit(x =>
     {
         var rabbitHost = builder.Configuration["RabbitMq:Host"] ?? "localhost";
         cfg.Host(rabbitHost, "/");
-        cfg.ConfigureEndpoints(context); 
+        cfg.ConfigureEndpoints(context);
     });
 });
 

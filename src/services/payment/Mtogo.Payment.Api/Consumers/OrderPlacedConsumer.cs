@@ -15,12 +15,12 @@ public class OrderPlacedConsumer : IConsumer<OrderPlacedEvent>
     public Task Consume(ConsumeContext<OrderPlacedEvent> context)
     {
         var message = context.Message;
-        
-        
-        _logger.LogInformation("SAGA STEP: Processing payment for Order {OrderId}. Amount: {Amount}", 
+
+
+        _logger.LogInformation("SAGA STEP: Processing payment for Order {OrderId}. Amount: {Amount}",
             message.OrderId, message.TotalPrice);
 
-        
+
         return Task.CompletedTask;
     }
 }
