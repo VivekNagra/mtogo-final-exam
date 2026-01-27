@@ -2,11 +2,22 @@ using Mtogo.Ordering.Api.Application;
 using Mtogo.Ordering.Api.Domain;
 using Mtogo.Ordering.Api.Integration;
 using Prometheus;
+using MassTransit;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+// Modern .NET 10 way to provide API documentation
+builder.Services.AddOpenApi();
+
+builder.Services.AddMassTransit(x =>
+{
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        var rabbitHost = builder.Configuration["RabbitMq:Host"] ?? "localhost";
+        cfg.Host(rabbitHost, "/");
+        cfg.ConfigureEndpoints(context); 
+    });
+});
 
 builder.Services.AddHttpClient<LegacyMenuClient>(client =>
 {
@@ -22,10 +33,10 @@ builder.Services.AddScoped<OrderService>();
 var app = builder.Build();
 
 app.UseHttpMetrics();
-
 app.MapMetrics("/metrics");
-app.UseSwagger();
-app.UseSwaggerUI();
+
+// Map the OpenAPI JSON endpoint 
+app.MapOpenApi();
 
 app.MapGet("/health", () => Results.Ok(new { status = "ok", service = "ordering" }));
 
