@@ -6,6 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
+using MassTransit;
+using Moq;
 using Mtogo.Ordering.Api.Application;
 using Mtogo.Ordering.Api.Domain;
 using Mtogo.Ordering.Api.Integration;
@@ -20,10 +22,13 @@ public sealed class OrderingApiTests : IClassFixture<WebApplicationFactory<Progr
     {
         _factory = factory.WithWebHostBuilder(builder =>
         {
+            builder.UseEnvironment("Testing");
             builder.ConfigureLogging(logging => logging.ClearProviders());
 
             builder.ConfigureServices(services =>
             {
+                services.AddSingleton(Mock.Of<IPublishEndpoint>());
+
                 // Replace legacy client with deterministic fake for integration tests
                 services.AddSingleton<ILegacyMenuClient>(new FakeLegacyMenuClient(true));
                 services.AddSingleton<IMenuItemPriceProvider>(new FakePriceProvider());
@@ -39,8 +44,12 @@ public sealed class OrderingApiTests : IClassFixture<WebApplicationFactory<Progr
     {
         return _factory.WithWebHostBuilder(builder =>
         {
+            builder.UseEnvironment("Testing");
             builder.ConfigureServices(services =>
             {
+                services.RemoveAll<IPublishEndpoint>();
+                services.AddSingleton(Mock.Of<IPublishEndpoint>());
+
                 services.RemoveAll<ILegacyMenuClient>();
                 services.RemoveAll<IMenuItemPriceProvider>();
                 if (pricingRules is not null)

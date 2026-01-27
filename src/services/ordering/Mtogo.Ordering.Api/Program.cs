@@ -9,20 +9,25 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenApi();
 
-builder.Services.AddMassTransit(x =>
+// Tests run in-process (WebApplicationFactory) without external infrastructure.
+// Keep it simple: don't require RabbitMQ for tests.
+if (!builder.Environment.IsEnvironment("Testing"))
 {
-    x.AddConsumer<PaymentFailedConsumer>();
-
-    x.UsingRabbitMq((context, cfg) =>
+    builder.Services.AddMassTransit(x =>
     {
-        // Use 'rabbitmq' for Docker, 'localhost' for local dev
-        var rabbitHost = builder.Configuration["RabbitMq:Host"] ?? "rabbitmq";
-        cfg.Host(rabbitHost, "/");
-        
-        // Best Practice: Auto-configure endpoints for any registered consumers
-        cfg.ConfigureEndpoints(context); 
+        x.AddConsumer<PaymentFailedConsumer>();
+
+        x.UsingRabbitMq((context, cfg) =>
+        {
+            // Use 'rabbitmq' for Docker, 'localhost' for local dev
+            var rabbitHost = builder.Configuration["RabbitMq:Host"] ?? "rabbitmq";
+            cfg.Host(rabbitHost, "/");
+
+            // Best Practice: Auto-configure endpoints for any registered consumers
+            cfg.ConfigureEndpoints(context);
+        });
     });
-});
+}
 
 builder.Services.AddHttpClient<LegacyMenuClient>(client =>
 {

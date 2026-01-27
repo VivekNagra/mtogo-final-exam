@@ -30,6 +30,10 @@ Unit tests focus on deterministic logic and edge cases:
   - Integration boundary behavior: unknown restaurant rejected
   - Dependency resilience: legacy service unavailable → mapped response (503)
 
+- **Payment consumer logic** (`OrderPlacedConsumerTests`)
+  - Demo rule: totals > 500 publish `PaymentFailedEvent`
+  - Totals ≤ 500 do not publish failure
+
 - **Legacy menu service logic** (`MenuServiceTests`)
   - Restaurant existence true/false
   - Menu retrieval: items returned / empty menu
@@ -58,8 +62,9 @@ The CI pipeline runs on every push to `main` and on pull requests:
 - **Format verification**
   - `dotnet format mtogo-final-exam.sln --verify-no-changes`
 - **Test execution + coverage gate**
-  - `dotnet test mtogo-final-exam.sln -c Release /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat="cobertura,json" /p:ExcludeByAttribute="Obsolete,GeneratedCodeAttribute,CompilerGeneratedAttribute" /p:ExcludeByFile="**/Migrations/*.cs,**/Program.cs,**/OpenApi*.cs,**/obj/**,**/*.g.cs,**/*.g.i.cs,**/*AssemblyInfo*.cs"`
-  - Coverage threshold is enforced (Ordering **30% line**, LegacyMenu **25% line**).
+  - CI runs coverage gates per test project (see `.github/workflows/ci.yml`).
+  - Coverage threshold is enforced (Ordering **65% line**, LegacyMenu **65% line**, Payment **65% line**).
+  - Note: the gate uses **total line coverage** (`ThresholdStat=total`) so shared libraries (like `Mtogo.Contracts`) do not fail the gate on their own.
 
 Coverage reports (`coverage.cobertura.xml`) are uploaded as workflow artifacts so an examiner can inspect them from GitHub Actions.
 
@@ -67,37 +72,49 @@ Coverage reports (`coverage.cobertura.xml`) are uploaded as workflow artifacts s
 
 ## 4. Coverage evidence (Docker-run, CI-equivalent)
 
-To ensure reproducibility (and to avoid Windows-specific execution policy issues), the repository can run tests and collect coverage using the official .NET SDK container. This matches what the CI environment would execute.
+To ensure reproducibility (and to avoid Windows policies that can block running locally), the repo can run tests + coverage in the official .NET SDK container. This matches CI more closely.
 
-**Command (PowerShell):**
+**Commands (PowerShell):**
 ```powershell
 docker run --rm -v ${PWD}:/src -w /src mcr.microsoft.com/dotnet/sdk:10.0 `
-  dotnet test mtogo-final-exam.sln -c Release `
-    /p:CollectCoverage=true `
-    /p:CoverletOutput=TestResults/ `
-    /p:CoverletOutputFormat="cobertura,json" `
-    /p:ExcludeByAttribute="Obsolete,GeneratedCodeAttribute,CompilerGeneratedAttribute" `
-    /p:ExcludeByFile="**/Migrations/*.cs,**/Program.cs,**/OpenApi*.cs,**/obj/**,**/*.g.cs,**/*.g.i.cs,**/*AssemblyInfo*.cs"
+  dotnet test tests/ordering.tests/Mtogo.Ordering.Tests/Mtogo.Ordering.Tests.csproj -c Release `
+    /p:CollectCoverage=true /p:CoverletOutput=TestResults/ordering- /p:Threshold=65 /p:ThresholdType=line /p:ThresholdStat=total
+
+docker run --rm -v ${PWD}:/src -w /src mcr.microsoft.com/dotnet/sdk:10.0 `
+  dotnet test tests/legacy-menu.tests/Mtogo.LegacyMenu.Tests/Mtogo.LegacyMenu.Tests.csproj -c Release `
+    /p:CollectCoverage=true /p:CoverletOutput=TestResults/legacy- /p:Threshold=65 /p:ThresholdType=line /p:ThresholdStat=total
+
+docker run --rm -v ${PWD}:/src -w /src mcr.microsoft.com/dotnet/sdk:10.0 `
+  dotnet test tests/payment.tests/Mtogo.Payment.Tests/Mtogo.Payment.Tests.csproj -c Release `
+    /p:CollectCoverage=true /p:CoverletOutput=TestResults/payment- /p:Threshold=65 /p:ThresholdType=line /p:ThresholdStat=total
 ````
 
 **Evidence (latest run output):**
 
 ```text
-Passed!  - Failed:     0, Passed:    18, Skipped:     0, Total:    18, Duration: 338 ms - Mtogo.Ordering.Tests.dll (net10.0)
+Passed!  - Failed:     0, Passed:    18, Skipped:     0, Total:    18, Duration: 646 ms - Mtogo.Ordering.Tests.dll (net10.0)
 
 +--------------------+--------+--------+--------+
 | Module             | Line   | Branch | Method |
 +--------------------+--------+--------+--------+
-| Mtogo.Ordering.Api | 26.36% | 8.11%  | 25.64% |
+| Mtogo.Ordering.Api | 82.05% | 100%   | 75%    |
 +--------------------+--------+--------+--------+
 
-Passed!  - Failed:     0, Passed:    10, Skipped:     0, Total:    10, Duration: 526 ms - Mtogo.LegacyMenu.Tests.dll (net10.0)
+Passed!  - Failed:     0, Passed:    13, Skipped:     0, Total:    13, Duration: 691 ms - Mtogo.LegacyMenu.Tests.dll (net10.0)
 
 +----------------------+--------+--------+--------+
 | Module               | Line   | Branch | Method |
 +----------------------+--------+--------+--------+
-| Mtogo.LegacyMenu.Api | 15.46% | 1.85%  | 45.09% |
+| Mtogo.LegacyMenu.Api | 100%   | 100%   | 100%   |
 +----------------------+--------+--------+--------+
+
+Passed!  - Failed:     0, Passed:     2, Skipped:     0, Total:     2, Duration: 1 s - Mtogo.Payment.Tests.dll (net10.0)
+
++-------------------+------+--------+--------+
+| Module            | Line | Branch | Method |
++-------------------+------+--------+--------+
+| Mtogo.Payment.Api | 100% | 100%   | 100%   |
++-------------------+------+--------+--------+
 ```
 
 ---
@@ -200,6 +217,8 @@ docker run --rm -v ${PWD}:/src -w /src mcr.microsoft.com/dotnet/sdk:10.0 `
     /p:ExcludeByAttribute="Obsolete,GeneratedCodeAttribute,CompilerGeneratedAttribute" `
     /p:ExcludeByFile="**/Migrations/*.cs,**/Program.cs,**/OpenApi*.cs,**/obj/**,**/*.g.cs,**/*.g.i.cs,**/*AssemblyInfo*.cs"
 ```
+
+Tip: for the exact CI gates (thresholds), use the commands in section 4.
 
 ### 7.3 Check formatting locally
 

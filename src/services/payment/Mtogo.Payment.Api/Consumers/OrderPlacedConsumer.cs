@@ -20,10 +20,10 @@ public class OrderPlacedConsumer : IConsumer<OrderPlacedEvent>
         if (message.TotalPrice > 500)
         {
             _logger.LogWarning("SAGA STEP: Payment REJECTED for Order {Id} due to high amount", message.OrderId);
-            
+
             await context.Publish(new PaymentFailedEvent(
-                message.OrderId, 
-                "Insufficient funds / Credit limit exceeded", 
+                message.OrderId,
+                "Insufficient funds / Credit limit exceeded",
                 DateTime.UtcNow));
             return;
         }
