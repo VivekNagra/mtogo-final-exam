@@ -1,38 +1,49 @@
 flowchart LR
-  %% C4-style Container diagram (implementation-focused)
+  %% C4-ish Container diagram (SI architecture)
+  classDef person fill:#ffffff,stroke:#333,stroke-width:1px;
   classDef container fill:#f7f7f7,stroke:#333,stroke-width:1px;
-  classDef boundary fill:#fff,stroke:#666,stroke-dasharray: 4 3;
-  classDef client fill:#fff,stroke:#333,stroke-width:1px;
   classDef broker fill:#e1f5fe,stroke:#01579b,stroke-width:2px;
+  classDef db fill:#fff3e0,stroke:#e65100,stroke-width:2px;
+  classDef note fill:#ffffff,stroke:#666,stroke-dasharray: 4 3;
 
-  U[Client\nWeb/Mobile/Postman]:::client
+  U[<<Person>>\nClient\n(Web/Mobile/Postman)]:::person
 
-  subgraph MTOGO["MTOGO System (Implemented Microservices)"]
+  subgraph S["MTOGO System (Composite Integrated System)"]
     direction LR
-    G[API Gateway YARP\nReverse Proxy]:::container
-    O[Ordering Service\nModern Service / Producer]:::container
-    P[Payment Service\nModern Service / Consumer]:::container
-    L[Legacy Menu Service\nLegacy boundary]:::container
-    R[RabbitMQ\nMessage Broker]:::broker
+
+    G[<<Container>>\nAPI Gateway (YARP)\nRouting + Strangler Facade\nASP.NET Core + YARP]:::container
+
+    O[<<Container>>\nOrdering Service (Ordering BC)\nCreate orders + publish events\n.NET Web API]:::container
+    ODB[(<<Database>>\nOrdering Store\nDB / In-Memory)]:::db
+
+    R[<<Message Broker>>\nRabbitMQ\nPub/Sub for domain events\nSaga choreography]:::broker
+
+    P[<<Container>>\nPayment Service (Payment BC)\nProcess payments + publish outcome\n.NET Worker/Web API]:::container
+    PDB[(<<Database>>\nPayment Store\nDB / In-Memory)]:::db
+
+    L[<<Container>>\nLegacy Menu Service (Menu BC - Legacy)\nServe restaurant menu data\n.NET Web API (legacy)]:::container
+    LDB[(<<Database>>\nLegacy Menu Store\nDB / In-Memory)]:::db
+
+    N[Docker Compose\n(local orchestration + service DNS)]:::note
   end
 
+  %% Client entry
   U -->|HTTP| G
+
+  %% Gateway routing
   G -->|HTTP| O
   G -->|HTTP| L
 
-  %% Synchronous Integration (Strangler)
-  O -->|Sync HTTP / Fallback| L
+  %% Datastore ownership
+  O -->|read/write| ODB
+  P -->|read/write| PDB
+  L -->|read/write| LDB
 
-  %% Asynchronous Integration (Saga/EDA)
-  O -->|Publish: OrderPlacedEvent| R
-  R -->|Consume| P
-  P -->|Publish: PaymentFailedEvent| R
-  R -->|Consume: Compensation| O
+  %% Sync integration (Strangler + ACL + fallback)
+  O -->|Sync HTTP (ACL mapping + fallback)| L
 
-  %% Infrastructure
-  D[Docker Compose\nlocal orchestration]:::boundary
-  D -.-> G
-  D -.-> O
-  D -.-> P
-  D -.-> L
-  D -.-> R
+  %% Async integration (Saga / EDA)
+  O -->|Publish OrderPlacedEvent| R
+  R -->|Consume OrderPlacedEvent| P
+  P -->|Publish PaymentSucceededEvent / PaymentFailedEvent| R
+  R -->|Consume Payment* event (continue/compensate)| O
