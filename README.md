@@ -24,6 +24,9 @@ The implementation is intentionally small and demo-friendly: a legacy menu syste
 - **Ordering service (modern service)**: `src/services/ordering/Mtogo.Ordering.Api/`  
   Place order endpoint + validation against legacy menu.
 
+- **Payment service (saga step)**: `src/services/payment/Mtogo.Payment.Api/`  
+  Consumes `OrderPlacedEvent` from RabbitMQ and (for demo) publishes `PaymentFailedEvent` for large orders.
+
 - **Observability**: Prometheus scraping `/metrics` + Grafana dashboard provisioning (Prometheus datasource + an overview dashboard).
 
 I worked alone, but the repository is structured like a team repository, including PR flow, templates, CI, and code scanning. I started from my earlier **large-systems collaboration template** to get a realistic baseline.
@@ -42,6 +45,8 @@ docker compose -f docker-compose.exam.yml up --build
 
 ### 2) Verify services (through the gateway)
 
+Windows (PowerShell):
+
 ```powershell
 Invoke-RestMethod http://localhost:8080/legacy-menu/health
 Invoke-RestMethod http://localhost:8080/ordering/health
@@ -49,13 +54,37 @@ Invoke-RestMethod http://localhost:8080/ordering/health
 
 Expected: both return an OK response (simple status payload).
 
+Payment health (direct):
+
+```powershell
+Invoke-RestMethod http://localhost:8083/health
+```
+
+macOS/Linux (bash):
+
+```bash
+curl -s http://localhost:8080/legacy-menu/health
+curl -s http://localhost:8080/ordering/health
+curl -s http://localhost:8083/health
+```
+
 ### 3) Call legacy menu (through gateway)
+
+Windows (PowerShell):
 
 ```powershell
 Invoke-RestMethod http://localhost:8080/legacy-menu/api/legacy/menu/11111111-1111-1111-1111-111111111111
 ```
 
+macOS/Linux (bash):
+
+```bash
+curl -s http://localhost:8080/legacy-menu/api/legacy/menu/11111111-1111-1111-1111-111111111111
+```
+
 ### 4) Create an order (through gateway)
+
+Windows (PowerShell):
 
 ```powershell
 $body = @{
@@ -68,6 +97,14 @@ $body = @{
 
 Invoke-RestMethod -Method Post -Uri "http://localhost:8080/ordering/api/orders" `
   -ContentType "application/json" -Body $body
+```
+
+macOS/Linux (bash):
+
+```bash
+curl -s -X POST "http://localhost:8080/ordering/api/orders" \
+  -H "Content-Type: application/json" \
+  -d '{"restaurantId":"11111111-1111-1111-1111-111111111111","items":[{"menuItemId":"22222222-2222-2222-2222-222222222222","quantity":1},{"menuItemId":"33333333-3333-3333-3333-333333333333","quantity":1}]}'
 ```
 
 Expected:
@@ -85,6 +122,8 @@ Expected:
 Gateway metrics:     http://localhost:8080/metrics
 Ordering metrics:    http://localhost:8082/metrics
 Legacy metrics:      http://localhost:8081/metrics
+
+Payment health:      http://localhost:8083/health
 
 Prometheus:          http://localhost:9090
 Prometheus targets:  http://localhost:9090/targets

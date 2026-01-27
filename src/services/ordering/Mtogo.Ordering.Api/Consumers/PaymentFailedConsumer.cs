@@ -16,10 +16,10 @@ public class PaymentFailedConsumer : IConsumer<PaymentFailedEvent>
     {
         // In your oral exam, explain that this is where you'd update 
         // the database status to 'Cancelled' or 'Failed'.
-        _logger.LogCritical("SAGA COMPENSATION: Order {Id} is now CANCELLED. Reason: {Reason}", 
-            context.Message.OrderId, 
+        _logger.LogCritical("SAGA COMPENSATION: Order {Id} is now CANCELLED. Reason: {Reason}",
+            context.Message.OrderId,
             context.Message.Reason);
-            
+
         return Task.CompletedTask;
     }
 }
