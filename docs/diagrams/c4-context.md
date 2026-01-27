@@ -1,3 +1,4 @@
+```mermaid
 flowchart TB
   %% C4-style Context (kept simple and honest)
   classDef person fill:#fff,stroke:#333,stroke-width:1px;
@@ -18,3 +19,4 @@ flowchart TB
   N1["Future (not implemented):<br/>• Delivery agent app + bonus rules<br/>• Customer status updates (SMS/app)<br/>• Payment provider integration<br/>• Full customer accounts"]:::ext
   
   S -.-> N1
+```
