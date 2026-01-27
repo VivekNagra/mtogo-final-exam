@@ -12,15 +12,22 @@ public class OrderPlacedConsumer : IConsumer<OrderPlacedEvent>
         _logger = logger;
     }
 
-    public Task Consume(ConsumeContext<OrderPlacedEvent> context)
+    public async Task Consume(ConsumeContext<OrderPlacedEvent> context)
     {
         var message = context.Message;
 
+        // Demo Scenario: simulating a payment failure for large orders
+        if (message.TotalPrice > 500)
+        {
+            _logger.LogWarning("SAGA STEP: Payment REJECTED for Order {Id} due to high amount", message.OrderId);
+            
+            await context.Publish(new PaymentFailedEvent(
+                message.OrderId, 
+                "Insufficient funds / Credit limit exceeded", 
+                DateTime.UtcNow));
+            return;
+        }
 
-        _logger.LogInformation("SAGA STEP: Processing payment for Order {OrderId}. Amount: {Amount}",
-            message.OrderId, message.TotalPrice);
-
-
-        return Task.CompletedTask;
+        _logger.LogInformation("SAGA STEP: Payment APPROVED for Order {Id}", message.OrderId);
     }
 }
