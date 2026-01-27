@@ -1,30 +1,29 @@
 flowchart TB
-  %% Component view inside Ordering Service (conceptual mapping)
-
+  %% Component view inside Ordering Service
   classDef comp fill:#f7f7f7,stroke:#333,stroke-width:1px;
   classDef ext fill:#fff,stroke:#666,stroke-dasharray: 4 3;
 
   subgraph OS["Ordering Service (Mtogo.Ordering.Api)"]
     direction TB
-    API["HTTP API Layer\n(Controllers/Endpoints)"]:::comp
-    APP["Application Layer\n(Use-cases: Place Order)"]:::comp
-    DOM["Domain Model\n(Order, OrderLine, validation rules)"]:::comp
-    INT["Integration Client\n(LegacyMenu HTTP client)"]:::comp
-    ERR["Error handling\n(Dependency failure -> controlled response)"]:::comp
-    LOG["Logging\n(request + dependency outcome)"]:::comp
+    API["HTTP API Layer\n(Endpoints)"]:::comp
+    APP["Application Layer\n(OrderService)"]:::comp
+    DOM["Domain Model\n(Pricing Rules)"]:::comp
+    INT["Integration Client\n(LegacyMenuClient)"]:::comp
+    PUB["MassTransit Publisher\n(IPublishEndpoint)"]:::comp
+    SUB["PaymentFailedConsumer\n(Compensation Listener)"]:::comp
+    ERR["Fallback Handling\n(Try/Catch Pattern)"]:::comp
   end
 
-  LEG["Legacy Menu Service\nHTTP API"]:::ext
+  RMQ["RabbitMQ Broker"]:::ext
+  LEG["Legacy Menu API"]:::ext
 
   API --> APP
   APP --> DOM
   APP --> INT
-  
-  %% Optional: Connect Error/Log to specific flows or keep generic
+  APP --> PUB
   APP --> ERR
-  API --> LOG
   
   INT -->|HTTP| LEG
-
-  %% Note: persistence intentionally not shown as a dedicated component
-  %% unless you actually have a DB/repository abstraction in repo.
+  PUB -->|Events| RMQ
+  RMQ -->|Events| SUB
+  SUB -->|Update Status| APP

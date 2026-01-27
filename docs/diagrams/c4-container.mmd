@@ -1,31 +1,38 @@
 flowchart LR
   %% C4-style Container diagram (implementation-focused)
-
   classDef container fill:#f7f7f7,stroke:#333,stroke-width:1px;
   classDef boundary fill:#fff,stroke:#666,stroke-dasharray: 4 3;
   classDef client fill:#fff,stroke:#333,stroke-width:1px;
+  classDef broker fill:#e1f5fe,stroke:#01579b,stroke-width:2px;
 
   U[Client\nWeb/Mobile/Postman]:::client
 
-  subgraph MTOGO["MTOGO (implemented slice)"]
+  subgraph MTOGO["MTOGO System (Implemented Microservices)"]
     direction LR
-    G[API Gateway YARP\nSingle entry point]:::container
-    O[Ordering Service\nModern service]:::container
+    G[API Gateway YARP\nReverse Proxy]:::container
+    O[Ordering Service\nModern Service / Producer]:::container
+    P[Payment Service\nModern Service / Consumer]:::container
     L[Legacy Menu Service\nLegacy boundary]:::container
+    R[RabbitMQ\nMessage Broker]:::broker
   end
 
   U -->|HTTP| G
   G -->|HTTP| O
   G -->|HTTP| L
 
-  %% Key integration (explicit in repo story)
-  O -->|Sync HTTP| L
+  %% Synchronous Integration (Strangler)
+  O -->|Sync HTTP / Fallback| L
 
-  %% Local runtime
+  %% Asynchronous Integration (Saga/EDA)
+  O -->|Publish: OrderPlacedEvent| R
+  R -->|Consume| P
+  P -->|Publish: PaymentFailedEvent| R
+  R -->|Consume: Compensation| O
+
+  %% Infrastructure
   D[Docker Compose\nlocal orchestration]:::boundary
   D -.-> G
   D -.-> O
+  D -.-> P
   D -.-> L
-
-  %% Future containers (not implemented)
-  F["Future (not implemented):\nNotifications, Delivery, Payments,\nshared data stores, messaging"]:::boundary
+  D -.-> R

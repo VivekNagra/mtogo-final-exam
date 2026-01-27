@@ -1,26 +1,37 @@
-%%{init: { 'theme': 'base', 'themeVariables': { 'background': '#ffffff', 'mainBkg': '#ffffff', 'actorBkg': '#ffffff', 'signalColor': '#333333', 'textColor': '#333333', 'noteBkgColor': '#ffffff'} } }%%
 sequenceDiagram
   autonumber
-  actor Client as Client (Web/Mobile/Postman)
+  actor Client as Client (Postman)
   participant GW as API Gateway (YARP)
   participant ORD as Ordering Service
   participant MENU as Legacy Menu Service
+  participant RMQ as RabbitMQ
+  participant PMT as Payment Service
 
-  Client->>GW: POST /orders (order request)
+  Client->>GW: POST /orders
   GW->>ORD: Forward request (HTTP)
 
-  ORD->>MENU: GET /menu or validate items (HTTP)
+  Note over ORD,MENU: Synchronous Validation (Strangler)
+  ORD->>MENU: GET /menu (Check Restaurant)
   
-  alt Menu validation OK
-    MENU-->>ORD: Menu/items valid
-    ORD-->>GW: 200 OK (order accepted)
-    GW-->>Client: 200 OK
-  else Validation fails (invalid restaurant/item)
-    MENU-->>ORD: Not found / invalid item
-    ORD-->>GW: 400 Bad Request (validation error)
-    GW-->>Client: 400 Bad Request
-  else LegacyMenu unavailable / timeout
-    MENU--xORD: (Connection failed/Timeout)
-    ORD-->>GW: 503 Service Unavailable (dependency failure)
+  alt Legacy Menu Unavailable
+    MENU--xORD: (Timeout/Connection Error)
+    Note right of ORD: Fallback Pattern Triggered
+    ORD-->>GW: 503 Service Unavailable
     GW-->>Client: 503 Service Unavailable
+  else Validation OK
+    MENU-->>ORD: Restaurant Found
+    ORD-->>GW: 202 Accepted (Order Created)
+    GW-->>Client: 202 Accepted
+  end
+
+  Note over ORD,PMT: Asynchronous Saga (Choreography)
+  ORD->>RMQ: Publish OrderPlacedEvent
+  RMQ->>PMT: Deliver OrderPlacedEvent
+  
+  alt Happy Path (Amount <= 500)
+    Note right of PMT: Payment Successful
+  else Failure & Compensation (Amount > 500)
+    PMT->>RMQ: Publish PaymentFailedEvent
+    RMQ->>ORD: Deliver PaymentFailedEvent
+    Note right of ORD: Compensation Logic:<br/>Cancel Order
   end
