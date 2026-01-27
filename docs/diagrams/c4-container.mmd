@@ -1,48 +1,41 @@
 flowchart LR
-  %% C4-ish Container diagram (SI architecture)
   classDef person fill:#ffffff,stroke:#333,stroke-width:1px;
   classDef container fill:#f7f7f7,stroke:#333,stroke-width:1px;
   classDef broker fill:#e1f5fe,stroke:#01579b,stroke-width:2px;
   classDef db fill:#fff3e0,stroke:#e65100,stroke-width:2px;
   classDef note fill:#ffffff,stroke:#666,stroke-dasharray: 4 3;
 
-  U[<<Person>>\nClient\n(Web/Mobile/Postman)]:::person
+  U["Person: Client<br/>Web / Mobile / Postman"]:::person
 
   subgraph S["MTOGO System (Composite Integrated System)"]
     direction LR
 
-    G[<<Container>>\nAPI Gateway (YARP)\nRouting + Strangler Facade\nASP.NET Core + YARP]:::container
+    G["Container: API Gateway (YARP)<br/>Routing + Strangler Facade<br/>ASP.NET Core + YARP"]:::container
 
-    O[<<Container>>\nOrdering Service (Ordering BC)\nCreate orders + publish events\n.NET Web API]:::container
-    ODB[(<<Database>>\nOrdering Store\nDB / In-Memory)]:::db
+    O["Container: Ordering Service (Ordering BC)<br/>Create orders + publish events<br/>.NET Web API"]:::container
+    ODB[("Database: Ordering Store<br/>DB / In-Memory")]:::db
 
-    R[<<Message Broker>>\nRabbitMQ\nPub/Sub for domain events\nSaga choreography]:::broker
+    R["Message Broker: RabbitMQ<br/>Pub/Sub domain events<br/>Saga choreography"]:::broker
 
-    P[<<Container>>\nPayment Service (Payment BC)\nProcess payments + publish outcome\n.NET Worker/Web API]:::container
-    PDB[(<<Database>>\nPayment Store\nDB / In-Memory)]:::db
+    P["Container: Payment Service (Payment BC)<br/>Process payments + publish outcome<br/>.NET Worker/Web API"]:::container
+    PDB[("Database: Payment Store<br/>DB / In-Memory")]:::db
 
-    L[<<Container>>\nLegacy Menu Service (Menu BC - Legacy)\nServe restaurant menu data\n.NET Web API (legacy)]:::container
-    LDB[(<<Database>>\nLegacy Menu Store\nDB / In-Memory)]:::db
+    L["Container: Legacy Menu Service (Menu BC - Legacy)<br/>Serve restaurant menu data<br/>.NET Web API (legacy)"]:::container
+    LDB[("Database: Legacy Menu Store<br/>DB / In-Memory")]:::db
 
-    N[Docker Compose\n(local orchestration + service DNS)]:::note
+    N["Docker Compose<br/>(local orchestration + service DNS)"]:::note
   end
 
-  %% Client entry
   U -->|HTTP| G
-
-  %% Gateway routing
   G -->|HTTP| O
   G -->|HTTP| L
 
-  %% Datastore ownership
   O -->|read/write| ODB
   P -->|read/write| PDB
   L -->|read/write| LDB
 
-  %% Sync integration (Strangler + ACL + fallback)
   O -->|Sync HTTP (ACL mapping + fallback)| L
 
-  %% Async integration (Saga / EDA)
   O -->|Publish OrderPlacedEvent| R
   R -->|Consume OrderPlacedEvent| P
   P -->|Publish PaymentSucceededEvent / PaymentFailedEvent| R
