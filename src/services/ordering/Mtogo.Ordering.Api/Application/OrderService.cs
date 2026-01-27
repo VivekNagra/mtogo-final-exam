@@ -1,5 +1,7 @@
 using Mtogo.Ordering.Api.Domain;
 using Mtogo.Ordering.Api.Integration;
+using Mtogo.Contracts;
+using MassTransit;
 
 namespace Mtogo.Ordering.Api.Application;
 
@@ -9,26 +11,27 @@ public sealed class OrderService
     private readonly IMenuItemPriceProvider _prices;
     private readonly IOrderPricingRules _pricing;
     private readonly ILogger<OrderService> _log;
+    private readonly IPublishEndpoint _publishEndpoint;
 
     public OrderService(
         ILegacyMenuClient legacy,
         IMenuItemPriceProvider prices,
         IOrderPricingRules pricing,
-        ILogger<OrderService> log)
+        ILogger<OrderService> log,
+        IPublishEndpoint publishEndpoint)
     {
         _legacy = legacy;
         _prices = prices;
         _pricing = pricing;
         _log = log;
+        _publishEndpoint = publishEndpoint;
     }
 
     public async Task<(bool ok, int statusCode, object body)> CreateOrderAsync(CreateOrderRequest req, CancellationToken ct)
     {
-        // Defensive guard (helps tests and prevents null reference if binding fails)
         if (req is null)
             return (false, 400, new { message = "request body required" });
 
-        // Validation (also used for SQ test cases / taint mitigation)
         if (req.RestaurantId == Guid.Empty)
             return (false, 400, new { message = "restaurantId required" });
 
@@ -38,8 +41,6 @@ public sealed class OrderService
         if (req.Items.Any(i => i.Quantity <= 0))
             return (false, 400, new { message = "quantity must be > 0" });
 
-        // Integration boundary: untrusted input flows into downstream HTTP call.
-        // If legacy is unavailable/timeout -> map to 503 to avoid leaking infrastructure exceptions to clients.
         bool exists;
         try
         {
@@ -47,20 +48,12 @@ public sealed class OrderService
         }
         catch (HttpRequestException ex)
         {
-            _log.LogWarning(
-                ex,
-                "Legacy menu unavailable when validating RestaurantId {RestaurantId}",
-                req.RestaurantId);
-
+            _log.LogWarning(ex, "Legacy menu unavailable when validating RestaurantId {RestaurantId}", req.RestaurantId);
             return (false, 503, new { message = "Legacy menu unavailable" });
         }
         catch (TaskCanceledException ex)
         {
-            _log.LogWarning(
-                ex,
-                "Legacy menu timeout when validating RestaurantId {RestaurantId}",
-                req.RestaurantId);
-
+            _log.LogWarning(ex, "Legacy menu timeout when validating RestaurantId {RestaurantId}", req.RestaurantId);
             return (false, 503, new { message = "Legacy menu timeout" });
         }
 
@@ -79,13 +72,20 @@ public sealed class OrderService
         var pricing = _pricing.CalculateTotal(pricedItems);
         var orderId = Guid.NewGuid();
 
-        // Safe logging (no full request body / no PII)
+        // INTEGRATION: Publish the event to RabbitMQ
+        // This is the trigger for the Saga pattern
+        await _publishEndpoint.Publish(new OrderPlacedEvent(
+            orderId,
+            req.RestaurantId,
+            pricing.Total,
+            DateTime.UtcNow), ct);
+
         _log.LogInformation(
-            "Order created {OrderId} for Restaurant {RestaurantId}",
+            "Order created {OrderId} for Restaurant {RestaurantId} and event published",
             orderId,
             req.RestaurantId);
 
-        return (true, 202, new { orderId, status = "Created", totalPrice = pricing.Total });
+        return (true, 202, new { orderId, status = "Accepted", totalPrice = pricing.Total });
     }
 }
 

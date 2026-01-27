@@ -3,3 +3,16 @@ name: mtogo-exam
 include:
   - deploy/compose/docker-compose.yml
   - deploy/observability/docker-compose.observability.yml
+
+services:
+  payment:
+    build:
+      context: .
+      dockerfile: src/services/payment/Mtogo.Payment.Api/Dockerfile
+    environment:
+      ASPNETCORE_URLS: http://0.0.0.0:8080
+      RabbitMq__Host: rabbitmq
+    depends_on:
+      - rabbitmq
+    ports:
+      - "8083:8080"
