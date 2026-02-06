@@ -5,3 +5,4 @@ public record OrderPlacedEvent(
     Guid RestaurantId,
     decimal TotalPrice,
     DateTime OccurredOn);
+    

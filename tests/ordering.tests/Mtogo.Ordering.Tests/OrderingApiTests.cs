@@ -29,7 +29,7 @@ public sealed class OrderingApiTests : IClassFixture<WebApplicationFactory<Progr
             {
                 services.AddSingleton(Mock.Of<IPublishEndpoint>());
 
-                // Replace legacy client with deterministic fake for integration tests
+                // Replace legacy client with fake for integration tests
                 services.AddSingleton<ILegacyMenuClient>(new FakeLegacyMenuClient(true));
                 services.AddSingleton<IMenuItemPriceProvider>(new FakePriceProvider());
                 services.AddSingleton<IOrderPricingRules, OrderPricingRules>();

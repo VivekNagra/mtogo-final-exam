@@ -10,7 +10,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 
 // Tests run in-process (WebApplicationFactory) without external infrastructure.
-// Keep it simple: don't require RabbitMQ for tests.
 if (!builder.Environment.IsEnvironment("Testing"))
 {
     builder.Services.AddMassTransit(x =>
@@ -19,12 +18,11 @@ if (!builder.Environment.IsEnvironment("Testing"))
 
         x.UsingRabbitMq((context, cfg) =>
         {
-            // Use 'rabbitmq' for Docker, 'localhost' for local dev
+           
             var rabbitHost = builder.Configuration["RabbitMq:Host"] ?? "rabbitmq";
             cfg.Host(rabbitHost, "/");
 
-            // Best Practice: Auto-configure endpoints for any registered consumers
-            cfg.ConfigureEndpoints(context);
+                        cfg.ConfigureEndpoints(context);
         });
     });
 }
